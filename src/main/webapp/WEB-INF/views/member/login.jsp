@@ -15,7 +15,7 @@
 	
 	<div class="wrap">
 		<div class="logo_wrap">
-			<span>Book Mall</span>
+			<span>SHOP</span>
 		</div>
 		<div class="login_wrap"> 
 			<div class="id_wrap">
