@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="${path}/resources/include/header.jsp" />
 </head>
 <body>
 	<table>
@@ -15,20 +16,21 @@
 			<tr>
 				<td>
 					<table>
+					<tr>
 						<c:forEach var="imgs" items="${img}" varStatus="status">
 							<c:forEach var="titles" items="${title}" varStatus="status">
-								<c:if test="${img[status.index]!=''}">
-									<tr><td><img src="${img[status.index]}"></td></tr>
-										<c:if test="${title[status.index]!=''}">
-											<tr><td>${title[status.index]}</td></tr>
-										</c:if>
+								<c:if test="${status.index%4==0}">
+									</tr><tr>
 								</c:if>
+								<td><img src="${img[status.index]}"><br/>${title[status.index]}</td>
 							</c:forEach>
 						</c:forEach>
+						</tr>
 					</table>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </body>
+<jsp:include page="${path}/resources/include/header.jsp" />
 </html>
