@@ -59,19 +59,18 @@
 		<table class="hjTable">
 			<tr>
 				<c:forEach var="imgs" items="${img}" varStatus="status">
-					<c:forEach var="titles" items="${title}" varStatus="status">
-						<c:if test="${status.index%4==0}">
-			</tr>
-			<tr>
-				</c:if>
-
-				<td>
-					<div class="hjPadding">
-						<img src="${img[status.index]}"><br />
-						<div class="hjText">${title[status.index]}</div>
-					</div>
-				</td>
-				</c:forEach>
+					<c:if test="${status.index%4==0}">
+						</tr>
+						<tr>
+					</c:if>
+					<td>
+						<div class="hjPadding">
+							<img style="width: 240px; height: 240px;"src="${img[status.index]}">
+							<div class="hjText"><br/>${title[status.index]}</div>
+							${price[status.index]}원
+							<hr/>
+						</div>
+					</td>
 				</c:forEach>
 			</tr>
 		</table>
