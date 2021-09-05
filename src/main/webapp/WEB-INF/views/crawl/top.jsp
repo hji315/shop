@@ -9,12 +9,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table class=big>
+	<table>
 		<thead>
 		<tbody>
 			<tr>
 				<td>
-					<table class="seongbukNews1">
+					<table>
 						<c:forEach var="imgs" items="${img}" varStatus="status">
 							<c:forEach var="titles" items="${title}" varStatus="status">
 								<c:if test="${img[status.index]!=''}">
