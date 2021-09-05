@@ -56,25 +56,11 @@
 </head>
 <body>
 	<div class="container">
-		<table class="hjTable">
-			<tr>
-				<c:forEach var="imgs" items="${img}" varStatus="status">
-					<c:if test="${status.index%4==0}">
-						</tr>
-						<tr>
-					</c:if>
-					<td onClick="location.href='${path}/crawl/top_detail';" id="detail">
-						<div class="hjPadding">
-							<img style="width: 240px; height: 240px;"src="${img[status.index]}">
-							<div class="hjText"><br/>${title[status.index]}</div>
-							${price[status.index]}원
-							<div style="display:none;">${url[status.index]}</div>
-							<hr/>
-						</div>
-					</td>
-				</c:forEach>
-			</tr>
-		</table>
+		<div class="hjTable">
+				<div class="hjPadding">
+					${img}
+				</div>
+		</div>
 	</div>
 </body>
 <jsp:include page="${path}/resources/include/footer.jsp" />

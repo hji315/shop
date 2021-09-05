@@ -30,11 +30,12 @@ public class CrawlingController {
 	}
 
 	@RequestMapping(value = "/top", method = RequestMethod.GET)
-	public String get_categories(Model model) throws Exception {
+	public String get_top(Model model) throws Exception {
 		
 		ArrayList<String> al1 = new ArrayList<>();
 		ArrayList<String> al2 = new ArrayList<>();
 		ArrayList<String> al3 = new ArrayList<>();
+		ArrayList<String> al4 = new ArrayList<>();
 		
 		//세틴
 		String top_setin = "https://smartstore.naver.com/setinshop/category/dee12a9ae652482883678bc6f0d36935?cp=1";
@@ -55,8 +56,13 @@ public class CrawlingController {
             String price = elem_setin3.get(j).text();
             al3.add(price);
         }
+		Elements link_setin = doc_setin.select("a._3BkKgDHq3l");
+		for (int j = 0; j < link_setin.size(); j++) {
+            final String link = link_setin.get(j).attr("abs:href");
+            al4.add(link);
+        }
 				
-		//더모닝
+		//더모닌
 		String top_themonin = "http://themonin.co.kr/product/list.html?cate_no=27";
 		Connection conn_themonin = Jsoup.connect(top_themonin);
 		Document doc_themonin = conn_themonin.get();
@@ -80,18 +86,31 @@ public class CrawlingController {
             price=price.replace("KRW", "");
             al3.add(price);
         }
+		Elements link_themonin = doc_themonin.select(".thumbnail > a");
+		for (int j = 0; j < link_themonin.size(); j++) {
+            final String link = link_themonin.get(j).attr("abs:href");
+            al4.add(link);
+        }
 
-		
-		
 		long seed = System.nanoTime();
 		Collections.shuffle(al1, new Random(seed));
 		Collections.shuffle(al2, new Random(seed));
 		Collections.shuffle(al3, new Random(seed));
+		Collections.shuffle(al4, new Random(seed));
 		
 		model.addAttribute("img", al1);
 		model.addAttribute("title", al2);
 		model.addAttribute("price", al3);
+		model.addAttribute("link", al4);
 		
 		return "/crawl/top";
+	}
+	
+	@RequestMapping(value = "/top_detail", method = RequestMethod.GET)
+	public String get_top_detail(Model model) throws Exception {
+		
+
+		
+		return "/crawl/top_detail";
 	}
 }
