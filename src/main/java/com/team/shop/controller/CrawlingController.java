@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.shop.service.CrawlingService;
 
@@ -105,11 +107,24 @@ public class CrawlingController {
 		
 		return "/crawl/top";
 	}
-	
-	@RequestMapping(value = "/top_detail", method = RequestMethod.GET)
-	public String get_top_detail(Model model) throws Exception {
-		
 
+	@RequestMapping(value = "/top_detail", method = RequestMethod.GET)
+	public String get_top_detail(HttpServletRequest request,Model model) throws Exception {
+		
+		ArrayList<String> al1 = new ArrayList<>();
+		
+		String link = request.getParameter("link");
+
+		Connection innerConn = Jsoup.connect(link);
+		Document innerDoc = innerConn.get();
+		Elements elem_setin = innerDoc.getElementsByClass("_2P2SMyOjl6");
+		for (Element element : elem_setin) {
+			String img = element.attr("abs:src");
+			al1.add(img);
+			System.out.println(img);
+		}
+		
+		model.addAttribute("img", al1);
 		
 		return "/crawl/top_detail";
 	}

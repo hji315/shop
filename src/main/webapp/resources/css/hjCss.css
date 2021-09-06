@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.hjTable {
+	width: 60%;
+	margin: auto;
+}
+
+.hjPadding {
+	padding: 5px 10px;
+}
+
+.hjText {
+	width: 240px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.hjImg{
+	width: 240px;
+	height: 240px;
+}

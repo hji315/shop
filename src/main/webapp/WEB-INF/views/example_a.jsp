@@ -3,17 +3,15 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<title>Home</title>
-	<link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
-</head>
+	<title>Example</title>
 </head>
 <body>
-<%@ include file="/resources/include/header.jsp"%>
+<%@ include file="/resources/include/header_a.jsp"%>
 <h1>
-	Hello world!  
+	Example page 
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<P>  This is Example page. </P>
 <%@ include file="/resources/include/footer.jsp"%>
 </body>
 </html>

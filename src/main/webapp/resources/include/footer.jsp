@@ -25,8 +25,8 @@
 <nav>
 <div class="inner">
     <div class="links-about">
-    	<a href="term.html" target="_blank" class="links-line">이용약관&nbsp</a> 
-    	<a href="privacy.html" target="_blank" class="links-line">&nbsp개인정보처리방침&nbsp</a> 
+    	<a href="${pageContext.request.contextPath}/resources/term.jsp" target="_blank" class="links-line">이용약관&nbsp</a> 
+    	<a href="${pageContext.request.contextPath}/resources/privacy.jsp" target="_blank" class="links-line">&nbsp개인정보처리방침&nbsp</a> 
     	<a href="https://www.ftc.go.kr/www/index.do" target="_blank" class="links">&nbsp사업자정보</a> 
     </div>
 	<div class="links-social">
@@ -37,9 +37,11 @@
 </div> 
 </nav>
 <div>
-  <p>COPYRIGHT(C) 2021 #SHOP ALL RIGHTS RESERVED</p>
-  아이콘 제작자 <a href="https://www.flaticon.com/kr/authors/becris" title="Becris">Becris</a> from <a href="https://www.flaticon.com/kr/" title="Flaticon">www.flaticon.com</a><br/>
-  아이콘 제작자 <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/kr/" title="Flaticon">www.flaticon.com</a>
+  <p>COPYRIGHT&copy; 2021 #SHOP ALL RIGHTS RESERVED</p>
+  아이콘 제작자 <a href="https://www.flaticon.com/kr/authors/becris" title="Becris" class="links">Becris</a> from 
+  <a href="https://www.flaticon.com/kr/" title="Flaticon" class="links">www.flaticon.com</a><br/>
+  아이콘 제작자 <a href="https://www.freepik.com" title="Freepik" class="links">Freepik</a> from 
+  <a href="https://www.flaticon.com/kr/" title="Flaticon" class="links">www.flaticon.com</a>
   <p>
     <a href="#" class="links">▲ Back to top ▲</a>
   </p>
