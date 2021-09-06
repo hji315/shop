@@ -8,22 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	/* 로그인 성공 영역 */
-	.login_success_area{
-	    height: 62%;
-	    width: 80%;
-	    border: 2px solid #7474ad;
-	    border-radius: 15px;
-	    margin: 5% auto;
-	    padding-top: 5%;
-	}
-	.login_success_area>span{
-	    display : block;
-	    text-align: left;
-	    margin-left: 10%;
-	}
-</style>
 </head>
 <body>
 
