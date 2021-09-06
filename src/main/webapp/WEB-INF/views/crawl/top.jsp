@@ -63,11 +63,17 @@
 						</tr>
 						<tr>
 					</c:if>
-					<td onClick="location.href='${path}/crawl/top_detail';" id="detail">
+					<td>
 						<div class="hjPadding">
+							<a href="#">
 							<img style="width: 240px; height: 240px;"src="${img[status.index]}">
+							</a>
 							<div class="hjText"><br/>${title[status.index]}</div>
 							${price[status.index]}원
+							<div class="d-flex justify-content-between">
+								<a href="#"><img src="${path }/resources/img/cart.png"></a>
+								<a href="#"><img src="${path }/resources/img/pick.png"></a>
+							</div>
 							<div style="display:none;">${url[status.index]}</div>
 							<hr/>
 						</div>
