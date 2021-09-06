@@ -2,6 +2,7 @@ package com.team.shop.controller;
 
 import java.util.Random;
 
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +34,9 @@ public class MemberController {
     @Autowired
     private JavaMailSender mailSender; //JavaMailSender 객체 타입인 mailSender 변수를 선언
 	
+    @Autowired(required=false)
+    private BCryptPasswordEncoder pwEncoder;
+    
 	//회원가입 페이지 이동
 	@RequestMapping(value = "/join", method=RequestMethod.GET)
 	public void loginGET() {
@@ -44,12 +49,23 @@ public class MemberController {
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String joinPOST(MemberVO member) throws Exception{
 		
-		logger.info("join 진입");
+		/* 비밀번호 인코딩 전 코드
+		 * logger.info("join 진입");
 		
 		// 회원가입 서비스 실행
 		memberservice.memberJoin(member);
 		
-		logger.info("join Service 성공");
+		logger.info("join Service 성공");*/
+
+        String rawPw = "";            // 인코딩 전 비밀번호
+        String encodePw = "";        // 인코딩 후 비밀번호
+        
+        rawPw = member.getMemberPw();            // 비밀번호 데이터 얻음
+        encodePw = pwEncoder.encode(rawPw);        // 비밀번호 인코딩
+        member.setMemberPw(encodePw);            // 인코딩된 비밀번호 member객체에 다시 저장
+        
+        /* 회원가입 쿼리 실행 */
+        memberservice.memberJoin(member);
 		
 		return "redirect:/mainlogin"; //로그인성공 시 메인로그인페이지로 이동
 		
@@ -137,28 +153,59 @@ public class MemberController {
     //RedirectAttributes는 로그인 실패 시 리다이렉트 된 로그인 페이지에 실패를 의미하는 데이터를 전송
     @RequestMapping(value="login", method=RequestMethod.POST)
     public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception{
-       //데이터 전달 확인
-       // System.out.println("login 메서드 진입");
-       // System.out.println("전달된 데이터 : " + member);
-       
-    	//session을 사용하기 위해 session 변수를 선언하고 request.getSession()으로 초기화
-    	HttpSession session = request.getSession();
-    	//MemberService.java의 memberLogin메서드로 초기화,인자는 서버로부터 전달받은 member 변수를 사용
-    	//memberLogin 메서드를 요청하게 되면 MemberMapper.java를 거쳐서 로그인 쿼리가 실행이 되게 되고 
-    	//그 결과 값이 담긴 MemberVO 객체를 반환받아서 변수 lvo에 저장
-    	MemberVO lvo = memberservice.memberLogin(member);
+		/*    비밀번호 암호화 이전 코드
+		 * 
+		 *    //데이터 전달 확인
+		       // System.out.println("login 메서드 진입");
+		       // System.out.println("전달된 데이터 : " + member);
+		       
+		    	//session을 사용하기 위해 session 변수를 선언하고 request.getSession()으로 초기화
+		    	HttpSession session = request.getSession();
+		    	//MemberService.java의 memberLogin메서드로 초기화,인자는 서버로부터 전달받은 member 변수를 사용
+		    	//memberLogin 메서드를 요청하게 되면 MemberMapper.java를 거쳐서 로그인 쿼리가 실행이 되게 되고 
+		    	//그 결과 값이 담긴 MemberVO 객체를 반환받아서 변수 lvo에 저장
+		    	MemberVO lvo = memberservice.memberLogin(member);
+		    	
+		    	 if(lvo == null) {                                // 일치하지 않는 아이디, 비밀번호 입력 경우
+		     
+		     int result = 0;
+		     rttr.addFlashAttribute("result", result);
+		     return "redirect:/member/login";
+		     
+		 }
+		 
+		 session.setAttribute("member", lvo);             // 일치하는 아이디, 비밀번호 경우 (로그인 성공)
+		 
+		 return "redirect:/mainlogin";*/
     	
-    	 if(lvo == null) {                                // 일치하지 않는 아이디, 비밀번호 입력 경우
-             
-             int result = 0;
-             rttr.addFlashAttribute("result", result);
-             return "redirect:/member/login";
-             
-         }
-         
-         session.setAttribute("member", lvo);             // 일치하는 아이디, 비밀번호 경우 (로그인 성공)
-         
-         return "redirect:/mainlogin";
+    	HttpSession session = request.getSession();
+        String rawPw = "";
+        String encodePw = "";
+        
+        MemberVO lvo = memberservice.memberLogin(member);
+        
+        if(lvo != null) {            // 일치하는 아이디 존재시
+            
+            rawPw = member.getMemberPw();        // 사용자가 제출한 비밀번호
+            encodePw = lvo.getMemberPw();        // 데이터베이스에 저장한 인코딩된 비밀번호
+            
+            if(true == pwEncoder.matches(rawPw, encodePw)) {        // 비밀번호 일치여부 판단
+                
+                lvo.setMemberPw("");                    // 인코딩된 비밀번호 정보 지움
+                session.setAttribute("member", lvo);     // session에 사용자의 정보 저장
+                return "redirect:/mainlogin";        // 메인페이지 이동
+                
+            } else {
+                rttr.addFlashAttribute("result", 0);            
+                return "redirect:/member/login";    // 로그인 페이지로 이동
+            }
+            
+        } else {                    // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
+            
+            rttr.addFlashAttribute("result", 0);            
+            return "redirect:/member/login";    // 로그인 페이지로 이동
+          
+        }
     	
     }
     
