@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -35,24 +36,8 @@
 	rel="stylesheet">
 <!-- Custom styles for this template -->
 
-<style>
-.hjTable {
-	width: 60%;
-	margin: auto;
-}
-
-.hjPadding {
-	padding: 5px 10px;
-}
-
-.hjText {
-	width: 240px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-</style>
 <jsp:include page="${path}/resources/include/header.jsp" />
+<link rel="stylesheet" href="${path}/resources/css/hjCss.css">
 </head>
 <body>
 	<div class="container">
@@ -63,12 +48,17 @@
 						</tr>
 						<tr>
 					</c:if>
-					<td onClick="location.href='${path}/crawl/top_detail';" id="detail">
+					<td>
 						<div class="hjPadding">
-							<img style="width: 240px; height: 240px;"src="${img[status.index]}">
+							<a href="${path }/crawl/top_detail?link=${link[status.index]}">
+								<img class="hjImg" src="${img[status.index]}"/>
+							</a>
 							<div class="hjText"><br/>${title[status.index]}</div>
 							${price[status.index]}원
-							<div style="display:none;">${url[status.index]}</div>
+							<div class="d-flex justify-content-between">
+								<a href="#"><img src="${path }/resources/img/cart.png"></a>
+								<a href="#"><img src="${path }/resources/img/pick.png"></a>
+							</div>
 							<hr/>
 						</div>
 					</td>
