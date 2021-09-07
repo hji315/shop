@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/blog.css">
 </head>
 <body>
 
@@ -15,8 +16,8 @@
 	
 	<div class="wrap">
 		<div class="logo_wrap">
-			<span>SHOP</span>
-		</div>
+        #SHOP
+        </div>
 		<div class="login_wrap"> 
 			<div class="id_wrap">
 					<div class="id_input_box">

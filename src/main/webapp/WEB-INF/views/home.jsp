@@ -4,11 +4,9 @@
 <html>
 <head>
 	<title>Home</title>
-	<link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
-</head>
+<%@ include file="/resources/include/header.jsp"%>
 </head>
 <body>
-<%@ include file="/resources/include/header.jsp"%>
 <h1>
 	Hello world!  
 </h1>
