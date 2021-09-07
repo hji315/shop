@@ -209,5 +209,18 @@ public class MemberController {
     	
     }
     
+    /* 메인페이지 로그아웃 */
+    @RequestMapping(value="logout.do", method=RequestMethod.GET)
+    public String logoutMainGET(HttpServletRequest request) throws Exception{
+        
+    	logger.info("logoutMainGET메서드 진입");
+        
+        HttpSession session = request.getSession(); //HttpSession타입의 session 변수 및 초기화
+    	
+        session.invalidate(); //"invalidate()" 메서드의 경우 세션 전체를 무효화
+        
+        return "redirect:/mainlogin";
+    }
+    
 	
 }
