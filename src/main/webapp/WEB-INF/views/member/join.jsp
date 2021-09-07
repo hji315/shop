@@ -32,13 +32,13 @@
 			<div class="pw_wrap">
 				<div class="pw_name">비밀번호</div>
 				<div class="pw_input_box">
-					<input class="pw_input" name="memberPw">
+					<input class="pw_input" name="memberPw" type="password">
 				</div>
 			</div>
 			<div class="pwck_wrap">
 				<div class="pwck_name">비밀번호 확인</div>
 				<div class="pwck_input_box">
-					<input class="pwck_input">
+					<input class="pwck_input" type="password">
 				</div>
 			</div>
 			<div class="user_wrap">
