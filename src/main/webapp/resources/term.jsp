@@ -5,69 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style type="text/css">
-	table[data-v-2c6d83c5] {
-	  word-break: break-all;
-	}
-	
-	th[data-v-2c6d83c5],
-	td[data-v-2c6d83c5] {
-	  border: 1px solid black;
-	  min-width: 140px;
-	}
-	
-	th[data-v-2c6d83c5] {
-	  background: #e1e1e1;
-	}
-	
-	pre[data-v-2c6d83c5] {
-	  word-wrap: break-word;
-	}
-	
-	.term-container[data-v-8e4e6430] {
-	  padding: 24px 16px 20px;
-	}
-	.term-container *[data-v-8e4e6430] {
-	    font-family: "Noto Sans KR", "Spoqa Han Sans", Sans-serif;
-	}
-	.term-container h1[data-v-8e4e6430] {
-	    display: none;
-	    margin: 0;
-	}
-	.term-container[data-v-8e4e6430] .term * {
-	    font-family: "Noto Sans KR", "Spoqa Han Sans", Sans-serif;
-	    font-size: 14px;
-	    line-height: 26px;
-	    color: #202429;
-	}
-
-	.term-container[data-v-8e4e6430] .term pre {
-	    word-wrap: break-word;
-	}
-	.term-container[data-v-8e4e6430] .term pre:first-of-type {
-	      margin-top: 0;
-	}
-	@media screen and (min-width: 769px) {
-	.term-container[data-v-8e4e6430] {
-	    padding: 80px 20px;
-	    max-width: 1000px;
-	    margin: 0 auto;
-	}
-	.term-container h1[data-v-8e4e6430] {
-	      display: block;
-	      margin-bottom: 60px;
-	      font-size: 32px;
-	      text-align: center;
-	      line-height: 36px;
-	}
-
-</style>
+<link href="${pageContext.request.contextPath}/resources/css/blog.css" rel="stylesheet">
+    
 <title>#SHOP 이용약관</title>
 </head>
 <body>
 <!-- 헤더 -->
 <%@ include file="/resources/include/header.jsp"%>
-
 <div data-v-8e4e6430="" fragment="95e7214531" class="term-container">
 <h1 data-v-8e4e6430="">이용약관</h1> 
 <div data-v-2c6d83c5="" data-v-8e4e6430="" class="term">
