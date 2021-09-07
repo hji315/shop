@@ -41,13 +41,17 @@
 </head>
 <body>
 	<div class="container">
-		<div class="hjTable">
-			<div>
-				<c:forEach var="imgs" items="${img}" varStatus="status">
-					<img src="${img[status.index]}"/>
-				</c:forEach>
-			</div>
-		</div>
+		<table class="hjTable">
+			<tr><td>
+				<div class="hjPadding">
+					<c:forEach var="imgs" items="${img}" varStatus="status">
+						<img src="${img[status.index]}"/>
+						<div class="hjText"><br/>${title[status.index]}</div>
+							${price[status.index]}원
+					</c:forEach>
+				</div>
+			</td></tr>
+		</table>
 	</div>
 </body>
 <jsp:include page="${path}/resources/include/footer.jsp" />
