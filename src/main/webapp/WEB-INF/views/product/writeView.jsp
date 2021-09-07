@@ -28,18 +28,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<style>
-.hj{
-margin-top: 100px; 
-margin-bottom: 100px; 
-padding: 32px; 
-border-style: solid;
-border-color: gray;
-border-radius: 10px;
-border-width: 0.5px;
-
-}
-</style>
 
 <!-- Custom styles for this template -->
 <link

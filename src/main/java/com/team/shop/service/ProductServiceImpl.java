@@ -24,5 +24,10 @@ public class ProductServiceImpl implements ProductService{
 	public List<ProductVO> list() throws Exception {
 		return dao.list();
 	}
+
+	@Override
+	public ProductVO read(int product_id) throws Exception {
+		return dao.read(product_id);
+	}
 	
 }

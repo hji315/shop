@@ -24,4 +24,9 @@ public class ProductDAOImpl implements ProductDAO {
 	public List<ProductVO> list() throws Exception {
 		return sql.selectList("productMapper.list");
 	}
+
+	@Override
+	public ProductVO read(int product_id) throws Exception {
+		return sql.selectOne("productMapper.read", product_id);
+	}
 }
