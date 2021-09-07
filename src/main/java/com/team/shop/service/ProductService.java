@@ -10,4 +10,6 @@ public interface ProductService {
 	
 	public List<ProductVO> list() throws Exception;
 	
+	public ProductVO read(int product_id) throws Exception;
+	
 }
