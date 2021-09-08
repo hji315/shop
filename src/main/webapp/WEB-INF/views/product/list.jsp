@@ -39,6 +39,7 @@
 </head>
 <body>
 	<div class="container">
+		<form role="form" method="get">
 		<table class="hjTable">
 			<tr>
 				<c:set var="i" value="0" />
@@ -49,9 +50,8 @@
 					</c:if>
 						<td>
 							<div class="hjPadding">
-								<a href="/product/readView?product_id=${list.product_id}">
-									<img class="hjImg" src="<c:out value="${list.product_main_img}" />">
-								</a><br/>
+								<a href="${path}/product/readView?product_id=${list.product_id}&page=${scri.page}&perPageNum=${scri.perPageNum}&searchType=${scri.searchType}&keyword=${scri.keyword}"><img class="hjImg" src="<c:out value="${list.product_main_img}" />"></a>
+								<br/>
 								<div class="hjText">${list.product_name}<br/></div>
 								<a href="#"><img src="${path }/resources/img/cart.png"></a>
 								<div class="right">${list.product_price}원<br/><br/></div>
@@ -67,16 +67,28 @@
 		<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<c:if test="${pageMaker.prev}">
-							<li class="page-item"><a class="page-link" href="list${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+							<li class="page-item"><a class="btn btn-outline-secondary" href="list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
 						</c:if> 
 						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-							<li class="page-item"><a class="page-link" href="list${pageMaker.makeQuery(idx)}">${idx}</a></li>
+							<li class="page-item"><a class="btn btn-outline-secondary" href="list${pageMaker.makeSearch(idx)}">${idx}</a></li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-							<li class="page-item"><a class="page-link" href="list${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+							<li class="page-item"><a class="btn btn-outline-secondary" href="list${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
 						</c:if> 
 					</ul>
 				</nav>
+		<div class="search">
+			<input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+			<button id="searchBtn" type="button">검색</button>
+			<script>
+			$(function(){
+			  $('#searchBtn').click(function() {
+			    self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + 'y' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+			  });
+			});   
+			</script>
+		</div>
+		</form>
 	</div>
 </body>
 <jsp:include page="${path}/resources/include/footer.jsp" />
