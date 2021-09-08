@@ -9,8 +9,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mainlogin.css">
-
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 </head>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$("#memberUpdateBtn").on("click", function(){
+			location.href="member/memberUpdateView";
+		})
+		
+	})
+</script>
+
 <body>
 
 			<!-- 로그인 하지 않은 상태 -->
@@ -24,6 +38,7 @@
                      <span>회원 : ${member.memberName}</span>
                      <span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span>
                      <span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
+					  <button id="memberUpdateBtn" type="button">회원정보수정</button>
 					  <a href="/member/logout.do">로그아웃</a>                 
                  </div>
             </c:if>
