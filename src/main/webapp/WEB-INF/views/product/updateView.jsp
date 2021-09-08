@@ -7,7 +7,7 @@
 <html>
 <head>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title>상품 등록</title>
+<title>상품 수정</title>
 <!-- 부트스트랩 -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -36,27 +36,23 @@
 	rel="stylesheet">
 <!-- Custom styles for this template -->
 
-
-<c:if test="">
 <jsp:include page="${path}/resources/include/header.jsp" />
-</c:if>
-
 <link rel="stylesheet" href="${path}/resources/css/hjCss.css">
 </head>
 <script type="text/javascript">
 	$(document).ready(function(){
-		var formObj = $("form[name='writeForm']");
+		var formObj = $("form[name='updateForm']");
 		$("#submit").on("click", function(){
 			if(fn_valiChk()){
 				return false;
 			}
-			formObj.attr("action", "/product/write");
+			formObj.attr("action", "/product/update");
 			formObj.attr("method", "post");
 			formObj.submit();
 		});
 	})
 	function fn_valiChk(){
-		var regForm = $("form[name='writeForm'] .chk").length;
+		var regForm = $("form[name='updateForm'] .chk").length;
 		for(var i = 0; i<regForm; i++){
 			if($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null){
 				alert($(".chk").eq(i).attr("title"));
@@ -67,68 +63,67 @@
 </script>
 <body>
 	<div class="container hj" style="width:60%">
-		<form class="row g-3" method="post" action="${path }/product/write" name="writeForm">
+		<form class="row g-3" method="post" action="${path }/product/update" name="updateForm">
+			<input type="hidden" id="product_id" name="product_id" value="${update.product_id}" />
 			<div class="col-md-12">
 				<label class="form-label" for="product_name">상품 이름</label>
-				<input class="form-control chk" type="text" id="product_name" name="product_name" title="이름을 입력하세요"/>
+				<input class="form-control chk" type="text" id="product_name" name="product_name" value="${update.product_name}" title="이름을 입력하세요" />
 				신상품 <input type="checkbox" name="product_new"value="product_new">
 			</div>
 		
 			<div class="col-md-4">
 				<label class="form-label" for="product_price">가격</label>
-				<input class="form-control chk" type="number"id="product_price" name="product_price" title="가격을 입력하세요"
-					placeholder="숫자만 입력 가능합니다."/>
+				<input class="form-control chk" type="number"id="product_price" name="product_price" 
+					value="${update.product_price}" title="가격을 입력하세요"/>
 			</div>
 			<div class="col-md-4">
 				<label class="form-label" for="product_stock">재고수량</label>
-				<input class="form-control chk" type="number" id="product_stock" name="product_stock" title="수량을 입력하세요"
-					placeholder="숫자만 입력 가능합니다."/>
+				<input class="form-control chk" type="number" id="product_stock" name="product_stock" value="${update.product_stock}" title="수량을 입력하세요"/>
 			</div>
 			<div class="col-md-4">
 				<label class="form-label" for="product_category">카테고리</label>
 				<select class="form-select" name="product_category">
-					<option value="OUTER">OUTER</option>
-					<option value="TOP">TOP</option>
-					<option value="BOTTOM">BOTTOM</option>
-					<option value="OPS">OPS</option>
-					<option value="ETC">ETC</option>
-					<option value="SALE">SALE</option>
+				<c:set var="product_category" value="${update.product_category }" />
+					<option <c:if test="${update.product_category eq 'OUTER'}">selected</c:if> value="OUTER">OUTER</option>
+					<option <c:if test="${update.product_category eq 'TOP'}">selected</c:if> value="TOP">TOP</option>
+					<option <c:if test="${update.product_category eq 'BOTTOM'}">selected</c:if> value="BOTTOM">BOTTOM</option>
+					<option <c:if test="${update.product_category eq 'OPS'}">selected</c:if> value="OPS">OPS</option>
+					<option <c:if test="${update.product_category eq 'ETC'}">selected</c:if> value="ETC">ETC</option>
+					<option <c:if test="${update.product_category eq 'SALE'}">selected</c:if> value="SALE">SALE</option>
 				</select>
 			</div>
 			
 			<div class="col-md-6">
 				<label class="form-label" for="product_size">사이즈</label>
-				<input class="form-control chk" type="text" id="product_size" name="product_size" title="사이즈를 입력하세요"
-					placeholder="ex)S, M, L (','를 기준으로 나누어집니다)"/>
+				<input class="form-control chk" type="text" id="product_size" name="product_size" value="${update.product_size}" title="사이즈를 입력하세요"/>
 			</div>
 			<div class="col-md-6">
 				<label class="form-label" for="product_color">색상</label>
-				<input class="form-control chk" type="text" id="product_color" name="product_color" title="색상을 입력하세요"
-					placeholder="ex)블랙, 베이지 (','를 기준으로 나누어집니다)"/>
+				<input class="form-control chk" type="text" id="product_color" name="product_color" value="${update.product_color}" title="색상을 입력하세요"/>
 			</div>
 			
 			<div class="col-md-12">
 			<label class="form-label" for="product_main_img">메인 사진</label>
-			<input class="form-control chk" type="text" id="product_main_img" name="product_main_img" title="사진 주소를 입력하세요"/>
+			<input class="form-control chk" type="text" id="product_main_img" name="product_main_img" value="${update.product_main_img}" title="사진 주소를 입력하세요"/>
 			</div>
 			
 			<div class="col-md-12">
 			<label class="form-label" for="product_detail_img">상세 사진</label>
-			<input class="form-control chk" type="text" id="product_detail_img" name="product_detail_img" title="사진 주소를 입력하세요"/>
+			<input class="form-control chk" type="text" id="product_detail_img" name="product_detail_img" value="${update.product_detail_img}" title="사진 주소를 입력하세요"/>
 			</div>
 		
 			<div class="col-md-12">
 			<label class="form-label" for="product_url">제품 페이지</label>
-			<input class="form-control chk" type="text" id="product_url" name="product_url" title="제품 페이지 주소를 입력하세요" />
+			<input class="form-control chk" type="text" id="product_url" name="product_url" value="${update.product_url}" title="제품 페이지 주소를 입력하세요" />
 			</div>
 			
 			<div class="col-md-12">
 			<label class="form-label" for="product_detail">상세 설명</label>
-			<textarea class="form-control" id="product_detail" name="product_detail"></textarea>
+			<textarea class="form-control" id="product_detail" name="product_detail"><c:out value="${update.product_detail}" /></textarea>
 			</div>
 			
 			<div class="col-md-12" style="text-align:center;">
-				<button type="submit" class="btn btn-sm btn-outline-secondary" id="submit">상품 등록</button>
+				<button type="submit" class="btn btn-sm btn-outline-secondary" id="submit">상품 수정</button>
 				<button class="btn btn-sm btn-outline-secondary" type="button" id="cancle">돌아가기</button>
 			</div>
 		</form>
