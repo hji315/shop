@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>4.12</version>
 			<!-- <scope>test</scope> -->
 		</dependency>
 		
@@ -180,12 +180,6 @@
             <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
             <version>1.16</version>
         </dependency>
-        
-        <dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.11.2</version>
-		</dependency>
 		
 		<!-- 메일 인증 관련 -->
         <!-- https://mvnrepository.com/artifact/javax.mail/mail -->

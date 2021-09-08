@@ -1,20 +1,30 @@
 @charset "UTF-8";
-.hjTable {
-	width: 60%;
-	margin: auto;
+.hjImg{
+	width: 240px;
+	height: 240px;
 }
-
-.hjPadding {
-	padding: 5px 10px;
-}
-
 .hjText {
 	width: 240px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.hjImg{
-	width: 240px;
-	height: 240px;
+.right{
+float:right;
+}
+.hjTable {
+	width: 60%;
+	margin: auto;
+}
+.hjPadding {
+	padding: 5px 10px;
+}
+.hj{
+margin-top: 100px; 
+margin-bottom: 100px; 
+padding: 32px; 
+border-style: solid;
+border-color: gray;
+border-radius: 10px;
+border-width: 0.5px;
 }

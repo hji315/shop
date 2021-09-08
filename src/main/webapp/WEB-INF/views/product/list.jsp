@@ -28,8 +28,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-
-
 <!-- Custom styles for this template -->
 <link
 	href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap"
@@ -41,13 +39,30 @@
 </head>
 <body>
 	<div class="container">
-		<div class="hjTable">
-			<div>
-				<c:forEach var="imgs" items="${img}" varStatus="status">
-					<img src="${img[status.index]}"/>
+		<table class="hjTable">
+			<tr>
+				<c:set var="i" value="0" />
+				<c:set var="j" value="4" />
+				<c:forEach var="list" items="${list}">
+					<c:if test="${i%j == 0 }">
+						<tr>
+					</c:if>
+						<td>
+							<div class="hjPadding">
+								<a href="/product/readView?product_id=${list.product_id}">
+									<img class="hjImg" src="<c:out value="${list.product_main_img}" />">
+								</a><br/>
+								<div class="hjText">${list.product_name}<br/></div>
+								${list.product_price}원<br/>
+							</div>
+						</td>
+					<c:if test="${i%j == j-1 }">
+						</tr>
+					</c:if>
+					<c:set var="i" value="${i+1 }" />
 				</c:forEach>
-			</div>
-		</div>
+			</tr>
+		</table>
 	</div>
 </body>
 <jsp:include page="${path}/resources/include/footer.jsp" />

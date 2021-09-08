@@ -6,139 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
-	table[data-v-2c6d83c5] {
-	  word-break: break-all;
-	}
-	
-	th[data-v-2c6d83c5],
-	td[data-v-2c6d83c5] {
-	  border: 1px solid black;
-	  min-width: 140px;
-	}
-	
-	th[data-v-2c6d83c5] {
-	  background: #e1e1e1;
-	}
-	
-	pre[data-v-2c6d83c5] {
-	  word-wrap: break-word;
-	}
 
-	/* 여기까지 term과 중복 css  */
-
-	.term-container[data-v-8e4e6430] {
-	  padding: 24px 16px 20px;
-	}
-	.term-container *[data-v-8e4e6430] {
-	    font-family: "Noto Sans KR", "Spoqa Han Sans", Sans-serif;
-	}
-	.term-container h1[data-v-8e4e6430] {
-	    display: none;
-	    margin: 0;
-	}
-	.term-container[data-v-8e4e6430] .term * {
-	    font-family: "Noto Sans KR", "Spoqa Han Sans", Sans-serif;
-	    font-size: 14px;
-	    line-height: 26px;
-	    color: #202429;
-	}
-
-	.term-container[data-v-8e4e6430] .term pre {
-	    word-wrap: break-word;
-	}
-	.term-container[data-v-8e4e6430] .term pre:first-of-type {
-	      margin-top: 0;
-	}
-	@media screen and (min-width: 769px) {
-	.term-container[data-v-8e4e6430] {
-	    padding: 80px 20px;
-	    max-width: 1000px;
-	    margin: 0 auto;
-	}
-	.term-container h1[data-v-8e4e6430] {
-	      display: block;
-	      margin-bottom: 60px;
-	      font-size: 32px;
-	      text-align: center;
-	      line-height: 36px;
-	}
-	.term pre[data-v-6a555584] {
-	  font-family: 'Noto Sans KR', sans-serif;
-	  font-size: 14px;
-	  line-height: 26px;
-	  color: #202429;
-	  white-space: pre-line;
-	}
-	.term pre[data-v-6a555584]:first-of-type {
-	    margin-top: 0;
-	}
-	.term .tbl-term[data-v-6a555584] {
-	  max-width: 100%;
-	}
-	.term .tbl-term th[data-v-6a555584], .term .tbl-term td[data-v-6a555584] {
-	    padding: 5px;
-	    font-size: 14px;
-	    border: 1px solid #000;
-	    word-break: break-all;
-	}
-	.term .tbl-term thead th[data-v-6a555584] {
-	    background: #e1e1e1;
-	}
-	.term .tbl-term tbody th[data-v-6a555584] {
-	    font-weight: normal;
-	    text-align: left;
-	    background: #fff;
-	}
-	.term .tbl-term tbody td[data-v-6a555584] {
-	    vertical-align: middle;
-	}
-	.term .tbl-term tbody td a[data-v-6a555584] {
-	      color: #1e88e5;
-	      text-decoration: underline;
-	}
-	.term .tbl-term tbody td ul li[data-v-6a555584] {
-	      letter-spacing: -1px;
-	      margin-left: 25px;
-	      list-style-position: outside;
-	      list-style-type: disc;
-	}
-	.term .hidden_txt[data-v-6a555584] {
-	  overflow: hidden;
-	  position: absolute;
-	  top: 0;
-	  left: -9999px;
-	  width: 1px;
-	  height: 1px;
-	  text-indent: -9999px;
-	}
-	.term table[data-v-6a555584] {
-	  word-break: break-all;
-	}
-	.term th[data-v-6a555584],
-	.term td[data-v-6a555584] {
-	  border: 1px solid black;
-	}
-	.term th[data-v-6a555584] {
-	  background: #e1e1e1;
-	}
-	.term pre[data-v-6a555584] {
-	  word-wrap: break-word;
-	}
-	.term a[data-v-6a555584] {
-	  color: #1e88e5;
-	  text-decoration: underline;
-	}
-	.term a[data-v-6a555584]:link, .term a[data-v-6a555584]:visited, .term a[data-v-6a555584]:hover, .term a[data-v-6a555584]:active, .term a[data-v-6a555584]:focus {
-	    color: #1e88e5;
-	}
-}
 </style>
 <title>#SHOP 개인정보처리방침</title>
 </head>
 <body>
 <!-- 헤더 -->
 <%@ include file="/resources/include/header.jsp"%>
-
+<link href="${pageContext.request.contextPath}/resources/css/blog.css" rel="stylesheet">
 <div data-v-8e4e6430="" fragment="95e7214531" class="term-container">
 <h1 data-v-8e4e6430="">개인정보처리방침</h1> 
 <div data-v-2c6d83c5="" data-v-8e4e6430="" class="term">
@@ -337,8 +212,9 @@ IOS:설정 &gt; 개인 정보 보호 &gt; 광고 &gt; 광고 추적 제한 ON
 제13조 (고지의 의무)
 본 방침은 정부나 회사의 정책이 변경됨에 따라 내용의 추가 및 삭제, 수정이 있을 수 있으며, 이 경우 홈페이지 또는 이메일 등을 통해 지체없이 공지하며, 이 정책은 공지한 날로부터 시행됩니다.
 </pre>
+</div>
+</div>
 <!-- 푸터 -->
 <%@ include file="/resources/include/footer.jsp"%>
-
 </body>
 </html>

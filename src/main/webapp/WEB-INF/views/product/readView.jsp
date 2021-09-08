@@ -28,8 +28,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-
-
 <!-- Custom styles for this template -->
 <link
 	href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap"
@@ -43,26 +41,28 @@
 	<div class="container">
 		<table class="hjTable">
 			<tr>
-				<c:forEach var="imgs" items="${img}" varStatus="status">
-					<c:if test="${status.index%4==0}">
-						</tr>
-						<tr>
-					</c:if>
-					<td>
-						<div class="hjPadding">
-							<a href="${path }/crawl/top_detail?link=${link[status.index]}">
-								<img class="hjImg" src="${img[status.index]}"/>
-							</a>
-							<div class="hjText"><br/>${title[status.index]}</div>
-							${price[status.index]}원
-							<div class="d-flex justify-content-between">
-								<a href="#"><img src="${path }/resources/img/cart.png"></a>
-								<a href="#"><img src="${path }/resources/img/pick.png"></a>
-							</div>
-							<hr/>
-						</div>
-					</td>
-				</c:forEach>
+				<td rowspan="7"><img src="${read.product_main_img}"></td>
+			</tr>
+			<tr>
+				<td><c:out value="${read.product_name}" /></td>
+			</tr>
+			<tr>
+				<td><c:out value="${read.product_price}" />원</td>
+			</tr>
+			<tr>
+				<td><c:out value="${read.product_size}" /></td>
+			</tr>
+			<tr>
+				<td><c:out value="${read.product_color}" /></td>
+			</tr>
+			<tr>
+				<td>장바구니</td>
+			</tr>
+			<tr>
+				<td>구매하기</td>
+			</tr>
+			<tr>
+				<td colspan="2"><img src="${read.product_detail_img}"></td>
 			</tr>
 		</table>
 	</div>
