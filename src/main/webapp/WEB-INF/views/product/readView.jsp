@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>Shop</title>
 <!-- 부트스트랩 -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -26,6 +26,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
 	integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
 	crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
@@ -39,30 +40,45 @@
 <link rel="stylesheet" href="${path}/resources/css/hjCss.css">
 
 </head>
-<body>
-<script>
-	var str = ${read.product_size};
-	var arr = str.split(",");
-	console.log("1234");
-	console.log(arr[0]);
-	document.writeln(arr[0]);
-	
+<script type="text/javascript">
+	$(document).ready(function(){
+		var formObj = $("form[name='readForm']");
+		// 수정 
+		$("#update").on("click", function(){
+			formObj.attr("action", "/product/updateView");
+			formObj.attr("method", "get");
+			formObj.submit();				
+		})
+		// 삭제
+		$("#delete").on("click", function(){
+			var deleteYN = confirm("정말 삭제하시겠습니까?");
+			if(deleteYN == true){
+				formObj.attr("action", "/product/delete");
+				formObj.attr("method", "post");
+				formObj.submit();
+			}
+		})
+	})
 </script>
+<body>
 	<div class="container">
+		<form name="readForm" role="form" method="post">
+			<input type="hidden" id="product_id" name="product_id" value="${read.product_id}" />
+		</form>
 		<table class="hjTable">
-		
 			<tr><td><br/></td></tr>
 			<tr>
 				<td rowspan="7"><img style="width :340px" src="${read.product_main_img}"></td>
 			</tr>
 			<tr>
-				<td style="width :340px"><c:out value="${read.product_name}" /></td>
+				<td colspan="2" style="width :340px; text-align: center"><strong><c:out value="${read.product_name}" /></strong></td>
 			</tr>
 			<tr>
-				<td class="right"><c:out value="${read.product_price}" />원 &nbsp;&nbsp;</td>
+				<td></td>
+				<td class="right"><strong><c:out value="${read.product_price}" />원 &nbsp;&nbsp;</strong></td>
 			</tr>
 			<tr>
-				<td>
+				<td colspan="2">
 					<select class="form-select" aria-label="Default select example">
 						<c:forEach items="${fn:split(read.product_size, ',') }" var="product_size">
 							  <option value="product_size">${product_size}</option>
@@ -71,7 +87,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td colspan="2">
 					<select class="form-select" aria-label="Default select example">
 						<c:forEach items="${fn:split(read.product_color, ',') }" var="product_color">
 							  <option value="product_color">${product_color}</option>
@@ -79,16 +95,17 @@
 					</select>
 				</td>
 			</tr>
-				<tr>
-					<td style="text-align: center"><button class="btn btn-lg btn-outline-secondary" type="button" id="cart">장바구니</button></td>
-				</tr>
-				<tr>
-					<td style="text-align: center"><button class="btn btn-lg btn-outline-secondary" type="button" id="byu">구매하기</button></td>
-				</tr>
 			<tr>
+				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="cart">장바구니</button></td>
+				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="buy">구매하기</button></td>
+			</tr>
+			<tr>
+				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="update">수정</button></td>
+				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="delete">삭제</button></td>
+			</tr>
 			<tr><td><br/></td></tr>
 			<tr>
-				<td colspan="2"><hr/><br/>
+				<td colspan="3"><hr/><br/>
 				<img style="width :700px" src="${read.product_detail_img}"></td>
 			</tr>
 		</table>
