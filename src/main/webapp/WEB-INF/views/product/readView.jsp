@@ -45,7 +45,7 @@
 		var formObj = $("form[name='readForm']");
 		// 수정 
 		$("#update").on("click", function(){
-			formObj.attr("action", "/product/updateView");
+			formObj.attr("action", "${path}/product/updateView");
 			formObj.attr("method", "get");
 			formObj.submit();				
 		})
@@ -58,27 +58,41 @@
 				formObj.submit();
 			}
 		})
+		// 목록
+		$("#list").on("click", function(){
+			location.href = "${path}/product/list?page=${scri.page}"
+			+"&perPageNum=${scri.perPageNum}"
+			+"&searchType=${scri.searchType}&keyword=${scri.keyword}";
+		})
 	})
 </script>
 <body>
+
+	<form name="readForm" role="form" method="post">
+		<input type="hidden" id="product_id" name="product_id" value="${read.product_id}" />
+		<input type="hidden" id="page" name="page" value="${scri.page}"> 
+		<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}"> 
+		<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}"> 
+		<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}"> 
+	</form>
+	
 	<div class="container">
 		<form name="readForm" role="form" method="post">
 			<input type="hidden" id="product_id" name="product_id" value="${read.product_id}" />
 		</form>
 		<table class="hjTable">
-			<tr><td><br/></td></tr>
+			<tr><td colspan="2"><br/></td></tr>
 			<tr>
 				<td rowspan="7"><img style="width :340px" src="${read.product_main_img}"></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="width :340px; text-align: center"><strong><c:out value="${read.product_name}" /></strong></td>
+				<td style="width :340px; text-align: center"><strong><c:out value="${read.product_name}" /></strong></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td class="right"><strong><c:out value="${read.product_price}" />원 &nbsp;&nbsp;</strong></td>
+				<td class="right"><strong><c:out value="${read.product_price}" />원</strong></td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td>
 					<select class="form-select" aria-label="Default select example">
 						<c:forEach items="${fn:split(read.product_size, ',') }" var="product_size">
 							  <option value="product_size">${product_size}</option>
@@ -87,7 +101,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td>
 					<select class="form-select" aria-label="Default select example">
 						<c:forEach items="${fn:split(read.product_color, ',') }" var="product_color">
 							  <option value="product_color">${product_color}</option>
@@ -96,17 +110,46 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="cart">장바구니</button></td>
-				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="buy">구매하기</button></td>
+				<td>
+					<div style="text-align:center;">
+						<button class="btn btn-sm btn-outline-secondary" type="button" id="cart">장바구니</button>
+						<button class="btn btn-sm btn-outline-secondary" type="button" id="buy">구매하기</button>
+						<button class="btn btn-sm btn-outline-secondary" type="button" id="list">돌아가기</button>
+					</div>
+				</td>
 			</tr>
 			<tr>
-				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="update">수정</button></td>
-				<td style="text-align:center;"><button class="btn btn-lg btn-outline-secondary" type="button" id="delete">삭제</button></td>
+				<td>
+					<div style="text-align:center;">
+						<button class="btn btn-sm btn-outline-secondary" type="button" id="update">수정</button>
+						<button class="btn btn-sm btn-outline-secondary" type="button" id="delete">삭제</button>
+					</div>
+				</td>
 			</tr>
-			<tr><td><br/></td></tr>
 			<tr>
-				<td colspan="3"><hr/><br/>
-				<img style="width :700px" src="${read.product_detail_img}"></td>
+				<td colspan="2"><br/>
+					<ul class="nav nav-tabs justify-content-center" style="text-align:center;">
+						<li class="nav-item"><a href="#detail" class="nav-link active">상세보기</a></li>
+						<li class="nav-item"><a href="#QNA" class="nav-link active">Q&A</a></li>
+						<li class="nav-item"><a href="#review" class="nav-link active">REVIEW</a></li>
+					</ul>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="3"><br/>
+				<div id="detail"><img style="width :700px" src="${read.product_detail_img}"></div></td>
+			</tr>
+			
+			<tr>
+				<td colspan="3"><br/>
+					
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="3"><br/>
+				<div id="review">리뷰유</div></td>
 			</tr>
 		</table>
 	</div>

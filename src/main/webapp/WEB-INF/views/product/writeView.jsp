@@ -50,7 +50,7 @@
 			if(fn_valiChk()){
 				return false;
 			}
-			formObj.attr("action", "/product/write");
+			formObj.attr("action", "${path}/product/write");
 			formObj.attr("method", "post");
 			formObj.submit();
 		});
@@ -67,7 +67,7 @@
 </script>
 <body>
 	<div class="container hj" style="width:60%">
-		<form class="row g-3" method="post" action="${path }/product/write" name="writeForm">
+		<form class="row g-3" method="post" action="${path}/product/write" name="writeForm">
 			<div class="col-md-12">
 				<label class="form-label" for="product_name">상품 이름</label>
 				<input class="form-control chk" type="text" id="product_name" name="product_name" title="이름을 입력하세요"/>
