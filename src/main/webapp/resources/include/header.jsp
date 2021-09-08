@@ -22,7 +22,7 @@
 	$(document).ready(function(){
 
 		$("#memberUpdateBtn").on("click", function(){
-			location.href="member/memberUpdateView";
+			location.href="${pageContext.request.contextPath}/member/memberUpdateView";
 		})
 		
 	})
@@ -48,13 +48,17 @@
          aria-label="Search">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
         </a>
+	      <c:if test="${member.adminCk == 1 }">
+	          <a class="btn btn-sm" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
+	          <a class="btn btn-sm" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
+	      </c:if>
         	<div>
 				<!-- 로그인 하지 않은 상태 -->
             <c:if test = "${member == null }">
                 <div><a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/login">Sign in</a></div>
             </c:if> 
 			<!-- 로그인한 상태 -->
-            <c:if test="${ member != null }">
+            <c:if test="${ member != null && member.adminCk != 1}">
         		<div class="login_success_area">
 					  <button class="btn btn-sm btn-outline-secondary" id="memberUpdateBtn" type="button">${member.memberName}님♥</button>
 					  <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/logout.do">logout</a>

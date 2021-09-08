@@ -66,8 +66,6 @@
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberId">아이디</label>
 					<input class="form-control" type="text" id="memberId" name="memberId" value="${member.memberId}" readonly="readonly" />
-					<span id="id_input_re_1">사용 가능한 아이디입니다.</span>
-					<span id="id_input_re_2">아이디가 이미 존재합니다.</span>
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberPw">비밀번호</label>
