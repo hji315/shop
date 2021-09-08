@@ -6,17 +6,41 @@
 	
 	<insert id="insert">
 		INSERT INTO product 
-		(product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, product_category, product_url, product_stock)
+			(product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, 
+			product_category, product_url, product_stock)
 		values
-		(product_seq.NEXTVAL, #{product_name}, #{product_price}, #{product_size}, #{product_color}, #{product_main_img}, #{product_detail_img}, #{product_detail}, #{product_category}, #{product_url}, #{product_stock})
+			(product_seq.NEXTVAL, #{product_name}, #{product_price}, #{product_size}, #{product_color}, #{product_main_img}, 
+			#{product_detail_img}, #{product_detail}, #{product_category}, #{product_url}, #{product_stock})
 	</insert>
 	
-	<select id="list" resultType="com.team.shop.model.ProductVO">
-		SELECT product_id, product_name, product_price, product_main_img, product_category from product ORDER BY product_id DESC
+	<select id="listPage" resultType="com.team.shop.model.ProductVO" parameterType="com.team.shop.model.Criteria">
+		select product_id, product_name, product_price, product_size, product_color, product_main_img, 
+				product_detail_img, product_detail, product_category, product_url, product_stock from (SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, 
+				product_detail_img, product_detail, product_category, product_url, product_stock, row_number() 
+			OVER(ORDER BY product_id DESC) AS rNum FROM product)
+		mp WHERE rNum BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY product_id DESC
+	</select>
+	
+	<select id="listCount" resultType="int">
+		<![CDATA[
+			SELECT COUNT(product_id) FROM product WHERE product_id > 0
+		]]>
 	</select>
     
     <select id="read" parameterType="int" resultType="com.team.shop.model.ProductVO">
-		SELECT	product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_url
-		FROM product WHERE product_id = #{product_id}
+		SELECT * FROM product WHERE product_id = #{product_id}
 	</select>
+	
+	<update id="update" parameterType="com.team.shop.model.ProductVO">
+		UPDATE product
+		   SET product_name = #{product_name}, product_price = #{product_price}, product_size = #{product_size}, 
+				product_color = #{product_color}, product_main_img = #{product_main_img}, product_detail_img = #{product_detail_img},
+				product_category = #{product_category}, product_url = #{product_url}, product_stock = #{product_stock}
+		 WHERE product_id = #{product_id} 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM product WHERE product_id = #{product_id}
+	</delete>
 </mapper>

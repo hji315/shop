@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.team.shop.model.Criteria;
 import com.team.shop.model.ProductVO;
 
 @Repository
@@ -21,12 +22,29 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	@Override
-	public List<ProductVO> list() throws Exception {
-		return sql.selectList("productMapper.list");
+	public List<ProductVO> list(Criteria cri) throws Exception {
+		return sql.selectList("productMapper.listPage", cri);
+	}
+	
+	@Override
+	public int listCount() throws Exception {
+		return sql.selectOne("productMapper.listCount");
 	}
 
 	@Override
 	public ProductVO read(int product_id) throws Exception {
 		return sql.selectOne("productMapper.read", product_id);
 	}
+
+	@Override
+	public void update(ProductVO productVO) throws Exception {
+		sql.update("productMapper.update", productVO);
+	}
+
+	@Override
+	public void delete(int product_id) throws Exception {
+		sql.delete("productMapper.delete", product_id);		
+	}
+
+	
 }

@@ -10,7 +10,10 @@
 	text-overflow: ellipsis;
 }
 .right{
-float:right;
+	float:right;
+}
+.center{
+	text-align:center;
 }
 .hjTable {
 	width: 60%;
@@ -18,13 +21,19 @@ float:right;
 }
 .hjPadding {
 	padding: 5px 10px;
+	max-width:260px;
 }
 .hj{
-margin-top: 100px; 
-margin-bottom: 100px; 
-padding: 32px; 
-border-style: solid;
-border-color: gray;
-border-radius: 10px;
-border-width: 0.5px;
+	margin-top: 100px; 
+	margin-bottom: 100px; 
+	padding: 32px; 
+	border-style: solid;
+	border-color: gray;
+	border-radius: 10px;
+	border-width: 0.5px;
 }
+li {
+	list-style: none; 
+	float: left; 
+	padding: 6px;
+	}
