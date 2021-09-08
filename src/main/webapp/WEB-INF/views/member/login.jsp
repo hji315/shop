@@ -15,7 +15,6 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css"> --%>
 
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">

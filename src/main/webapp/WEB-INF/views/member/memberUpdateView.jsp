@@ -22,32 +22,15 @@
    <!-- Custom styles for this template -->
    <link href="${pageContext.request.contextPath}/resources/css/blog.css" rel="stylesheet">
 
-<style type="text/css">
-
-	div{
-		margin-top: 5px;
-	}
-	/* 중복아이디 존재하지 않는경우 */
-	#id_input_re_1{
-		display : none;
-	}
-	/* 중복아이디 존재하는 경우 */
-	#id_input_re_2{
-		color : red;
-		display : none;
-	}
-
-</style>
-
 </head>
 
 <script type="text/javascript">
 		$(document).ready(function(){
 			// 취소
 			$("#cencle").on("click", function(){
-				location.href = "${path}/member/login";
+				location.href = "${path}/mainlogin";
 			})
-		
+			
 			$("#submit").on("click", function(){
 				if($("#memberId").val()==""){
 					alert("아이디를 입력해주세요.");
@@ -64,23 +47,9 @@
 					$("#memberPw").focus();
 					return false;
 				}
-				if($("#memberName").val()==""){
-					alert("이름을 입력해주세요.");
-					$("#memberName").focus();
-					return false;
-				}
-				if($("#memberMail").val()==""){
-					alert("이메일을 입력해주세요.");
-					$("#memberMail").focus();
-					return false;
-				}
-				if($("#memberAddr1").val()==""){
-					alert("주소를 입력해주세요.");
-					$("#memberAddr1").focus();
-					return false;
-				}
 			});
 		})
+		
 </script>
 <body>
 	<div class="container">
@@ -93,10 +62,10 @@
     </header>
     
 		<section id="container" class="mx-auto" style="width:500px; margin-top:10px;">
-			<form action="/member/join" method="post">
+			<form action="/member/memberUpdate" method="post">
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberId">아이디</label>
-					<input class="form-control" type="text" id="memberId" name="memberId" />
+					<input class="form-control" type="text" id="memberId" name="memberId" value="${member.memberId}" readonly="readonly" />
 					<span id="id_input_re_1">사용 가능한 아이디입니다.</span>
 					<span id="id_input_re_2">아이디가 이미 존재합니다.</span>
 				</div>
@@ -111,18 +80,13 @@
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberName">이름</label>
-					<input class="form-control" type="text" id="memberName" name="memberName" />
+					<input class="form-control" type="text" id="memberName" name="memberName" value="${member.memberName}" readonly="readonly"/>
 				</div>
 				
 				<div class="mail_wrap">
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberMail">이메일</label>
 					<input class="form-control" type="text" id="memberMail" name="memberMail" />
-				</div>
-				
-				<div class="input-group mb-3" id="mail_check_input_box_false">
-				  <input type="text" class="form-control" placeholder="인증 번호 입력" aria-describedby="button-addon2" id="mail_check_input" disabled="disabled">
-				  <button class="btn btn-outline-secondary" type="button" id="mail_check_button">인증 번호 전송</button>
 				</div>
 								
 					<div class="clearfix"></div>
@@ -131,13 +95,13 @@
 				
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberAddr1">주소</label>
-					<input class="form-control" type="text" id="address_input_1" name="memberAddr1" readonly="readonly"/>
+					<input class="form-control" type="text" id="address_input_1" name="memberAddr1"  />
 				</div>
 				<div id="address_button" onclick="execution_daum_address()">
 						<button class="btn btn-outline-dark" type="button">주소찾기</button>
 					</div>
 				<div class="form-group has-feedback">
-					<input class="form-control" type="text" id="address_input_2" name="memberAddr2" readonly="readonly"/>
+					<input class="form-control" type="text" id="address_input_2" name="memberAddr2" />
 				</div>
 				<div class="form-group has-feedback">
 					<input class="form-control" type="text" id="address_input_3" name="memberAddr3" readonly="readonly"/>
@@ -145,7 +109,7 @@
 					
 					
 				<div class="form-group has-feedback">
-					<button class="btn btn-dark" type="submit" id="submit">회원가입</button>
+					<button class="btn btn-dark" type="submit" id="submit">회원정보수정</button>
 					<button class="btn btn-outline-dark" type="button" id="cencle">취소</button>
 				</div>
 			</form>
@@ -153,76 +117,7 @@
 	</div>	
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-
-	var code = "";                //이메일전송 인증번호 저장위한 코드
-
-	//아이디 중복검사,input 태그(class="id_input")에 변화가 있을 때마다 실행
-	$('#memberId').on("propertychange change keyup paste input", function(){
-	
-		//console.log("keyup 테스트");// (F12)정상적으로 작동하는지 확인하기 위해 console.log코드를 작성
-		var memberId = $('#memberId').val(); // .id_input에 입력되는 값
-		var data = {memberId : memberId}	 // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
 		
-		$.ajax({
-			type : "post",
-			url : "/member/memberIdChk",
-			data : data,
-			success : function(result){
-				// console.log("성공 여부" + result);
-				if(result != 'fail'){
-					$('#id_input_re_1').css("display","inline-block");
-					$('#id_input_re_2').css("display", "none");				
-				} else {
-					$('#id_input_re_2').css("display","inline-block");
-					$('#id_input_re_1').css("display", "none");				
-				}
-			}// success 종료
-		}); // ajax 종료
-	});// function 종료
-	
-	/* 인증번호 이메일 전송 */
-	$("#mail_check_button").click(function(){
-		
-		var email = $("#mail_input").val(); //이메일 입력란에 입력된 값[$(".mail_input").val()]을 사용하기 쉽도록 "email" 변수를 선언
-		
-		/* 인증번호 이메일 전송 */
-		$("#mail_check_button").click(function(){
-		    
-		    var email = $("#mail_input").val();        // 입력한 이메일
-		    var cehckBox = $("#mail_check_input");        // 인증번호 입력란
-		    var boxWrap = $("#mail_check_input_box");    // 인증번호 입력란 박스
-		    
-		    $.ajax({ //controller에 요청할 때 화면이 전환되면 안 되기 때문에 ajax를 사용
-		        
-		        type:"GET",
-		        url:"mailCheck?email=" + email, // url을 통해 데이터를 보낼 수 있도록 GET방식으로 하였고, url명을 "mailCheck"로 하였습니다.
-		        success:function(data){
-		        	cehckBox.attr("disabled",false); //이메일 인증 입력란[$(".mail_check_input")]이 입력이 가능하도록 속성 변경
-		        	boxWrap.attr("id", "mail_check_input_box_true"); //태그 id속성 값을 변경해주는 코드(이메일 인증 입력란 색변경)
-		        	code = data; //Controller에서 전달받은 인증번호를 위에서 선언한 코드에 저장시키는 코드
-		        }
-		    
-		    });
-		});
-		
-		/* 인증번호 비교,인증번호 입력란에 데이터를 입력한 뒤 마우스로 다른 곳을 클릭 시에 실행 */
-		$("#mail_check_input").blur(function(){
-		    
-			var inputCode = $("#mail_check_input").val();        // 입력코드    
-		    var checkResult = $("#mail_check_input_box_warn");    // 비교 결과  
-		    
-		    //inputCode : 사용자 입력 번호 / code : 이메일로 전송된 인증번호
-		    if(inputCode == code){                            // 일치할 경우
-		        checkResult.html("인증번호가 일치합니다.");
-		        checkResult.attr("class", "correct");  //class속성이 correct(초록색)로 변경      
-		    } else {                                            // 일치하지 않을 경우
-		        checkResult.html("인증번호를 다시 확인해주세요.");
-		        checkResult.attr("class", "incorrect"); //class속성이 incorrect(빨간색)로 변경
-		    
-		    }
-		});
-		
-	});
 		/* 다음 주소 연동 */
 		function execution_daum_address(){
 			

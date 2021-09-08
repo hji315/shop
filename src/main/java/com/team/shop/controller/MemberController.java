@@ -67,7 +67,7 @@ public class MemberController {
         /* 회원가입 쿼리 실행 */
         memberservice.memberJoin(member);
 		
-		return "redirect:/mainlogin"; //로그인성공 시 메인로그인페이지로 이동
+		return "redirect:/"; //로그인성공 시 메인로그인페이지로 이동
 		
 	}
 	
@@ -193,7 +193,7 @@ public class MemberController {
                 
                 lvo.setMemberPw("");                    // 인코딩된 비밀번호 정보 지움
                 session.setAttribute("member", lvo);     // session에 사용자의 정보 저장
-                return "redirect:/mainlogin";        // 메인페이지 이동
+                return "redirect:/";        // 메인페이지 이동
                 
             } else {
                 rttr.addFlashAttribute("result", 0);            
@@ -219,7 +219,31 @@ public class MemberController {
     	
         session.invalidate(); //"invalidate()" 메서드의 경우 세션 전체를 무효화
         
-        return "redirect:/mainlogin";
+        return "redirect:/";
+    }
+    
+    //회원 정보 수정
+    @RequestMapping(value="/memberUpdateView", method = RequestMethod.GET)
+    public String registerUpdateView() throws Exception{
+    	
+    	return "member/memberUpdateView";
+    }
+
+    @RequestMapping(value="/memberUpdate", method = RequestMethod.POST)
+    public String registerUpdate(MemberVO member, HttpSession session) throws Exception{
+    	
+    	String rawPw = "";            // 인코딩 전 비밀번호
+        String encodePw = "";        // 인코딩 후 비밀번호
+        
+        rawPw = member.getMemberPw();            // 비밀번호 데이터 얻음
+        encodePw = pwEncoder.encode(rawPw);        // 비밀번호 인코딩
+        member.setMemberPw(encodePw);            // 인코딩된 비밀번호 member객체에 다시 저장
+    	
+    	memberservice.memberUpdate(member);
+    	
+    	session.invalidate();
+    	
+    	return "redirect:/";
     }
     
 	

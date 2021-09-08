@@ -26,4 +26,15 @@
      
      </select>
      
+     <!-- 회원정보 수정 , #{}는 Controller -> Service -> DAO를 통해 받은 파라미터값들이 들어옴 -->
+     <update id="memberUpdate" >
+     	UPDATE S_MEMBER SET
+    	memberPw=#{memberPw},
+    	memberName = #{memberName},
+    	memberAddr1 = #{memberAddr1},
+    	memberAddr2 = #{memberAddr2},
+    	memberAddr3 = #{memberAddr3}
+    	WHERE memberId = #{memberId}
+     </update>
+     
   </mapper>

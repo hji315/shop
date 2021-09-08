@@ -12,6 +12,9 @@
 .right{
 float:right;
 }
+.center{
+text-align:center;
+}
 .hjTable {
 	width: 60%;
 	margin: auto;
