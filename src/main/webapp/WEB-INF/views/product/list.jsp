@@ -78,6 +78,21 @@
 					</ul>
 				</nav>
 	</div>
+	
+	<div class="search">
+	
+	<input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+	
+	<button id="searchBtn" type="button">검색</button>
+		<script>
+		$(function(){
+		  $('#searchBtn').click(function() {
+		    self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + 'y' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+		  });
+		});   
+		</script>
+	</div>
+  
 </body>
 <jsp:include page="${path}/resources/include/footer.jsp" />
 </html>

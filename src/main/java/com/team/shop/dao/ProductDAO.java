@@ -1,9 +1,8 @@
 package com.team.shop.dao;
 
 import java.util.List;
-
-import com.team.shop.model.Criteria;
 import com.team.shop.model.ProductVO;
+import com.team.shop.model.SearchCriteria;
 
 public interface ProductDAO {
 	
@@ -11,10 +10,10 @@ public interface ProductDAO {
 	public void write(ProductVO productVO) throws Exception;
 	
 	//상품 목록 조회
-	public List<ProductVO> list(Criteria cri) throws Exception;
+	public List<ProductVO> list(SearchCriteria scri) throws Exception;
 	
 	//상품 총 갯수
-	public int listCount() throws Exception;
+	public int listCount(SearchCriteria scri) throws Exception;
 	
 	//상품 상세 조회
 	public ProductVO read(int product_id) throws Exception;

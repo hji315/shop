@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.team.shop.dao.ProductDAO;
 import com.team.shop.model.Criteria;
 import com.team.shop.model.ProductVO;
+import com.team.shop.model.SearchCriteria;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -22,13 +23,13 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<ProductVO> list(Criteria cri) throws Exception {
-		return dao.list(cri);
+	public List<ProductVO> list(SearchCriteria scri) throws Exception {
+		return dao.list(scri);
 	}
 	
 	@Override
-	public int listCount() throws Exception {
-		return dao.listCount();
+	public int listCount(SearchCriteria scri) throws Exception {
+		return dao.listCount(scri);
 	}
 
 	@Override

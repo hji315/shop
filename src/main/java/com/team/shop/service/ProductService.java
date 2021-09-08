@@ -4,14 +4,15 @@ import java.util.List;
 
 import com.team.shop.model.Criteria;
 import com.team.shop.model.ProductVO;
+import com.team.shop.model.SearchCriteria;
 
 public interface ProductService {
 	
 	public void write(ProductVO productVO) throws Exception;
 	
-	public List<ProductVO> list(Criteria cri) throws Exception;
+	public List<ProductVO> list(SearchCriteria scri) throws Exception;
 	
-	public int listCount() throws Exception;
+	public int listCount(SearchCriteria scri) throws Exception;
 	
 	public ProductVO read(int product_id) throws Exception;
 	

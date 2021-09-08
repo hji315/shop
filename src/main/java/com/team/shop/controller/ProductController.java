@@ -4,12 +4,14 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.team.shop.model.Criteria;
 import com.team.shop.model.PageMaker;
 import com.team.shop.model.ProductVO;
+import com.team.shop.model.SearchCriteria;
 import com.team.shop.service.ProductService;
 
 @Controller
@@ -33,12 +35,12 @@ public class ProductController {
 
 	//상품 목록 조회
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, Criteria cri) throws Exception{
-		model.addAttribute("list",service.list(cri));
+	public String list(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
+		model.addAttribute("list",service.list(scri));
 		
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.listCount());
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service.listCount(scri));
 		
 		model.addAttribute("pageMaker", pageMaker);
 		

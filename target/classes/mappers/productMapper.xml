@@ -14,18 +14,17 @@
 	</insert>
 	
 	<select id="listPage" resultType="com.team.shop.model.ProductVO" parameterType="com.team.shop.model.Criteria">
-		select product_id, product_name, product_price, product_size, product_color, product_main_img, 
+		SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, 
 				product_detail_img, product_detail, product_category, product_url, product_stock from (SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, 
 				product_detail_img, product_detail, product_category, product_url, product_stock, row_number() 
-			OVER(ORDER BY product_id DESC) AS rNum FROM product)
-		mp WHERE rNum BETWEEN #{rowStart} AND #{rowEnd}
-		ORDER BY product_id DESC
+			OVER(ORDER BY product_id DESC) AS rNum FROM product 
+			WHERE 1=1 <include refid="search"></include> )
+		mp WHERE rNum BETWEEN #{rowStart} AND #{rowEnd} ORDER BY product_id DESC
 	</select>
 	
-	<select id="listCount" resultType="int">
-		<![CDATA[
-			SELECT COUNT(product_id) FROM product WHERE product_id > 0
-		]]>
+	<select id="listCount" resultType="int" parameterType="com.team.shop.model.SearchCriteria">
+		SELECT COUNT(product_id) FROM product WHERE 1=1
+		<include refid="search"></include> AND product_id > 0
 	</select>
     
     <select id="read" parameterType="int" resultType="com.team.shop.model.ProductVO">
@@ -43,4 +42,10 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM product WHERE product_id = #{product_id}
 	</delete>
+	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'y'.toString()">AND product_name LIKE '%' || #{keyword} || '%'</if>
+		</if>
+	</sql>
 </mapper>

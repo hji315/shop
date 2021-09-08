@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.team.shop.model.Criteria;
 import com.team.shop.model.ProductVO;
+import com.team.shop.model.SearchCriteria;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO {
@@ -22,13 +23,13 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	@Override
-	public List<ProductVO> list(Criteria cri) throws Exception {
-		return sql.selectList("productMapper.listPage", cri);
+	public List<ProductVO> list(SearchCriteria scri) throws Exception {
+		return sql.selectList("productMapper.listPage", scri);
 	}
 	
 	@Override
-	public int listCount() throws Exception {
-		return sql.selectOne("productMapper.listCount");
+	public int listCount(SearchCriteria scri) throws Exception {
+		return sql.selectOne("productMapper.listCount",scri);
 	}
 
 	@Override
