@@ -12,7 +12,9 @@ public interface MemberMapper {
 
 	// 로그인
     public MemberVO memberLogin(MemberVO member);
-
+    
+    //회원정보 수정
+    public void memberUpdate(MemberVO member) throws Exception;
 
 
 }
