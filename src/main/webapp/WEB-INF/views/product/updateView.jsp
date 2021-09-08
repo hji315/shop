@@ -42,6 +42,16 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		var formObj = $("form[name='updateForm']");
+		
+		$("#cancle").on("click", function(){
+			event.preventDefault();
+			location.href = "/product/readView?product_id=${update.product_id}"
+				   + "&page=${scri.page}"
+				   + "&perPageNum=${scri.perPageNum}"
+				   + "&searchType=${scri.searchType}"
+				   + "&keyword=${scri.keyword}";
+		})
+		
 		$("#submit").on("click", function(){
 			if(fn_valiChk()){
 				return false;
@@ -51,15 +61,15 @@
 			formObj.submit();
 		});
 	})
-	function fn_valiChk(){
-		var regForm = $("form[name='updateForm'] .chk").length;
-		for(var i = 0; i<regForm; i++){
-			if($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null){
-				alert($(".chk").eq(i).attr("title"));
-				return true;
+		function fn_valiChk(){
+			var regForm = $("form[name='updateForm'] .chk").length;
+			for(var i = 0; i<regForm; i++){
+				if($(".chk").eq(i).val() == "" || $(".chk").eq(i).val() == null){
+					alert($(".chk").eq(i).attr("title"));
+					return true;
+				}
 			}
 		}
-	}
 </script>
 <body>
 	<div class="container hj" style="width:60%">
