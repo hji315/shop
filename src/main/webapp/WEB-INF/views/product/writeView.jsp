@@ -97,8 +97,8 @@
 			</div>
 			
 			<div class="col-md-12" style="text-align:center;">
-				<button type="submit" class="btn btn-secondary" id="submit">상품 등록</button>
-				<button class="btn btn-secondary" type="button" id="cancle">돌아가기</button>
+				<button type="submit" class="btn btn-sm btn-outline-secondary" id="submit">상품 등록</button>
+				<button class="btn btn-sm btn-outline-secondary" type="button" id="cancle">돌아가기</button>
 			</div>
 		</form>
 	</div>
