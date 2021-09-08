@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,33 +37,64 @@
 
 <jsp:include page="${path}/resources/include/header.jsp" />
 <link rel="stylesheet" href="${path}/resources/css/hjCss.css">
+
+<script>
+	String str = ${read.product_size};
+	str.split(',');
+	document.write(str.split(','));
+</script>
 </head>
 <body>
+<script>
+	var str = ${read.product_size};
+	var arr = str.split(",");
+	console.log("1234");
+	console.log(arr[0]);
+	document.writeln(arr[0]);
+	
+</script>
 	<div class="container">
 		<table class="hjTable">
+		
+			<tr><td><br/></td></tr>
 			<tr>
-				<td rowspan="7"><img src="${read.product_main_img}"></td>
+				<td rowspan="7"><img style="width :340px" src="${read.product_main_img}"></td>
 			</tr>
 			<tr>
-				<td><c:out value="${read.product_name}" /></td>
+				<td style="width :340px"><c:out value="${read.product_name}" /></td>
 			</tr>
 			<tr>
-				<td><c:out value="${read.product_price}" />원</td>
+				<td style="float: right;"><c:out value="${read.product_price}" />원 &nbsp;&nbsp;</td>
 			</tr>
 			<tr>
-				<td><c:out value="${read.product_size}" /></td>
+				<td>
+					<select class="form-select" aria-label="Default select example">
+						<c:forEach items="${fn:split(read.product_size, ',') }" var="product_size">
+							  <option value="product_size">${product_size}</option>
+						</c:forEach>
+					</select>
+				</td>
 			</tr>
 			<tr>
-				<td><c:out value="${read.product_color}" /></td>
+				<td>
+					<select class="form-select" aria-label="Default select example">
+						<c:forEach items="${fn:split(read.product_color, ',') }" var="product_color">
+							  <option value="product_color">${product_color}</option>
+						</c:forEach>
+					</select>
+				</td>
 			</tr>
+				<tr>
+					<td style="text-align: center"><button class="btn btn-lg btn-outline-secondary" type="button" id="cart">장바구니</button></td>
+				</tr>
+				<tr>
+					<td style="text-align: center"><button class="btn btn-lg btn-outline-secondary" type="button" id="byu">구매하기</button></td>
+				</tr>
 			<tr>
-				<td>장바구니</td>
-			</tr>
+			<tr><td><br/></td></tr>
 			<tr>
-				<td>구매하기</td>
-			</tr>
-			<tr>
-				<td colspan="2"><img src="${read.product_detail_img}"></td>
+				<td colspan="2"><hr/><br/>
+				<img style="width :700px" src="${read.product_detail_img}"></td>
 			</tr>
 		</table>
 	</div>
