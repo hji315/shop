@@ -1,5 +1,7 @@
 package com.team.shop.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -11,8 +13,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.shop.model.PageMaker;
 import com.team.shop.model.ProductVO;
+import com.team.shop.model.ReplyVO;
 import com.team.shop.model.SearchCriteria;
 import com.team.shop.service.ProductService;
+import com.team.shop.service.ReplyService;
 
 @Controller
 @RequestMapping("/product/*")
@@ -20,6 +24,9 @@ public class ProductController {
 
 	@Inject
 	ProductService service;
+	
+	@Inject
+	ReplyService replyService;
 	
 	//상품 등록 화면
 	@RequestMapping(value = "/writeView", method = RequestMethod.GET)
@@ -53,6 +60,12 @@ public class ProductController {
 		
 		model.addAttribute("read", service.read(productVO.getProduct_id()));
 		model.addAttribute("scri", scri);
+		
+		List<ReplyVO> replyList_qna = replyService.readReply_qna(productVO.getProduct_id());
+		model.addAttribute("replyList_qna", replyList_qna);
+		
+		List<ReplyVO> replyList_review = replyService.readReply_review(productVO.getProduct_id());
+		model.addAttribute("replyList_review", replyList_review);
 
 		return "/product/readView";
 	}

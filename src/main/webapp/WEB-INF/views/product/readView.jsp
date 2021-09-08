@@ -67,7 +67,6 @@
 	})
 </script>
 <body>
-
 	<form name="readForm" role="form" method="post">
 		<input type="hidden" id="product_id" name="product_id" value="${read.product_id}" />
 		<input type="hidden" id="page" name="page" value="${scri.page}"> 
@@ -130,28 +129,62 @@
 				<td colspan="2"><br/>
 					<ul class="nav nav-tabs justify-content-center" style="text-align:center;">
 						<li class="nav-item"><a href="#detail" class="nav-link active">상세보기</a></li>
-						<li class="nav-item"><a href="#QNA" class="nav-link active">Q&A</a></li>
 						<li class="nav-item"><a href="#review" class="nav-link active">REVIEW</a></li>
+						<li class="nav-item"><a href="#qna" class="nav-link active">Q&A</a></li>
 					</ul>
 				</td>
 			</tr>
 			
 			<tr>
-				<td colspan="3"><br/>
-				<div id="detail"><img style="width :700px" src="${read.product_detail_img}"></div></td>
+				<td colspan="2"><br/>
+				<div id="detail"><img style="width :700px;" src="${read.product_detail_img}"></div></td>
 			</tr>
-			
 			<tr>
-				<td colspan="3"><br/>
-					
+				<td colspan="2">
+					<ul class="nav nav-tabs" style="text-align:center;">
+						<li class="nav-item"><div id="review" class="nav-link active">REVIEW</div></li>
+					</ul>
 				</td>
 			</tr>
-			
+			<tr>	
+				<td colspan="2">
+					<div id="review">
+					    <c:forEach items="${replyList_review}" var="replyList_review">
+					      <li style="width:600px;">
+					        <p>
+					        작성자 : ${replyList_review.writer}<br />
+					        작성 날짜 :  <fmt:formatDate value="${replyList_review.regdate}" pattern="yyyy-MM-dd" />
+					        </p>
+					        <p>${replyList_review.review}</p>
+					      </li>
+					    </c:forEach>   
+					</div>
+				</td>
+			</tr>
 			<tr>
-				<td colspan="3"><br/>
-				<div id="review">리뷰유</div></td>
+				<td colspan="2">
+					<ul class="nav nav-tabs" style="text-align:center;">
+						<li class="nav-item"><div id="review" class="nav-link active">Q&A</div></li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div id="qna">
+					    <c:forEach items="${replyList_qna}" var="replyList_qna">
+					      <li style="width:600px;">
+					        <p>
+					        작성자 : ${replyList_qna.writer}<br />
+					        작성 날짜 :  <fmt:formatDate value="${replyList_qna.regdate}" pattern="yyyy-MM-dd" />
+					        </p>
+					        <p>${replyList_qna.qna}</p>
+					      </li>
+					    </c:forEach>
+					</div>
+				</td>
 			</tr>
 		</table>
+		
 	</div>
 </body>
 <jsp:include page="${path}/resources/include/footer.jsp" />
