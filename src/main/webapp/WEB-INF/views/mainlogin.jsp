@@ -3,6 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+
+<!-- 이 파일은 이제 사용은 안하지만 참고용으로 둡니다. -->
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
