@@ -38,11 +38,6 @@
 <jsp:include page="${path}/resources/include/header.jsp" />
 <link rel="stylesheet" href="${path}/resources/css/hjCss.css">
 
-<script>
-	String str = ${read.product_size};
-	str.split(',');
-	document.write(str.split(','));
-</script>
 </head>
 <body>
 <script>
@@ -64,7 +59,7 @@
 				<td style="width :340px"><c:out value="${read.product_name}" /></td>
 			</tr>
 			<tr>
-				<td style="float: right;"><c:out value="${read.product_price}" />원 &nbsp;&nbsp;</td>
+				<td class="right"><c:out value="${read.product_price}" />원 &nbsp;&nbsp;</td>
 			</tr>
 			<tr>
 				<td>

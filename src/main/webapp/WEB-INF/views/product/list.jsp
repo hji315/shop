@@ -53,7 +53,8 @@
 									<img class="hjImg" src="<c:out value="${list.product_main_img}" />">
 								</a><br/>
 								<div class="hjText">${list.product_name}<br/></div>
-								${list.product_price}원<br/>
+								<a href="#"><img src="${path }/resources/img/cart.png"></a>
+								<div class="right">${list.product_price}원<br/><br/></div>
 							</div>
 						</td>
 					<c:if test="${i%j == j-1 }">
