@@ -40,8 +40,6 @@
   <p>COPYRIGHT&copy; 2021 #SHOP ALL RIGHTS RESERVED</p>
   아이콘 제작자 <a href="https://www.flaticon.com/kr/authors/becris" title="Becris" class="links">Becris</a> from 
   <a href="https://www.flaticon.com/kr/" title="Flaticon" class="links">www.flaticon.com</a><br/>
-  아이콘 제작자 <a href="https://www.freepik.com" title="Freepik" class="links">Freepik</a> from 
-  <a href="https://www.flaticon.com/kr/" title="Flaticon" class="links">www.flaticon.com</a>
   <p>
     <a href="#" class="links">▲ Back to top ▲</a>
   </p>

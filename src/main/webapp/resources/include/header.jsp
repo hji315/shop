@@ -39,7 +39,7 @@
       </div>
       <div class="col-4 text-center">
         <a class="blog-header-logo text-dark" 
-        href="${pageContext.request.contextPath}">
+        href="${pageContext.request.contextPath}/">
         #SHOP</a>
       </div>
       <!-- 상품 검색창 -->
@@ -63,37 +63,40 @@
 				</script>
 			</div>
 		</form>
-		</div>
+		<!-- 관리자 -->
+		<div>
 	      <c:if test="${member.adminCk == 1 }">
-	          <a class="btn btn-sm" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
-	          <a class="btn btn-sm" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
+	          <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
+	          <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
 	      </c:if>
-        	<div>
-				<!-- 로그인 하지 않은 상태 -->
-            <c:if test = "${member == null }">
-                <div><a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/login">Sign in</a></div>
-            </c:if> 
-			<!-- 로그인한 상태 -->
-            <c:if test="${ member != null && member.adminCk != 1}">
-        		<div class="login_success_area">
-					  <button class="btn btn-sm btn-outline-secondary" id="memberUpdateBtn" type="button">${member.memberName}님♥</button>
-					  <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/logout.do">logout</a>
-                 </div>
-            </c:if>
+	    </div>
+       	<div>
+			<!-- 로그인 하지 않은 상태 -->
+           <c:if test = "${member == null }">
+               <div><a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/login">Sign in</a></div>
+           </c:if> 
+		<!-- 로그인한 상태 -->
+           <c:if test="${ member != null && member.adminCk != 1}">
+       		<div class="login_success_area">
+				  <button class="btn btn-sm btn-outline-secondary" id="memberUpdateBtn" type="button">${member.memberName}님♥</button>
+				  <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/logout.do">logout</a>
+                </div>
+           </c:if>
 			</div>
       </div>
+    </div>
 </header>     
 
 
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-      <a class="p-2 link-secondary" href="#">NEW</a>
-      <a class="p-2 link-secondary" href="#">OUTER</a>
-      <a class="p-2 link-secondary" href="#">TOP</a>
-      <a class="p-2 link-secondary" href="#">BOTTOM</a>
-      <a class="p-2 link-secondary" href="#">OPS</a>
-      <a class="p-2 link-secondary" href="#">SALE</a>
-      <a class="p-2 link-secondary" href="#">ETC</a>
+      <a class="p-2 link-secondary" href="${path}/product/list?product_category=NEW">NEW</a>
+      <a class="p-2 link-secondary" href="${path}/product/list?product_category=OUTER">OUTER</a>
+      <a class="p-2 link-secondary" href="${path}/product/list?product_category=TOP">TOP</a>
+      <a class="p-2 link-secondary" href="${path}/product/list?product_category=BOTTOM">BOTTOM</a>
+      <a class="p-2 link-secondary" href="${path}/product/list?product_category=OPS">OPS</a>
+      <a class="p-2 link-secondary" href="${path}/product/list?product_category=SALE">SALE</a>
+      <a class="p-2 link-secondary" href="${path}/product/list?product_category=ETC">ETC</a>
     </nav>
 	</div>
   </div>
