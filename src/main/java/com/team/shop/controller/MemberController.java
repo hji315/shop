@@ -246,5 +246,9 @@ public class MemberController {
     	return "redirect:/";
     }
     
+	//마이페이지
+	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
+	public void myPage() throws Exception {
+	}
 	
 }
