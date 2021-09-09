@@ -103,14 +103,16 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<div style="text-align:center;">
-						<button class="btn btn-sm btn-outline-secondary" type="button" id="update">수정</button>
-						<button class="btn btn-sm btn-outline-secondary" type="button" id="delete">삭제</button>
-					</div>
-				</td>
-			</tr>
+			<c:if test="${member.adminCk == 1 }">
+				<tr>
+					<td>
+						<div style="text-align:center;">
+							<button class="btn btn-sm btn-outline-secondary" type="button" id="update">수정</button>
+							<button class="btn btn-sm btn-outline-secondary" type="button" id="delete">삭제</button>
+						</div>
+					</td>
+				</tr>
+			</c:if>
 			<tr>
 				<td colspan="2"><br/>
 					<ul class="nav nav-tabs justify-content-center" style="text-align:center;">
@@ -137,11 +139,11 @@
 					<div id="review">
 					    <c:forEach items="${replyList_review}" var="replyList_review">
 					      <li style="width:600px;">
-					        <p>
-					        작성자 : ${replyList_review.writer}<br />
-					        작성 날짜 :  <fmt:formatDate value="${replyList_review.regdate}" pattern="yyyy-MM-dd" />
-					        </p>
-					        <p>${replyList_review.review}</p>
+					        ${replyList_review.writer}
+						    <div class="right"><fmt:formatDate value="${replyList_review.regdate}" pattern="yyyy-MM-dd" /></div>
+					      </li>
+					      <li style="width:600px;">  
+					        <strong>${replyList_review.review}</strong>
 					      </li>
 					    </c:forEach>   
 					</div>
@@ -159,11 +161,11 @@
 					<div id="qna">
 					    <c:forEach items="${replyList_qna}" var="replyList_qna">
 					      <li style="width:600px;">
-					        <p>
-					        작성자 : ${replyList_qna.writer}<br />
-					        작성 날짜 :  <fmt:formatDate value="${replyList_qna.regdate}" pattern="yyyy-MM-dd" />
-					        </p>
-					        <p>${replyList_qna.qna}</p>
+					        ${replyList_qna.writer}
+						    <div class="right"><fmt:formatDate value="${replyList_qna.regdate}" pattern="yyyy-MM-dd" /></div>
+					      </li>
+					      <li style="width:600px;">  
+					      	<strong>${replyList_qna.qna}</strong>
 					      </li>
 					    </c:forEach>
 					</div>
