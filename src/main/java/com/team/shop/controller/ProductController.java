@@ -56,10 +56,9 @@ public class ProductController {
 	
 	//상품 조회
 	@RequestMapping(value = "/readView", method = RequestMethod.GET)
-	public String read(ProductVO productVO, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
+	public String read(ProductVO productVO, Model model) throws Exception{
 		
 		model.addAttribute("read", service.read(productVO.getProduct_id()));
-		model.addAttribute("scri", scri);
 		
 		List<ReplyVO> replyList_qna = replyService.readReply_qna(productVO.getProduct_id());
 		model.addAttribute("replyList_qna", replyList_qna);
@@ -67,40 +66,27 @@ public class ProductController {
 		List<ReplyVO> replyList_review = replyService.readReply_review(productVO.getProduct_id());
 		model.addAttribute("replyList_review", replyList_review);
 
-		return "/product/readView";
+		return "product/readView";
 	}
 	
 	//상품 수정 화면
 	@RequestMapping(value = "/updateView", method = RequestMethod.GET)
-	public String updateView(ProductVO productVO, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
+	public String updateView(ProductVO productVO, Model model) throws Exception{
 		model.addAttribute("update", service.read(productVO.getProduct_id()));
-		model.addAttribute("scri", scri);
 		return "product/updateView";
 	}
 	
 	//상품 수정
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(ProductVO productVO,@ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception{
+	public String update(ProductVO productVO, RedirectAttributes rttr) throws Exception{
 		service.update(productVO);
-		
-		rttr.addAttribute("page", scri.getPage());
-		rttr.addAttribute("perPageNum", scri.getPerPageNum());
-		rttr.addAttribute("searchType", scri.getSearchType());
-		rttr.addAttribute("keyword", scri.getKeyword());
-		
 		return "redirect:/product/list";
 	}
 
 	//상품 삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(ProductVO productVO, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception{
+	public String delete(ProductVO productVO, RedirectAttributes rttr) throws Exception{
 		service.delete(productVO.getProduct_id());
-		
-		rttr.addAttribute("page", scri.getPage());
-		rttr.addAttribute("perPageNum", scri.getPerPageNum());
-		rttr.addAttribute("searchType", scri.getSearchType());
-		rttr.addAttribute("keyword", scri.getKeyword());
-		
 		return "redirect:/product/list";
 	}
 }

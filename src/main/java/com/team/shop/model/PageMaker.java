@@ -74,8 +74,8 @@ public class PageMaker {
 		   
 		return uriComponents.toUriString();
 	}
-	
-	public String makeSearch(int page){
+	public String makeSearch(int page) {
+	  
 	 UriComponents uriComponents =
 	            UriComponentsBuilder.newInstance()
 	            .queryParam("page", page)
@@ -90,11 +90,11 @@ public class PageMaker {
 		if(keyword == null || keyword.trim().length() == 0) { 
 			return "";
 		}
+		 
 		try {
 			return URLEncoder.encode(keyword, "UTF-8");
 		} catch(UnsupportedEncodingException e) { 
 			return ""; 
 		}
 	}
-	
 }

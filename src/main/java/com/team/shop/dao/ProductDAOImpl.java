@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.team.shop.model.Criteria;
 import com.team.shop.model.ProductVO;
 import com.team.shop.model.SearchCriteria;
 

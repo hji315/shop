@@ -44,12 +44,7 @@
 		var formObj = $("form[name='updateForm']");
 		
 		$("#cancle").on("click", function(){
-			event.preventDefault();
-			location.href = "/product/readView?product_id=${update.product_id}"
-				   + "&page=${scri.page}"
-				   + "&perPageNum=${scri.perPageNum}"
-				   + "&searchType=${scri.searchType}"
-				   + "&keyword=${scri.keyword}";
+			location.href="${path}/"
 		})
 		
 		$("#submit").on("click", function(){

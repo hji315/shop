@@ -2,7 +2,6 @@ package com.team.shop.service;
 
 import java.util.List;
 
-import com.team.shop.model.Criteria;
 import com.team.shop.model.ProductVO;
 import com.team.shop.model.SearchCriteria;
 

@@ -36,11 +36,7 @@
 	rel="stylesheet">
 <!-- Custom styles for this template -->
 
-
-<c:if test="">
 <jsp:include page="${path}/resources/include/header.jsp" />
-</c:if>
-
 <link rel="stylesheet" href="${path}/resources/css/hjCss.css">
 </head>
 <script type="text/javascript">

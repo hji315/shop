@@ -58,23 +58,9 @@
 				formObj.submit();
 			}
 		})
-		// 목록
-		$("#list").on("click", function(){
-			location.href = "${path}/product/list?page=${scri.page}"
-			+"&perPageNum=${scri.perPageNum}"
-			+"&searchType=${scri.searchType}&keyword=${scri.keyword}";
-		})
 	})
 </script>
 <body>
-	<form name="readForm" role="form" method="post">
-		<input type="hidden" id="product_id" name="product_id" value="${read.product_id}" />
-		<input type="hidden" id="page" name="page" value="${scri.page}"> 
-		<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}"> 
-		<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}"> 
-		<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}"> 
-	</form>
-	
 	<div class="container">
 		<form name="readForm" role="form" method="post">
 			<input type="hidden" id="product_id" name="product_id" value="${read.product_id}" />
