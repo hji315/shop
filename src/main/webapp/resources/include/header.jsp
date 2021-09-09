@@ -34,7 +34,6 @@
       <div class="col-4 pt-1">
 	      <a class="btn btn-sm" href="#">NOTICE</a>
 	      <a class="btn btn-sm" href="#">Q&A</a>
-	      <a class="btn btn-sm" href="#">REVIEW</a>
 	      <a class="btn btn-sm" href="#">CART</a>
       </div>
       <div class="col-4 text-center">
@@ -42,12 +41,14 @@
         href="${pageContext.request.contextPath}">
         #SHOP</a>
       </div>
+      <!-- 상품 검색창 -->
       <div class="col-4 d-flex justify-content-end align-items-center">
-        <a class="link-secondary" 
-        href="#"
-         aria-label="Search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
-        </a>
+            <form action="검색 버튼을 누른 후 이동할 페이지를 입력" method="post">
+		    <input type="search" name="q" style="border:0 solid black">
+			<button type="submit" style="border:0 solid black; background-color:white" >
+         	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+			</button>
+			</form>
 	      <c:if test="${member.adminCk == 1 }">
 	          <a class="btn btn-sm" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
 	          <a class="btn btn-sm" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
