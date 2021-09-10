@@ -23,7 +23,7 @@
 	$(document).ready(function(){
 
 		$("#memberUpdateBtn").on("click", function(){
-			location.href="${pageContext.request.contextPath}/member/memberUpdateView";
+			location.href="${pageContext.request.contextPath}/member/myPage";
 		})
 		
 	})
