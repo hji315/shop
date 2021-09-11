@@ -251,4 +251,5 @@ public class MemberController {
 	public void myPage() throws Exception {
 	}
 	
+	//아이디 찾기
 }
