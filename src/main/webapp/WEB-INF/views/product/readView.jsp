@@ -36,7 +36,7 @@
 	rel="stylesheet">
 <!-- Custom styles for this template -->
 
-<jsp:include page="${path}/resources/include/header.jsp" />
+<jsp:include page="/resources/include/header.jsp" />
 <link rel="stylesheet" href="${path}/resources/css/hjCss.css">
 
 </head>
@@ -98,7 +98,8 @@
 				<td>
 					<div style="text-align:center;">
 						<button class="btn btn-sm btn-outline-secondary" type="button" id="cart">장바구니</button>
-						<button class="btn btn-sm btn-outline-secondary" type="button" id="buy">구매하기</button>
+						<button class="btn btn-sm btn-outline-secondary" type="button" id="buy" 
+						onClick="location.href='${path}/payment/buy?product_id=${read.product_id}'">구매하기</button>
 						<button class="btn btn-sm btn-outline-secondary" type="button" id="list">돌아가기</button>
 					</div>
 				</td>
@@ -175,5 +176,5 @@
 		
 	</div>
 </body>
-<jsp:include page="${path}/resources/include/footer.jsp" />
+<jsp:include page="/resources/include/footer.jsp" />
 </html>

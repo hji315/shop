@@ -34,7 +34,7 @@
 	rel="stylesheet">
 <!-- Custom styles for this template -->
 
-<jsp:include page="${path}/resources/include/header.jsp" />
+<jsp:include page="/resources/include/header.jsp" />
 <link rel="stylesheet" href="${path}/resources/css/hjCss.css">
 </head>
 <body>
@@ -80,5 +80,5 @@
 		</nav>
 	</div>
 </body>
-<jsp:include page="${path}/resources/include/footer.jsp" />
+<jsp:include page="/resources/include/footer.jsp" />
 </html>
