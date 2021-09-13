@@ -20,7 +20,7 @@
    <!-- Custom styles for this template -->
    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
    <!-- Custom styles for this template -->
-   <link href="${pageContext.request.contextPath}/resources/css/blog.css" rel="stylesheet">
+   <link href="${path}/resources/css/blog.css" rel="stylesheet">
 
 <style>
 .admin_navi_wrap{
@@ -37,9 +37,11 @@
 	
 	<header class="mx-auto" style="width:500px; margin-top:10px;">
 		<div>
-        <a class="blog-header-logo text-dark" 
+		<a class="blog-header-logo text-dark" 
         href="${path}/" >
         #SHOP My Page</a>
+        <p>멤버 : ${member.memberId}</p>
+        <p>포인트 : ${member.point}</p>
       	</div>
     </header>
     
@@ -49,19 +51,19 @@
                 <div class="admin_navi_wrap">
                     <ul class="list-group list-group-flush">
                         <li >
-                            <a class="list-group-item" href="/mypage/modify">정보수정</a>
+                            <a class="list-group-item" href="${path}/mypage/modify">정보수정</a>
                         </li>
                         <li>
-                            <a class="list-group-item" href="/mypage/basket">장바구니</a>
+                            <a class="list-group-item" href="${path}/mypage/basket">장바구니</a>
                         </li>
                         <li>
-                            <a class="list-group-item"  href="/mypage/delivery">배송조회</a>                            
+                            <a class="list-group-item"  href="${path}/mypage/delivery">배송조회</a>                            
                         </li>
                         <li>
-                            <a class="list-group-item"  href="/mypage/postscript">후기작성</a>                            
+                            <a class="list-group-item"  href="${path}/mypage/postscript">후기작성</a>                            
                         </li>
                         <li>
-                            <a class="list-group-item"  href="/mypage/point">포인트조회</a>                            
+                            <a class="list-group-item"  href="${path}/mypage/point">포인트조회</a>                            
                         </li>                                                                                             
                     </ul>
                 </div>

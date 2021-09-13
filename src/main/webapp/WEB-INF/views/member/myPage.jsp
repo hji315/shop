@@ -87,7 +87,7 @@
                             <a class="list-group-item"  href="/mypage/postscript">후기작성</a>                            
                         </li>
                         <li>
-                            <a class="list-group-item"  href="/mypage/point">포인트조회</a>                            
+                            <a class="list-group-item"  href="${pageContext.request.contextPath}/mypage/point">포인트조회</a>                            
                         </li>                                                                                             
                     </ul>
                 </div>

@@ -37,4 +37,17 @@
     	WHERE memberId = #{memberId}
      </update>
      
+     <!-- 회원정보 조회 -->
+     <select id="memberRead" resultType="com.team.shop.model.MemberVO">
+        select * from s_member where memberId = #{memberId}     
+     </select>
+     
+     <!-- 회원 포인트, 돈 갱신 -->
+     <update id="memberMoneyUpdate" >
+     	UPDATE S_MEMBER SET
+    	point = #{point},
+    	money = ${money}
+    	WHERE memberId = #{memberId}
+     </update>
+     
   </mapper>
