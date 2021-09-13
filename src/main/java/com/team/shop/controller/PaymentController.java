@@ -41,12 +41,16 @@ public class PaymentController {
 	@Inject
 	private MemberService memberService;
 	
-	
-	
 	//구매
 	@RequestMapping(value="/buy", method=RequestMethod.GET)
-	public String buy(ProductVO pvo, HttpSession session) throws Exception {
+	public String buy(ProductVO pvo, HttpSession session, Model model) throws Exception {
 		logger.info("Payment Start!");
+		int proAmount = 1;
+//		//결제 실패
+//		if(pvo.getProduct_stock() < proAmount) {
+//			model.addAttribute("cause", "재고부족");
+//			return "payment/fail";
+//		}
 		// ProductVO를 세션으로 설정 
 		// 결제 종료 후 삭제
 		session.setAttribute("payProd", productService.read(pvo.getProduct_id()));
@@ -74,6 +78,14 @@ public class PaymentController {
 		// (verification)페이지에서 약관동의, 본인인증 구현
 	}
 	
+	//배송지 입력
+	@RequestMapping("/checkAddr")
+	public String checkAddress() {
+		//로그인 되어 있는지 확인
+		return "payment/checkAddr";
+		// (checkAddr)페이지에서 배송지 입력폼 구현
+		// 로그인 됐으면 배송지 선택 창으로
+	}
 	//카드 정보 확인
 	@RequestMapping("/checkCard")
 	public void checkCard() {
@@ -95,7 +107,7 @@ public class PaymentController {
 		// 가로 x 세로 x 높이 / 6000
 		// 1 이상이면 기본 배송비 7000원, 0.5당 1000원씩 추가
 		
-		model.addAttribute("shippingFee", 2500);
+		model.addAttribute("shippingFee", 30000);
 		return "payment/buyCheck";
 		// (buyCheck)페이지에서 결제 금액 표시(상품가격,할인금액,결제금액),
 		// 상품 정보 확인(ProductVO), 결제 동의, 결제하기(PaymentVO 입력폼 disabled) 구현
@@ -103,46 +115,74 @@ public class PaymentController {
 	
 	//결제 실행
 	@RequestMapping(value="/complete", method=RequestMethod.POST)
-	public void complete(Model model,PaymentVO pvo, HttpSession session) throws Exception{
+	public String complete(Model model,PaymentVO payVO, HttpSession session) throws Exception{
 		logger.info("Payment complete!");
+		int point = 90; // 적립 포인트
+		int proAmount = 1; // 구매하려는 상품 수량
+		ProductVO pvo = (ProductVO)session.getAttribute("payProd");
 		
 		//아이디에 비어있는 입력을 받을 경우
-		if(pvo.getMemberId().equals("")) {
-			pvo.setMemberId("이것은 비회원 아이디");
+		if(payVO.getMemberId().equals("")) {
+			payVO.setMemberId("이것은 비회원 아이디");
 		}
 		else {
+			
 			logger.info("Save memberPoint!");
-			pvo.setPayPoint(90); //적립포인트
+			payVO.setPayPoint(90); //적립포인트
 			MemberVO mvo = memberService.memberRead(
 					((MemberVO)session.getAttribute("member")));			
-			mvo.setPoint(mvo.getPoint()+90); // 포인트 90 추가
+			//결제 실패
+			if(mvo.getMoney() < payVO.getPayMoney()) {
+				model.addAttribute("cause", "잔액부족");
+				return "payment/fail";
+			}
+			
+			mvo.setPoint(mvo.getPoint()+point); // 포인트 90 추가
+			mvo.setMoney(mvo.getMoney()-payVO.getPayMoney());//돈에서 상품 금액 차감
 			memberService.memberMoneyUpdate(mvo); // 후 DB에 업데이트
 			session.setAttribute("member", mvo); // session도 업데이트
 			System.out.println(mvo);
 		}
-		System.out.println(pvo);
+		
+		System.out.println(payVO);
 		
 		//결제내역 저장
-		payService.add(pvo);
+		payService.add(payVO);
+		//재고 수량 갱신
+		pvo.setProduct_stock(pvo.getProduct_stock()-proAmount);
+		productService.update(pvo);
+		
 		session.removeAttribute("payProd"); //세션에서 상품 정보 삭제
 		
+		return "payment/complete";
 		// (complete)페이지에서 결제 완료창 구현
 		// 쌓인 포인트, 남은 잔액, 남은 재고수량 표시 
 		// 배송조회로 이동하는 링크 표시, 구매내역 조회 링크 표시
 	}
 	//결제 내역 보기
 	@RequestMapping(value="/view")
-	public void view(Model model) throws Exception {
+	public void view(Model model, HttpSession session) throws Exception {
 		logger.info("Payment history");
-		List <PaymentVO> view = payService.view();
+		List <PaymentVO> view = payService.view(
+				((MemberVO)session.getAttribute("member")).getMemberId());
 		model.addAttribute("view", view);
 	}
-	//결제 취소
+	//결제 취소, 환불
 	@RequestMapping(value="/cancel", method=RequestMethod.POST)
-	public String cancel(PaymentVO pvo) throws Exception{
+	public String cancel(PaymentVO payVO, HttpSession session) throws Exception{
 		logger.info("Payment cancel");
-		System.out.println(pvo);
-		payService.delete(pvo.getPno());
+		System.out.println(payVO);
+		MemberVO mvo = (MemberVO)session.getAttribute("member");
+		mvo.setMoney(mvo.getMoney()+payVO.getPayMoney()); // 금액 환불
+		mvo.setPoint(mvo.getPoint()-payVO.getPayPoint()); // 적립 포인트 회수
+		ProductVO pvo = productService.read(payVO.getProduct_id());
+		pvo.setProduct_stock(pvo.getProduct_stock()+1); // 재고수량 추가 
+		
+		//DB에 업데이트
+		productService.update(pvo);
+		memberService.memberMoneyUpdate(mvo);
+		payService.delete(payVO.getPno());
+		
 		return "redirect:/payment/view";
 	}
 	//결제 실패
