@@ -1,5 +1,7 @@
 package com.team.shop.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.team.shop.model.MemberVO;
 
 public interface MemberService {
@@ -21,5 +23,8 @@ public interface MemberService {
 
 	//회원 포인트, 금액 갱신
 	void memberMoneyUpdate(MemberVO member) throws Exception;
+	
+	//아이디 찾기
+	String find_id(HttpServletResponse response, String memberMail) throws Exception;
 
 }

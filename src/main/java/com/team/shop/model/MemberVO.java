@@ -133,6 +133,9 @@ public class MemberVO {
 				+ ", point=" + point + "]";
 	}
 
-	
+	public String addAttribute(String string, String find_id) {
+		return memberId;
+	}
+
 	
 }

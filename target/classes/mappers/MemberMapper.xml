@@ -50,4 +50,9 @@
     	WHERE memberId = #{memberId}
      </update>
      
+     <!-- 아이디 찾기 -->
+	<select id="find_id" parameterType="String" resultType="String" >
+		select memberId from s_member where memberMail = #{memberMail}
+	</select>
+     
   </mapper>

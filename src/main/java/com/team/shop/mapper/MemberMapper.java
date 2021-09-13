@@ -1,8 +1,10 @@
 package com.team.shop.mapper;
 
+
 import com.team.shop.model.MemberVO;
 
 public interface MemberMapper {
+	
 	
 	//회원가입
 	public void memberJoin(MemberVO member);
@@ -21,6 +23,9 @@ public interface MemberMapper {
 
 	// 회원 포인트, 금액 갱신
 	public void memberMoneyUpdate(MemberVO member);
-
+	
+	//아이디 찾기
+	public String find_id(String memberMail) throws Exception;
+	
 
 }
