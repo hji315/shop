@@ -33,9 +33,8 @@
   <header class="blog-header py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
-	      <a class="btn btn-sm" href="#">NOTICE</a>
+	      <a class="btn btn-sm" href="${pageContext.request.contextPath}/notice/list">NOTICE</a>
 	      <a class="btn btn-sm" href="#">Q&A</a>
-	      <a class="btn btn-sm" href="#">CART</a>
       </div>
       <div class="col-4 text-center">
         <a class="blog-header-logo text-dark" 
