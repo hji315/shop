@@ -3,18 +3,25 @@ package com.team.shop.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.team.shop.model.MemberVO;
 import com.team.shop.model.PaymentVO;
+import com.team.shop.model.ProductVO;
+import com.team.shop.service.MemberService;
 import com.team.shop.service.PaymentService;
+import com.team.shop.service.ProductService;
 
 @Controller
 @RequestMapping("/payment/*")
@@ -31,14 +38,35 @@ public class PaymentController {
 	@Inject
 	private PaymentService payService;
 	
+	@Inject
+	private ProductService productService;
+	
+	@Inject
+	private MemberService memberService;
+	
+	
+	
 	//구매
-	@RequestMapping("/buy")
-	public String buy() {
-		// ProductVO, memberId를 전달받아서
-		// 결제 프로세스에서 계속해서 사용할 수 있게
-		// 세션으로 설정
-		return "payment/buy";
-		// (buy)페이지에서 
+	@RequestMapping(value="/buy", method=RequestMethod.GET)
+	public String buy(ProductVO pvo, HttpSession session) throws Exception {
+		// ProductVO를 세션으로 설정 
+		// 결제 종료 후 삭제
+		session.setAttribute("payProd", productService.read(pvo.getProduct_id()));
+		session.setMaxInactiveInterval(15*60); // 세션 유지 시간 15분 
+		
+		// 이미 로그인 되어있는지 확인
+		if(session.getAttribute("member") == null) 
+			return "payment/buy";
+		else
+			return "payment/checkCard"; // 배송지 선택 나중에 추가
+		
+		// (buy)페이지에서 회원 비회원 주문 결정
+		// 비회원 -> verification, 회원 -> memberLogin
+	}
+	@RequestMapping("/memberLogin")
+	public void memberLogin() {
+		
+		// (memberLogin)페이지에서 로그인
 	}
 	
 	//본인 인증
@@ -50,47 +78,65 @@ public class PaymentController {
 	
 	//카드 정보 확인
 	@RequestMapping("/checkCard")
-	public String checkCard() {
-		return "payment/checkCard";
+	public void checkCard() {
 		// (checkCard)페이지에서 카드 정보(CardVO) 입력폼, 
 		// 인증서 확인(Bank_accountVO의 accountPassword 입력폼) 구현
 	}
 	
 	//구매 최종 확인
-	@RequestMapping(value="/buyCheck", method = RequestMethod.POST)
-	public String buyCheck() {
+	@RequestMapping(value="/buyCheck")
+	public String buyCheck(Model model) {
 		// CardVO cvo 파라미터로 받아와야 함
 		// @RequestParam("password") String accountPassword 파라미터로 받아와야 함
 		// CardVO의 ano와 일치하는 Bank_account 컬럼을 
 		// Bank_accountService에서 select해서
 		// accountPassword와 password로 입력받은 값이 일치하는지 확인
+		// MemberVO의 memberAddr1 확인해서 
+		// 제주, 도서산간 지역은 추가 배송비 5000원
+		// ProductVO의 product_size 확인해서 ?
+		// 가로 x 세로 x 높이 / 6000
+		// 1 이상이면 기본 배송비 7000원, 0.5당 1000원씩 추가
 		
+		model.addAttribute("shippingFee", 2500);
 		return "payment/buyCheck";
 		// (buyCheck)페이지에서 결제 금액 표시(상품가격,할인금액,결제금액),
 		// 상품 정보 확인(ProductVO), 결제 동의, 결제하기(PaymentVO 입력폼 disabled) 구현
 	}
 	
 	//결제 실행
-	@RequestMapping(value="/complete", method = RequestMethod.POST)
-	public String complete(Model model,PaymentVO pvo) throws Exception{
+	@RequestMapping(value="/complete", method=RequestMethod.POST)
+	public void complete(Model model,PaymentVO pvo, HttpSession session) throws Exception{
 		logger.info("Payment complete!");
-		pvo.setMemberId("이것은 결제하는 아이디");
-		pvo.setProduct_id(1234); // 상품번호
-		pvo.setShippingFee(1200); // 배송비
-		pvo.setPayMoney(5600); //결제금액
+		//비어있는 입력을 받을 경우
+		if(pvo.getMemberId().equals("")) {
+			pvo.setMemberId("이것은 비회원 아이디");
+		}
 		pvo.setPayPoint(90); //적립포인트
 		System.out.println(pvo);
 		
 		//결제내역 저장
 		payService.add(pvo);
-		List <PaymentVO> view = payService.view();
-		model.addAttribute("view", view);
-		return "payment/complete";
+		session.removeAttribute("payProd"); //세션에서 상품 정보 삭제
+		
 		// (complete)페이지에서 결제 완료창 구현
 		// 쌓인 포인트, 남은 잔액, 남은 재고수량 표시 
 		// 배송조회로 이동하는 링크 표시, 구매내역 조회 링크 표시
 	}
-	
+	//결제 내역 보기
+	@RequestMapping(value="/view")
+	public void view(Model model) throws Exception {
+		logger.info("Payment history");
+		List <PaymentVO> view = payService.view();
+		model.addAttribute("view", view);
+	}
+	//결제 취소
+	@RequestMapping(value="/cancel", method=RequestMethod.POST)
+	public String cancel(PaymentVO pvo) throws Exception{
+		logger.info("Payment cancel");
+		System.out.println(pvo);
+		payService.delete(pvo.getPno());
+		return "redirect:/payment/view";
+	}
 	//결제 실패
 	@RequestMapping("/fail")
 	public String fail() {
