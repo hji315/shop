@@ -3,18 +3,15 @@ package com.team.shop.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team.shop.model.MemberVO;
 import com.team.shop.model.PaymentVO;
@@ -49,6 +46,7 @@ public class PaymentController {
 	//구매
 	@RequestMapping(value="/buy", method=RequestMethod.GET)
 	public String buy(ProductVO pvo, HttpSession session) throws Exception {
+		logger.info("Payment Start!");
 		// ProductVO를 세션으로 설정 
 		// 결제 종료 후 삭제
 		session.setAttribute("payProd", productService.read(pvo.getProduct_id()));
@@ -107,11 +105,21 @@ public class PaymentController {
 	@RequestMapping(value="/complete", method=RequestMethod.POST)
 	public void complete(Model model,PaymentVO pvo, HttpSession session) throws Exception{
 		logger.info("Payment complete!");
-		//비어있는 입력을 받을 경우
+		
+		//아이디에 비어있는 입력을 받을 경우
 		if(pvo.getMemberId().equals("")) {
 			pvo.setMemberId("이것은 비회원 아이디");
 		}
-		pvo.setPayPoint(90); //적립포인트
+		else {
+			logger.info("Save memberPoint!");
+			pvo.setPayPoint(90); //적립포인트
+			MemberVO mvo = memberService.memberRead(
+					((MemberVO)session.getAttribute("member")));			
+			mvo.setPoint(mvo.getPoint()+90); // 포인트 90 추가
+			memberService.memberMoneyUpdate(mvo); // 후 DB에 업데이트
+			session.setAttribute("member", mvo); // session도 업데이트
+			System.out.println(mvo);
+		}
 		System.out.println(pvo);
 		
 		//결제내역 저장

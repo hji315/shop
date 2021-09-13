@@ -16,5 +16,11 @@ public interface MemberMapper {
     //회원정보 수정
     public void memberUpdate(MemberVO member) throws Exception;
 
+    // 회원정보 조회
+	public MemberVO memberRead(MemberVO member);
+
+	// 회원 포인트, 금액 갱신
+	public void memberMoneyUpdate(MemberVO member);
+
 
 }

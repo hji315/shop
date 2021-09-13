@@ -16,4 +16,10 @@ public interface MemberService {
     //회원 정보 수정
     public void memberUpdate(MemberVO member) throws Exception;
 
+    //회원 정보 조회
+	MemberVO memberRead(MemberVO member) throws Exception;
+
+	//회원 포인트, 금액 갱신
+	void memberMoneyUpdate(MemberVO member) throws Exception;
+
 }

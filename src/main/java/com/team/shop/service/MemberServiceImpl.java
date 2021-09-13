@@ -35,5 +35,17 @@ public class MemberServiceImpl implements MemberService {
 		
 		membermapper.memberUpdate(member);
 	}
+	
+	//회원정보 조회
+	@Override
+	public MemberVO memberRead(MemberVO member) throws Exception {
+		
+		return membermapper.memberRead(member);
+	}
 
+	//회원 포인트, 돈 갱신
+	@Override
+	public void memberMoneyUpdate(MemberVO member) throws Exception{
+		membermapper.memberMoneyUpdate(member);
+	}
 }
