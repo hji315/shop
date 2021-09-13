@@ -1,8 +1,14 @@
 package com.team.shop.service;
 
+import java.io.PrintWriter;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team.shop.dao.MemberDAO;
 import com.team.shop.mapper.MemberMapper;
 import com.team.shop.model.MemberVO;
 
@@ -11,6 +17,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	MemberMapper membermapper; 
+	
+	@Inject
+	private MemberDAO manager; 
 	
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
@@ -47,5 +56,24 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void memberMoneyUpdate(MemberVO member) throws Exception{
 		membermapper.memberMoneyUpdate(member);
+	}
+	
+	// 아이디 찾기
+	@Override
+	public String find_id(HttpServletResponse response, String memberMail) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String id = membermapper.find_id(memberMail);
+		
+		if (id == null) {
+			out.println("<script>");
+			out.println("alert('가입된 아이디가 없습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return null;
+		} else {
+			return id;
+		}
 	}
 }
