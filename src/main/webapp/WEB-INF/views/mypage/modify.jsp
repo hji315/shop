@@ -37,7 +37,7 @@
 		$(document).ready(function(){
 			// 취소
 			$("#cencle").on("click", function(){
-				location.href = "${path}/mainlogin";
+				location.href = "${path}/";
 			})
 			
 			$("#submit").on("click", function(){
@@ -57,7 +57,9 @@
 					return false;
 				}
 			});
+			
 		})
+		
 		
 </script>
 <body>
@@ -89,7 +91,7 @@
                         </li>
                         <li>
                             <a class="list-group-item"  href="/mypage/point">포인트조회</a>                            
-                        </li>                                                                                             
+                        </li>                                                                                            
                     </ul>
                 </div>
               </div>
@@ -150,7 +152,7 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 		
-		/* 다음 주소 연동 */
+		/* 다음 주소 API 연동 */
 		function execution_daum_address(){
 			
 			new daum.Postcode({

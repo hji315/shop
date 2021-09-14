@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
 <body>
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
-			<form action="../member/find_id.do" method="post">
+			<form action="${path}/member/find_id.do" method="post">
 				<div class="w3-center w3-large w3-margin-top">
 					<h3>아이디 찾기</h3>
 				</div>

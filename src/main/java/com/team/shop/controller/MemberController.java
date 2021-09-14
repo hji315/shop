@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -266,5 +267,34 @@ public class MemberController {
 		md.addAttribute("memberId", memberservice.find_id(response, memberMail));
 		return "/member/find_id";
 	}
+	
+	// 회원 탈퇴 get
+	@RequestMapping(value="/memberDeleteView", method = RequestMethod.GET)
+	public String memberDeleteView() throws Exception{
+		return "member/memberDeleteView";
+	}
+	
+	// 회원 탈퇴 post
+	@RequestMapping(value="/memberDelete", method = RequestMethod.POST)
+	public String memberDelete(MemberVO member, HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		memberservice.memberDelete(member);
+		session.invalidate();
+		
+		return "redirect:/";
+	}
+	
+	// 패스워드 체크
+	@ResponseBody
+	@RequestMapping(value="/passChk", method = RequestMethod.POST)
+	public boolean passChk(MemberVO member) throws Exception {
+
+		MemberVO login = memberservice.memberLogin(member);
+		boolean pwdChk = pwEncoder.matches(member.getMemberPw(),login.getMemberPw());
+		System.out.println(login);
+		System.out.println(pwdChk);
+		return pwdChk;
+	}
+	
 	
 }

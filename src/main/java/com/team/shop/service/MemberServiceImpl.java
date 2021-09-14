@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService {
 	MemberMapper membermapper; 
 	
 	@Inject
-	private MemberDAO manager; 
+	MemberDAO dao;
 	
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
@@ -76,4 +76,19 @@ public class MemberServiceImpl implements MemberService {
 			return id;
 		}
 	}
+	
+	//회원탈퇴
+	@Override
+	public void memberDelete(MemberVO member) throws Exception {
+		membermapper.memberDelete(member);
+	}
+	
+	//비밀번호 체크
+	@Override
+	public int passChk(MemberVO member) throws Exception {
+		int result = membermapper.passChk(member);
+		return result;
+	}
+	
+	
 }

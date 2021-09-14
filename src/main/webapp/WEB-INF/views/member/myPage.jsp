@@ -36,7 +36,7 @@
 		$(document).ready(function(){
 			// 취소
 			$("#cencle").on("click", function(){
-				location.href = "${path}/mainlogin";
+				location.href = "${path}/";
 			})
 			
 			$("#submit").on("click", function(){
@@ -91,6 +91,9 @@
                         </li>    
                         <li>
                             <a class="list-group-item"  href="${path}/payment/view">구매내역 조회</a>                            
+                        </li>
+                        <li>
+                            <a class="list-group-item"  href="${path}/member/memberDeleteView">회원 탈퇴</a>                            
                         </li>                                                                                           
                     </ul>
                 </div>
