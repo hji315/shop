@@ -46,5 +46,21 @@ public class ProductDAOImpl implements ProductDAO {
 		sql.delete("productMapper.delete", product_id);		
 	}
 
+	@Override
+	public void productHit(int product_id) throws Exception {
+		sql.update("productMapper.productHit", product_id);
+		
+	}
+
+	@Override
+	public List<ProductVO> newItem() throws Exception {
+		return sql.selectList("productMapper.newItem");
+	}
+
+	@Override
+	public List<ProductVO> bestItem() throws Exception {
+		return sql.selectList("productMapper.bestItem");
+	}
+
 	
 }

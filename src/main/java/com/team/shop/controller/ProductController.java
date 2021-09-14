@@ -37,7 +37,7 @@ public class ProductController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(ProductVO productVO) throws Exception{
 		service.write(productVO);
-		return "product/list";
+		return "redirect:/";
 	}
 
 	//상품 목록 조회

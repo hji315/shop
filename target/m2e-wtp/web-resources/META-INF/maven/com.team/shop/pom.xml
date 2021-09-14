@@ -234,6 +234,15 @@
 		</dependency>
 		<!-- ajax -->
 		
+		<!-- 트랜젝션(조회수) -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		    <version>3.1.1.RELEASE</version>
+		</dependency>
+		<!-- 트랜젝션 -->
+		
 		<!-- 라이브러리 추가 끝 -->
 		
 	</dependencies>
