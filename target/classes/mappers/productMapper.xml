@@ -16,13 +16,20 @@
 	<select id="listPage" resultType="com.team.shop.model.ProductVO" parameterType="com.team.shop.model.SearchCriteria">
 		SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, product_category, product_url, product_stock 
 		FROM (SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, product_category, product_url, product_stock, row_number() OVER(ORDER BY product_id DESC) AS rNum 
-		FROM product WHERE 1=1 <include refid="search"></include> ) MP
+		FROM product WHERE 1=1 <include refid="category"></include> AND 1=1 <include refid="search"></include> ) MP
 		WHERE rNum BETWEEN #{rowStart} AND #{rowEnd} ORDER BY product_id DESC 
 	</select>
 	
 	<select id="listCount" parameterType="com.team.shop.model.SearchCriteria" resultType="int">
-		SELECT COUNT(product_id) FROM product WHERE 1=1 <include refid="search"></include> AND product_id > 0
+		SELECT COUNT(product_id) FROM product WHERE 1=1 <include refid="category"></include> AND 1=1 <include refid="search"></include> AND product_id > 0
 	</select>
+	
+	<sql id="category">
+		<if test="searchType != null">
+			AND product_category = #{product_category}
+			<if test="searchType == 'y'.toString()">OR product_category IS NOT NULL</if>
+		</if>
+	</sql>
     
 	<sql id="search">
 		<if test="searchType != null">
