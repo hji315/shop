@@ -24,8 +24,8 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	// 결제 내역 전체 조회
 	@Override
-	public List<PaymentVO> view() throws Exception {
-		return dao.view();
+	public List<PaymentVO> view(String memberId) throws Exception {
+		return dao.view(memberId);
 	}
 
 	// 결제 1개 조회

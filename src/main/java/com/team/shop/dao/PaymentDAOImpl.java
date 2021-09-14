@@ -23,8 +23,8 @@ public class PaymentDAOImpl implements PaymentDAO {
 	
 	// 결제 내역 전체 조회
 	@Override
-	public List<PaymentVO> view() throws Exception {
-		return sqlSession.selectList("paymentMapper.view");
+	public List<PaymentVO> view(String memberId) throws Exception {
+		return sqlSession.selectList("paymentMapper.view", memberId);
 	}
 
 	// 결제 1개 조회
