@@ -55,4 +55,14 @@
 		select memberId from s_member where memberMail = #{memberMail}
 	</select>
      
+     <!-- 비밀번호 체크 -->
+     <select id="passChk" resultType="int">
+     	select count(*) from s_member where memberId = #{memberId} and memberPw = #{memberPw}
+     </select>
+     
+     <!-- 회원 탈퇴 -->
+     <delete id="memberDelete">
+		delete from s_member where memberId = #{memberId}
+	</delete>
+	
   </mapper>

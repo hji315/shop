@@ -23,4 +23,13 @@ public interface ProductDAO {
 	
 	//상품 삭제
 	public void delete(int product_id) throws Exception;
+	
+	//조회수
+	public void productHit(int product_id) throws Exception;
+	
+	//신상품 조회
+	public List<ProductVO> newItem() throws Exception;
+	
+	//인기상품 조회
+	public List<ProductVO> bestItem() throws Exception;
 }

@@ -19,4 +19,8 @@ public interface ProductService {
 	
 	public void delete(int product_id) throws Exception;
 	
+	public List<ProductVO> newItem() throws Exception;
+	
+	public List<ProductVO> bestItem() throws Exception;
+	
 }

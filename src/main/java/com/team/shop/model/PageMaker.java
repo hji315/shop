@@ -15,7 +15,16 @@ public class PageMaker {
 	private boolean next;
 	private int displayPageNum = 10;
 	private Criteria cri;
+	private String product_category;
 	
+	public String getProduct_category() {
+		return product_category;
+	}
+
+	public void setProduct_category(String product_category) {
+		this.product_category = product_category;
+	}
+
 	public void setCri(Criteria cri) {
 		this.cri = cri;
 	}
@@ -74,14 +83,15 @@ public class PageMaker {
 		   
 		return uriComponents.toUriString();
 	}
+	
 	public String makeSearch(int page) {
-	  
 	 UriComponents uriComponents =
 	            UriComponentsBuilder.newInstance()
 	            .queryParam("page", page)
 	            .queryParam("perPageNum", cri.getPerPageNum())
 	            .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
 	            .queryParam("keyword", encoding(((SearchCriteria)cri).getKeyword()))
+	            .queryParam("product_category", ((SearchCriteria)cri).getProduct_category())
 	            .build(); 
 	    return uriComponents.toUriString();  
 	}

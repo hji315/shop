@@ -7,22 +7,29 @@
 	<insert id="insert">
 		INSERT INTO product 
 			(product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, 
-			product_category, product_url, product_stock)
+			product_category, product_url, product_stock, product_new)
 		values
 			(product_seq.NEXTVAL, #{product_name}, #{product_price}, #{product_size}, #{product_color}, #{product_main_img}, 
-			#{product_detail_img}, #{product_detail}, #{product_category}, #{product_url}, #{product_stock})
+			#{product_detail_img}, #{product_detail}, #{product_category}, #{product_url}, #{product_stock}, #{product_new})
 	</insert>
 	
 	<select id="listPage" resultType="com.team.shop.model.ProductVO" parameterType="com.team.shop.model.SearchCriteria">
-		SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, product_category, product_url, product_stock 
-		FROM (SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, product_category, product_url, product_stock, row_number() OVER(ORDER BY product_id DESC) AS rNum 
-		FROM product WHERE 1=1 <include refid="search"></include> ) MP
+		SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, product_category, product_url, product_stock, hit
+		FROM (SELECT product_id, product_name, product_price, product_size, product_color, product_main_img, product_detail_img, product_detail, product_category, product_url, product_stock, hit, row_number() OVER(ORDER BY product_id DESC) AS rNum 
+		FROM product WHERE 1=1 <include refid="category"></include> AND 1=1 <include refid="search"></include> ) MP
 		WHERE rNum BETWEEN #{rowStart} AND #{rowEnd} ORDER BY product_id DESC 
 	</select>
 	
 	<select id="listCount" parameterType="com.team.shop.model.SearchCriteria" resultType="int">
-		SELECT COUNT(product_id) FROM product WHERE 1=1 <include refid="search"></include> AND product_id > 0
+		SELECT COUNT(product_id) FROM product WHERE 1=1 <include refid="category"></include> AND 1=1 <include refid="search"></include> AND product_id > 0
 	</select>
+	
+	<sql id="category">
+		<if test="searchType != null">
+			AND product_category = #{product_category}
+			<if test="searchType == 'y'.toString()">OR product_category IS NOT NULL</if>
+		</if>
+	</sql>
     
 	<sql id="search">
 		<if test="searchType != null">
@@ -46,5 +53,17 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM product WHERE product_id = #{product_id}
 	</delete>
+	
+	<update id="productHit" parameterType="int">
+    	UPDATE product SET hit = hit+1 WHERE product_id = #{product_id}
+    </update>
+	
+	<select id="newItem" resultType="com.team.shop.model.ProductVO">
+		SELECT * FROM product WHERE product_new = 1 ORDER BY product_id DESC
+	</select>
+	
+	<select id="bestItem" resultType="com.team.shop.model.ProductVO">
+		SELECT * FROM ( SELECT * FROM product ORDER BY hit DESC) WHERE ROWNUM between 1 and 10
+	</select>
 	
 </mapper>

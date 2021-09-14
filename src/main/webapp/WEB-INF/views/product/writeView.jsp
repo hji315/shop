@@ -67,7 +67,7 @@
 			<div class="col-md-12">
 				<label class="form-label" for="product_name">상품 이름</label>
 				<input class="form-control chk" type="text" id="product_name" name="product_name" title="이름을 입력하세요"/>
-				신상품 <input type="checkbox" name="product_new"value="product_new">
+				신상품<input type="checkbox" name="product_new" id="product_new" value='1' checked/>
 			</div>
 		
 			<div class="col-md-4">

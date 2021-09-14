@@ -26,5 +26,11 @@ public interface MemberService {
 	
 	//아이디 찾기
 	String find_id(HttpServletResponse response, String memberMail) throws Exception;
-
+	
+	//회원 탈퇴
+	public void memberDelete(MemberVO member) throws Exception;
+	
+	//비밀번호 체크
+	public int passChk(MemberVO member) throws Exception;
+	
 }
