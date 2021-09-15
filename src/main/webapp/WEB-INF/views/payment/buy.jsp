@@ -9,9 +9,16 @@
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp"%>
-<h2>payment - buy</h2>
+<div align="center">
+<div class="card" style="width: 33%;">
+<strong class="bd-title mt-0">결제하기</strong>
+<p class="bd-lead">
+회원 아이디가 있다면 로그인하여주세요.
+</p>
+<a class="btn btn-sm btn-outline-dark" href="${path}/payment/memberLogin">회원</a>
 <a class="btn btn-sm btn-outline-secondary" href="${path}/payment/verification">비회원</a>
-<a class="btn btn-sm btn-outline-secondary" href="${path}/payment/memberLogin">회원</a>
+</div>
+</div>
 <%@ include file="/resources/include/footer.jsp"%>
 </body>
 </html>

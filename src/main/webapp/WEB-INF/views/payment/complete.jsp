@@ -11,6 +11,16 @@
 <%@ include file="/resources/include/header.jsp"%>
 <h2>payment - complete</h2>
 결제 완료!
+<c:if test="${not empty member}">
+<p>계좌 남은 잔액 : ${member.money}</p>
+<p>적립된 포인트 : ${member.point}</p> 
+</c:if>
+<p>남은 재고 : ${payProd.product_stock}</p>
+
+<form action="">
+
+</form>
+
 <a href="${path}/payment/delivery" class="btn btn-sm btn-outline-secondary">
 배송 조회</a>
 <%@ include file="/resources/include/footer.jsp"%>

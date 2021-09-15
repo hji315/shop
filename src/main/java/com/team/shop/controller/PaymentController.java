@@ -50,30 +50,37 @@ public class PaymentController {
 	@RequestMapping(value="/buy", method=RequestMethod.GET)
 	public String buy(ProductVO pvo, HttpSession session, Model model) throws Exception {
 		logger.info("Payment Start!");
+		int stock = ((ProductVO)productService.read(pvo.getProduct_id())).getProduct_stock();
 		int proAmount = 1; // 구매 갯수 1로 설정
-//		//결제 실패 // 재고수량이 없어서 주석처리
-//		if(pvo.getProduct_stock() < proAmount) {
-//			model.addAttribute("cause", "재고부족");
-//			return "payment/fail";
-//		}
+		//결제 실패 
+		if(stock < proAmount) {
+			model.addAttribute("cause", "재고부족");
+			return "payment/fail";
+		}
 		// ProductVO를 세션으로 설정 
 		// 결제 종료 후 삭제
 		session.setAttribute("payProd", productService.read(pvo.getProduct_id()));
 		session.setMaxInactiveInterval(15*60); // 세션 유지 시간 15분 
 		
 		// 이미 로그인 되어있는지 확인
-		if(session.getAttribute("member") == null) 
-			return "payment/buy";
-		else
-			return "payment/checkCard"; // 배송지 선택 나중에 추가
-		
+		if(isSessionMember(session)) {
+			MemberVO mvo = 
+					memberService.memberRead(getSessionMember(session, "member"));
+			System.out.println("회원 : " + mvo);
+			model.addAttribute("payMember", mvo); //회원 주소 가져오기 위해
+			return "payment/choiceAddr"; 
+		}
+		else {
+			return "payment/buy";	
+		}
 		// (buy)페이지에서 회원 비회원 주문 결정
 		// 비회원 -> verification, 회원 -> memberLogin
 	}
 	@RequestMapping("/memberLogin")
-	public void memberLogin() {
+	public String memberLogin() {
 		
-		// (memberLogin)페이지에서 로그인
+		return "redirect:/member/login";
+		// member login 페이지로 보냄
 	}
 	
 	//본인 인증
@@ -85,23 +92,38 @@ public class PaymentController {
 	
 	//배송지 입력
 	@RequestMapping("/checkAddr")
-	public String checkAddress(Model model, HttpSession session, String name) {
-		logger.info("Payment address!");
+	public String checkAddress(Model model, HttpSession session, String name) throws Exception {
+		logger.info("Payment check member!");
+		
 		//로그인 되어 있는지 확인
-		if(session.getAttribute("member")==null) {
-			System.out.println(name);
-			session.setAttribute("payName", name);
-			return "payment/checkAddr";
+		if(isSessionMember(session)) {
+			MemberVO mvo = 
+					memberService.memberRead(getSessionMember(session, "member"));
+			System.out.println("회원 : " + mvo);
+			model.addAttribute("payMember", mvo); //회원 주소 가져오기 위해
+			return "payment/choiceAddr";
 		}
 		else {
-			return "payment/choiceAddr";
+			System.out.println("비회원 : " + name);
+			//비회원은 아이디 대신 이것을 사용
+			model.addAttribute("noMember", name); // 필요하면 이름+전화번호로
+			return "payment/checkAddr";
 		}
 		// (checkAddr)페이지에서 배송지 입력폼 구현
 		// 로그인 됐으면 배송지 선택 창으로
 	}
 	//카드 정보 확인
 	@RequestMapping("/checkCard")
-	public void checkCard() {
+	public void checkCard(MemberVO mvo, HttpSession session) {
+		logger.info("Payment address!");
+		// 배송지 입력 받아서 저장
+		if(isSessionMember(session)) {
+			System.out.println("회원 배송지 : " + mvo);
+			session.setAttribute("member", mvo);
+		}else {
+			System.out.println("비회원 배송지 : " + mvo);
+			session.setAttribute("noMember", mvo);
+		}
 		// (checkCard)페이지에서 카드 정보(CardVO) 입력폼, 
 		// 인증서 확인(Bank_accountVO의 accountPassword 입력폼) 구현
 	}
@@ -114,7 +136,7 @@ public class PaymentController {
 		// CardVO의 ano와 일치하는 Bank_account 컬럼을 
 		// Bank_accountService에서 select해서
 		// accountPassword와 password로 입력받은 값이 일치하는지 확인
-		
+		logger.info("Payment card!");
 		System.out.println("입력받은 비밀번호 : " + password);
 		String accountPassword = "1234"; // 임시 비밀번호
 		//결제 실패
@@ -123,14 +145,9 @@ public class PaymentController {
 			return "payment/fail";
 		}
 		cvo.setAno(13241234);
-		cvo.setMemberId("이것은 비회원 아이디");//default
-		if(session.getAttribute("member") != null) {
-			//로그인된 아이디
-			cvo.setMemberId(((MemberVO)session.getAttribute("member")).getMemberId());
-		}else {
-			//비회원 본인인증 시 아이디
-			cvo.setMemberId((String)session.getAttribute("payName"));
-		}
+		//회원, 비회원
+		String mem = isSessionMember(session)?"member":"noMember";
+		cvo.setMemberId(getSessionMember(session, mem).getMemberId());
 		
 		cardService.add(cvo);
 		// MemberVO의 memberAddr1 확인해서 
@@ -152,23 +169,13 @@ public class PaymentController {
 		int point = 90; // 적립 포인트
 		int proAmount = 1; // 구매하려는 상품 수량
 		ProductVO pvo = (ProductVO)session.getAttribute("payProd");
-		
-		//아이디에 비어있는 입력을 받을 경우
-		if(payVO.getMemberId().equals("")) {
-			//default
-			payVO.setMemberId("이것도 비회원 아이디");
-			
-			//비회원 본인인증시 이름으로 적용
-			if(session.getAttribute("payName") != null) {
-				payVO.setMemberId((String)session.getAttribute("payName"));
-			}
-		}
-		else {
-			
+		// 회원, 비회원
+		if(isSessionMember(session)) {
 			logger.info("Save memberPoint!");
+			
 			payVO.setPayPoint(90); //적립포인트
 			MemberVO mvo = memberService.memberRead(
-					((MemberVO)session.getAttribute("member")));			
+					getSessionMember(session, "member"));			
 			//결제 실패
 			if(mvo.getMoney() < payVO.getPayMoney()) {
 				model.addAttribute("cause", "잔액부족");
@@ -179,35 +186,42 @@ public class PaymentController {
 			mvo.setMoney(mvo.getMoney()-payVO.getPayMoney());//돈에서 상품 금액 차감
 			memberService.memberMoneyUpdate(mvo); // 후 DB에 업데이트
 			session.setAttribute("member", mvo); // session도 업데이트
-			System.out.println(mvo);
+			
+			System.out.println("결제 후 회원 : " + mvo);
+		}
+		else {
+			logger.info("NoMember check!");
+			MemberVO mvo = getSessionMember(session, "noMember");
+			//비회원 본인인증시 이름으로 적용
+			payVO.setMemberId(mvo.getMemberId());
 		}
 		
-		System.out.println(payVO);
+		System.out.println("결제된 것 : " + payVO);
 		
 		//결제내역 저장
 		payService.add(payVO);
-		//재고 수량 갱신 // 재고수량이 없어서 주석처리
-		//pvo.setProduct_stock(pvo.getProduct_stock()-proAmount);
-		//productService.update(pvo);
+		//재고 수량 갱신 
+		pvo.setProduct_stock(pvo.getProduct_stock()-proAmount);
+		productService.update(pvo);
 		
+		model.addAttribute("payProd", pvo); //재고수량 넘기기
 		session.removeAttribute("payProd"); //세션에서 상품 정보 삭제
 		
 		return "payment/complete";
 		// (complete)페이지에서 결제 완료창 구현
 		// 쌓인 포인트, 남은 잔액, 남은 재고수량 표시 
-		// 배송조회로 이동하는 링크 표시, 구매내역 조회 링크 표시
+		// 배송조회로 이동하는 링크 표시
 	}
 	//결제 내역 보기
 	@RequestMapping(value="/view")
 	public void view(Model model, HttpSession session) throws Exception {
 		logger.info("Payment history");
 		List <PaymentVO> view;
-		if(session.getAttribute("member") != null) {
-			MemberVO mvo = (MemberVO)session.getAttribute("member");
-			String mid = mvo.getMemberId();
-			System.out.println("아이디 " + mid);
-			view = payService.view(mid);
+		if(isSessionMember(session)) {
+			//회원 아이디로 조회
+			view = payService.view(getSessionMember(session, "member").getMemberId());
 		}else {
+			//전체 조회
 			view = payService.view();
 		}
 		model.addAttribute("view", view);
@@ -216,8 +230,8 @@ public class PaymentController {
 	@RequestMapping(value="/cancel", method=RequestMethod.POST)
 	public String cancel(PaymentVO payVO, HttpSession session) throws Exception{
 		logger.info("Payment cancel");
-		System.out.println(payVO);
-		MemberVO mvo = (MemberVO)session.getAttribute("member");
+		System.out.println("취소된 결제 : " + payVO);
+		MemberVO mvo = getSessionMember(session, "memeber");
 		mvo.setMoney(mvo.getMoney()+payVO.getPayMoney()); // 금액 환불
 		mvo.setPoint(mvo.getPoint()-payVO.getPayPoint()); // 적립 포인트 회수
 		ProductVO pvo = productService.read(payVO.getProduct_id());
@@ -233,15 +247,33 @@ public class PaymentController {
 	
 	//결제 실패
 	@RequestMapping("/fail")
-	public String fail() {
+	public String fail(HttpSession session) {
 		logger.error("PAYMENT FAIL!!!");
+		if(session.getAttribute("noMember")!=null) {
+			session.removeAttribute("noMember");//비회원 세션 삭제
+		}
+		session.removeAttribute("payProd"); //상품 정보 세션 삭제
 		return "payment/fail";
 		// (fail)페이지에서 결제 실패 구현
 	}
 	
 	// 배송 조회
 	@RequestMapping("/delivery")
-	public String deliveryView() {
+	public String deliveryView(Model model, HttpSession session) {
+		logger.info("Delivery!");
+		String mem = (isSessionMember(session))?"member":"noMember";
+		MemberVO mvo = getSessionMember(session, mem);
+		model.addAttribute("deliveryMVO",mvo);
+		
 		return "payment/delivery";
+	}
+	
+	//세션에 "member"가 있는지 => 로그인 되어 있는지
+	private boolean isSessionMember(HttpSession session) {
+		return (session.getAttribute("member")!=null)?true:false;
+	}
+	//세션의 MemberVO 받아오기
+	private MemberVO getSessionMember(HttpSession session, String member) {
+		return (MemberVO)session.getAttribute(member);
 	}
 }
