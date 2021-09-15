@@ -18,8 +18,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	MemberMapper membermapper; 
 	
-	@Inject
-	MemberDAO dao;
 	
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
@@ -90,5 +88,16 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	//비밀번호 찾기
+	@Override
+	public MemberVO find_pw(MemberVO member) throws Exception {
+		return membermapper.find_pw(member);
+	}
+	
+	//비밀번호 변경
+	@Override
+	public int change_pw(MemberVO member) throws Exception {
+		return membermapper.change_pw(member);
+	}
 	
 }

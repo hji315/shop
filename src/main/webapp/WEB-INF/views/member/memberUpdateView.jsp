@@ -28,7 +28,7 @@
 		$(document).ready(function(){
 			// 취소
 			$("#cencle").on("click", function(){
-				location.href = "${path}/mainlogin";
+				location.href = "${path}/login";
 			})
 			
 			$("#submit").on("click", function(){

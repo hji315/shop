@@ -65,4 +65,14 @@
 		delete from s_member where memberId = #{memberId}
 	</delete>
 	
+	<!-- 비밀번호 찾기 -->
+    <select id="find_pw" resultType="com.team.shop.model.MemberVO">
+    	SELECT memberId from s_member WHERE memberId = #{memberId} AND memberName = #{memberName} AND memberMail = #{memberMail}
+    </select>
+    
+   	<!-- 비밀번호 변경 -->
+    <update id="change_pw">
+    	UPDATE s_member SET memberPw = #{memberPw} WHERE memberId = #{memberId}
+    </update>
+	
   </mapper>
