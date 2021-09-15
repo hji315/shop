@@ -27,6 +27,10 @@ public class PaymentDAOImpl implements PaymentDAO {
 		return sqlSession.selectList("paymentMapper.view", memberId);
 	}
 
+	@Override
+	public List<PaymentVO> view() {
+		return sqlSession.selectList("paymentMapper.view");
+	}
 	// 결제 1개 조회
 	@Override
 	public PaymentVO read(int pno) throws Exception {
@@ -39,10 +43,12 @@ public class PaymentDAOImpl implements PaymentDAO {
 		sqlSession.update("paymentMapper.update", paymentVO);
 	}
 
+	
 	// 결제 내역 삭제
 	@Override
 	public void delete(int pno) throws Exception {
 		sqlSession.delete("paymentMapper.delete", pno);
 	}
+
 
 }

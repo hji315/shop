@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="cardMapper">
+  
+  	<!-- 카드 정보 추가 -->
+  	<!-- 계좌와 연동하는 것은 Bank_관련 DB 추가 후 작성-->
+	<insert id="add" parameterType="com.team.shop.model.CardVO">
+  		insert into card (
+  			cardNumber, memberId, ano, CVCNumber, 
+  			cardCompany, cardValidityPeriod
+  		)
+  		values(
+  		#{cardNumber}, #{memberId}, #{ano}, ${CVCNumber}, 
+  		#{cardCompany}, #{cardValidityPeriod}
+  		)
+  	</insert>
+  	
+  	 <!-- 카드 전체 조회 -->
+  	<select id="view" parameterType="String" resultType="com.team.shop.model.CardVO">
+  	
+  		select * from card where memberId=#{memberId}
+  	</select>
+  	
+  	<!-- 카드 1개 조회 -->
+  	<select id="read" parameterType="int" resultType="com.team.shop.model.CardVO">
+  	
+  		select * from card where cardNumber=#{cardNumber} 	
+  	</select>
+  	
+  	<!-- 카드 정보 삭제-->
+	<delete id="delete" parameterType="int">
+		
+		DELETE 
+		  FROM card
+		 WHERE cardNumber=#{cardNumber}
+	</delete>
+	
+  </mapper>

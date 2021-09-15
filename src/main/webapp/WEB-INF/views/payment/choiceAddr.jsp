@@ -9,7 +9,7 @@
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp"%>
-<h2>payment - checkAddr</h2>
+<h2>payment - choiceAddr</h2>
 <div>
 	<section id="container" class="mx-auto" style="width:500px; margin-top:10px;">
 			<form action="${path}/payment/checkCard" method="post">
@@ -34,7 +34,7 @@
 					
 					
 				<div class="form-group has-feedback">
-					<button class="btn btn-dark" type="submit" id="submit">배송지 입력완료</button>
+					<button class="btn btn-dark" type="submit" id="submit">배송지 입력 완료</button>
 					<button class="btn btn-outline-dark" type="button" id="cencle">취소</button>
 				</div>
 			</form>
