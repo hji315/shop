@@ -33,4 +33,10 @@ public interface MemberService {
 	//비밀번호 체크
 	public int passChk(MemberVO member) throws Exception;
 	
+	//비밀번호 찾기
+	public MemberVO find_pw(MemberVO vo) throws Exception;
+	
+	//비밀번호 변경
+	public int change_pw(MemberVO vo) throws Exception;
+	
 }
