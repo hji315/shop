@@ -6,9 +6,47 @@
 <head>
 	<link href="${path}/resources/img/favicon.png" rel="icon">
 	<title>SHOP</title>
+	<style>
+.admin_navi_wrap{
+    width: 20%;
+    height: 300px;
+    float:left;
+    height: 100%;
+}
+
+</style>
 </head>
 <body>
-<%@ include file="/resources/include/header.jsp"%>
+<header class="mx-auto" style="width:500px; margin-top:10px;">
+		<div>
+        <a class="blog-header-logo text-dark" 
+        href="${path}/" >
+        #SHOP My Page</a>
+      	</div>
+    </header>
+<!-- 네비영역 -->
+                <div class="admin_navi_wrap">
+                    <ul class="list-group list-group-flush">
+                        <li >
+                            <a class="list-group-item" href="${path}/mypage/modify">정보수정</a>
+                        </li>
+                        <li>
+                            <a class="list-group-item" href="${path}/mypage/basket">장바구니</a>
+                        </li>
+                        <li>
+                            <a class="list-group-item"  href="${path}/mypage/delivery">배송조회</a>                            
+                        </li>
+                        <li>
+                            <a class="list-group-item"  href="${path}/mypage/postscript">후기작성</a>                            
+                        </li>
+                        <li>
+                            <a class="list-group-item"  href="${path}/mypage/point">포인트조회</a>                            
+                        </li>    
+                        <li>
+                            <a class="list-group-item"  href="${path}/payment/view">구매내역 조회</a>                            
+                        </li>                                                                                          
+                    </ul>
+                </div>
 <h2>payment - view</h2>
 <c:forEach var="view" items="${view}">
 <hr />

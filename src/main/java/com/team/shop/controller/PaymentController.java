@@ -10,12 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.team.shop.model.CardVO;
 import com.team.shop.model.MemberVO;
 import com.team.shop.model.PaymentVO;
 import com.team.shop.model.ProductVO;
+import com.team.shop.service.CardService;
 import com.team.shop.service.MemberService;
 import com.team.shop.service.PaymentService;
 import com.team.shop.service.ProductService;
@@ -40,13 +43,16 @@ public class PaymentController {
 	
 	@Inject
 	private MemberService memberService;
+
+	@Inject
+	private CardService cardService;
 	
 	//구매
 	@RequestMapping(value="/buy", method=RequestMethod.GET)
 	public String buy(ProductVO pvo, HttpSession session, Model model) throws Exception {
 		logger.info("Payment Start!");
-		int proAmount = 1;
-//		//결제 실패
+		int proAmount = 1; // 구매 갯수 1로 설정
+//		//결제 실패 // 재고수량이 없어서 주석처리
 //		if(pvo.getProduct_stock() < proAmount) {
 //			model.addAttribute("cause", "재고부족");
 //			return "payment/fail";
@@ -80,9 +86,17 @@ public class PaymentController {
 	
 	//배송지 입력
 	@RequestMapping("/checkAddr")
-	public String checkAddress() {
+	public String checkAddress(Model model, HttpSession session, String name) {
+		logger.info("Payment address!");
 		//로그인 되어 있는지 확인
-		return "payment/checkAddr";
+		if(session.getAttribute("member")==null) {
+			System.out.println(name);
+			session.setAttribute("payName", name);
+			return "payment/checkAddr";
+		}
+		else {
+			return "payment/choiceAddr";
+		}
 		// (checkAddr)페이지에서 배송지 입력폼 구현
 		// 로그인 됐으면 배송지 선택 창으로
 	}
@@ -95,19 +109,42 @@ public class PaymentController {
 	
 	//구매 최종 확인
 	@RequestMapping(value="/buyCheck")
-	public String buyCheck(Model model) {
+	public String buyCheck(Model model, CardVO cvo, String password, HttpSession session) throws Exception{
 		// CardVO cvo 파라미터로 받아와야 함
 		// @RequestParam("password") String accountPassword 파라미터로 받아와야 함
 		// CardVO의 ano와 일치하는 Bank_account 컬럼을 
 		// Bank_accountService에서 select해서
 		// accountPassword와 password로 입력받은 값이 일치하는지 확인
+		
+		System.out.println("입력받은 비밀번호 : " + password);
+		String accountPassword = "1234"; // 임시 비밀번호
+		//결제 실패
+		if(!accountPassword.equals(password)) {
+			model.addAttribute("cause", "카드 비밀번호 불일치");
+			return "payment/fail";
+		}
+		cvo.setAno(13241234);
+		cvo.setCardNumber(56788765);
+		cvo.setCardValidityPeriod("20210915");
+		cvo.setCVCNumber("000");
+		
+		cvo.setMemberId("이것은 비회원 아이디");
+		if(session.getAttribute("member") != null) {
+			//로그인된 아이디
+			cvo.setMemberId(((MemberVO)session.getAttribute("member")).getMemberId());
+		}else {
+			//비회원 본인인증 시 아이디
+			cvo.setMemberId((String)session.getAttribute("payName"));
+		}
+		
+		cardService.add(cvo);
 		// MemberVO의 memberAddr1 확인해서 
 		// 제주, 도서산간 지역은 추가 배송비 5000원
 		// ProductVO의 product_size 확인해서 ?
 		// 가로 x 세로 x 높이 / 6000
 		// 1 이상이면 기본 배송비 7000원, 0.5당 1000원씩 추가
 		
-		model.addAttribute("shippingFee", 30000);
+		model.addAttribute("shippingFee", 2500);
 		return "payment/buyCheck";
 		// (buyCheck)페이지에서 결제 금액 표시(상품가격,할인금액,결제금액),
 		// 상품 정보 확인(ProductVO), 결제 동의, 결제하기(PaymentVO 입력폼 disabled) 구현
@@ -123,7 +160,13 @@ public class PaymentController {
 		
 		//아이디에 비어있는 입력을 받을 경우
 		if(payVO.getMemberId().equals("")) {
-			payVO.setMemberId("이것은 비회원 아이디");
+			//default
+			payVO.setMemberId("이것도 비회원 아이디");
+			
+			//비회원 본인인증시 이름으로 적용
+			if(session.getAttribute("payName") != null) {
+				payVO.setMemberId((String)session.getAttribute("payName"));
+			}
 		}
 		else {
 			
@@ -148,9 +191,9 @@ public class PaymentController {
 		
 		//결제내역 저장
 		payService.add(payVO);
-		//재고 수량 갱신
-		pvo.setProduct_stock(pvo.getProduct_stock()-proAmount);
-		productService.update(pvo);
+		//재고 수량 갱신 // 재고수량이 없어서 주석처리
+		//pvo.setProduct_stock(pvo.getProduct_stock()-proAmount);
+		//productService.update(pvo);
 		
 		session.removeAttribute("payProd"); //세션에서 상품 정보 삭제
 		
@@ -163,8 +206,13 @@ public class PaymentController {
 	@RequestMapping(value="/view")
 	public void view(Model model, HttpSession session) throws Exception {
 		logger.info("Payment history");
-		List <PaymentVO> view = payService.view(
+		List <PaymentVO> view;
+		if(session.getAttribute("member") != null) {
+			view = payService.view(
 				((MemberVO)session.getAttribute("member")).getMemberId());
+		}else {
+			view = payService.view();
+		}
 		model.addAttribute("view", view);
 	}
 	//결제 취소, 환불
@@ -185,11 +233,18 @@ public class PaymentController {
 		
 		return "redirect:/payment/view";
 	}
+	
 	//결제 실패
 	@RequestMapping("/fail")
 	public String fail() {
 		logger.error("PAYMENT FAIL!!!");
 		return "payment/fail";
 		// (fail)페이지에서 결제 실패 구현
+	}
+	
+	// 배송 조회
+	@RequestMapping("/delivery")
+	public String deliveryView() {
+		return "payment/delivery";
 	}
 }
