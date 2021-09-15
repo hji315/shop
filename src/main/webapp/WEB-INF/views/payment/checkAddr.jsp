@@ -9,10 +9,13 @@
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp"%>
-<h2>payment - checkAddr</h2>
 <div>
 	<section id="container" class="mx-auto" style="width:500px; margin-top:10px;">
 			<form action="${path}/payment/checkCard" method="post">
+				<div class="form-group has-feedback">
+					<input class="form-control" type="hidden" name="memberId" value="${noMember}" />
+				</div>
+			
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberName">받는분</label>
 					<input class="form-control" type="text" id="memberName" name="memberName" value="${member.memberName}" />

@@ -10,7 +10,8 @@
 <body>
 <%@ include file="/resources/include/header.jsp"%>
 <h2>payment - fail</h2>
-결제 실패! ${cause}
+<p>결제 실패! ${cause}</p>
+처음부터 다시 진행해주세요.
 <%@ include file="/resources/include/footer.jsp"%>
 </body>
 </html>

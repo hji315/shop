@@ -5,14 +5,13 @@
   <mapper namespace="cardMapper">
   
   	<!-- 카드 정보 추가 -->
-  	<!-- 계좌와 연동하는 것은 Bank_관련 DB 추가 후 작성-->
 	<insert id="add" parameterType="com.team.shop.model.CardVO">
   		insert into card (
   			cardNumber, memberId, ano, CVCNumber, 
   			cardCompany, cardValidityPeriod
   		)
   		values(
-  		#{cardNumber}, #{memberId}, #{ano}, ${CVCNumber}, 
+  		#{cardNumber}, #{memberId}, #{ano}, #{CVCNumber}, 
   		#{cardCompany}, #{cardValidityPeriod}
   		)
   	</insert>
@@ -31,7 +30,6 @@
   	
   	<!-- 카드 정보 삭제-->
 	<delete id="delete" parameterType="int">
-		
 		DELETE 
 		  FROM card
 		 WHERE cardNumber=#{cardNumber}
