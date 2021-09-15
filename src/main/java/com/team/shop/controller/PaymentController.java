@@ -208,8 +208,9 @@ public class PaymentController {
 		logger.info("Payment history");
 		List <PaymentVO> view;
 		if(session.getAttribute("member") != null) {
-			view = payService.view(
-				((MemberVO)session.getAttribute("member")).getMemberId());
+			MemberVO mvo = (MemberVO)session.getAttribute("member");
+			System.out.println(mvo);
+			view = payService.view(mvo.getMemberId());
 		}else {
 			view = payService.view();
 		}
