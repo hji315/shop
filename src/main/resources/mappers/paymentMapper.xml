@@ -24,7 +24,7 @@
   	<select id="view" parameterType="String" resultType="com.team.shop.model.PaymentVO">
   	
   		select * from payment
-  		<if test="memberId != null">
+  		<if test="value != null">
   		 where memberId=#{memberId}
   		 </if>
   	</select>

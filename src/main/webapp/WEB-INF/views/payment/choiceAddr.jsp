@@ -11,8 +11,32 @@
 <%@ include file="/resources/include/header.jsp"%>
 <h2>payment - choiceAddr</h2>
 <div>
+	<div>
+	
+	</div>
 	<section id="container" class="mx-auto" style="width:500px; margin-top:10px;">
 			<form action="${path}/payment/checkCard" method="post">
+				<div class="form-group has-feedback default_delivery">
+					<label class="control-label" for="memberName">받는분</label>
+					<input class="form-control" type="text" id="memberName" name="memberName" value="${member.memberName}" readonly="readonly" />
+				</div>
+					<div class="clearfix"></div>
+				<div class="form-group has-feedback">
+					<label class="control-label" for="memberAddr1">주소</label>
+					<input class="form-control" type="text" id="address_input_1" name="memberAddr1" value="${member.memberAddr1}" readonly="readonly" />
+				</div>
+				<div class="form-group has-feedback">
+					<input class="form-control" type="text" id="address_input_2" name="memberAddr2" value="${member.memberAddr2}" readonly="readonly"/>
+				</div>
+				<div class="form-group has-feedback">
+					<input class="form-control" type="text" id="address_input_3" name="memberAddr3" value="${member.memberAddr3}" readonly="readonly" />
+				</div>
+					
+					
+				<div class="form-group has-feedback">
+					<button class="btn btn-dark" type="submit" id="submit">기본 배송지</button>
+				</div>
+				
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberName">받는분</label>
 					<input class="form-control" type="text" id="memberName" name="memberName" value="${member.memberName}" />

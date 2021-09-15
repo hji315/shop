@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -124,11 +123,7 @@ public class PaymentController {
 			return "payment/fail";
 		}
 		cvo.setAno(13241234);
-		cvo.setCardNumber(56788765);
-		cvo.setCardValidityPeriod("20210915");
-		cvo.setCVCNumber("000");
-		
-		cvo.setMemberId("이것은 비회원 아이디");
+		cvo.setMemberId("이것은 비회원 아이디");//default
 		if(session.getAttribute("member") != null) {
 			//로그인된 아이디
 			cvo.setMemberId(((MemberVO)session.getAttribute("member")).getMemberId());
@@ -209,8 +204,9 @@ public class PaymentController {
 		List <PaymentVO> view;
 		if(session.getAttribute("member") != null) {
 			MemberVO mvo = (MemberVO)session.getAttribute("member");
-			System.out.println(mvo);
-			view = payService.view(mvo.getMemberId());
+			String mid = mvo.getMemberId();
+			System.out.println("아이디 " + mid);
+			view = payService.view(mid);
 		}else {
 			view = payService.view();
 		}

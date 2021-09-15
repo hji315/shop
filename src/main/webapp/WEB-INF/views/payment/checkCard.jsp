@@ -18,8 +18,15 @@
   <option value="2">삼성</option>
   <option value="3">비씨</option>
 </select>
+<label for="cardNumber">카드 번호</label>
+<input type="text" name="cardNumber" id="cardNumber"/>
+<label for="cardValidityPeriod">카드 유효기간</label>
+<input type="text" name="cardValidityPeriod" id="cardValidityPeriod"/>
+<label for="CVCNumber">CVC 번호</label>
+<input type="text" name="CVCNumber" id="CVCNumber"/>
+<!-- 카드 비밀번호 임시 1234 -->
 <label for="password">카드 비밀번호</label>
-<input type="text" name="password" id="password"/>
+<input type="text" name="password" id="password" value="1234"/> 
 <input type="submit" class="btn btn-sm btn-outline-secondary" value="저장" />
 </form>
 </div>
