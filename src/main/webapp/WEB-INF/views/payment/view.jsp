@@ -44,7 +44,10 @@
                         </li>    
                         <li>
                             <a class="list-group-item"  href="${path}/payment/view">구매내역 조회</a>                            
-                        </li>                                                                                          
+                        </li>         
+                          <li>
+                            <a class="list-group-item"  href="${path}/member/memberDeleteView">회원 탈퇴</a>                            
+                        </li>                                                                                    
                     </ul>
                 </div>
 <h2>payment - view</h2>
