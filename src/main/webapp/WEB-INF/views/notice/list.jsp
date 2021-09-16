@@ -65,9 +65,13 @@
 				<li class="pageInfo_btn next"><a href="${pageMAker.startPage+1 }">Next</a></li>
 			</c:if>
 		</ul>
+		<div>
+	      <c:if test="${member.adminCk == 1 }">
+			  <a href="${pageContext.request.contextPath}/notice/enroll" class="top_btn" >글쓰기</a>
+	      </c:if>
+	    </div>
 	</div>
 </div>
-	<a href="${pageContext.request.contextPath}/notice/enroll" class="top_btn">글쓰기</a>
 </div>
 
 <form id="moveForm" method="get">
