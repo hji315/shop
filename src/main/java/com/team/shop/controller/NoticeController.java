@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.team.shop.mapper.PageMakerDTO;
+import com.team.shop.model.NCriteria;
 import com.team.shop.model.NoticeVO;
 import com.team.shop.service.NoticeService;
 
@@ -23,6 +25,7 @@ public class NoticeController {
 	private NoticeService nservice;
 	
 	// 게시판 목록 페이지 접속
+	/*
 	@GetMapping("/list")
 	// => @RequestMapping(value="list", method=RequestMethod.GET)
 	public void noticeListGET(Model model) {
@@ -32,7 +35,23 @@ public class NoticeController {
 		model.addAttribute("list", nservice.getList());
 		
 	}
-
+	 */
+	
+	// 게시판 목록 페이지 접속(페이징 적용)
+	@GetMapping("/list")
+	public void noticeListGET(Model model, NCriteria ncri) {
+		
+		log.info("noticeListGET");
+		
+		model.addAttribute("list", nservice.getListPaging(ncri));
+		
+		int total = nservice.getTotal();
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(ncri, total);
+		
+		model.addAttribute("pageMaker", pageMaker);
+	}
+	
 	// 게시판 등록 페이지 접속
 	@GetMapping("/enroll")
 	// => @RequestMapping(value="enroll", method=RequestMethod.GET)
@@ -58,9 +77,11 @@ public class NoticeController {
 
 	// 게시판 조회
 	@GetMapping("/get")
-	public void noticeGetPageGET(int bno, Model model) {
+	public void noticeGetPageGET(int bno, Model model, NCriteria ncri) {
 		
 		model.addAttribute("pageInfo", nservice.getPage(bno));
+		
+		model.addAttribute("ncri", ncri);
 		
 	}
 	
