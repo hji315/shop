@@ -27,7 +27,7 @@
 				<tbody>
 					<tr>
 						<td >송장번호</td>
-						<td >10223707063813</td>
+						<td >${dvVO.deliveryNumber}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -37,19 +37,19 @@
 				<tbody>
 					<tr>
 						<td >받는사람</td>
-						<td >${deliveryMVO.memberName}</td>
+						<td >${dvVO.memberName}</td>
 					</tr>
 					<tr>
 						<td >받는주소</td>
-						<td >${deliveryMVO.memberAddr2} ${deliveryMVO.memberAddr3}</td>
+						<td >${dvVO.memberAddr2} ${dvVO.memberAddr3}</td>
 					</tr>
 					<tr>
 						<td>배송요청사항</td>
-						<td>현관문앞 (자율출입 가능)</td>
+						<td>${dvVO.deliveryMemo}</td>
 					</tr>
 					<tr>
 						<td>상품수령방법</td>
-						<td>문앞 전달</td>
+						<td>${dvVO.deliveryReceive}</td>
 					</tr>
 				</tbody>
 			</table>

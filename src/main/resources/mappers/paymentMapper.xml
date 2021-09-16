@@ -27,6 +27,7 @@
   		<if test="value != null">
   		 where memberId=#{memberId}
   		 </if>
+  		 order by pno desc
   	</select>
   	
   	

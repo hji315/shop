@@ -36,10 +36,19 @@
 				</div>
 					
 					
+				<div>
+					<label for="deliveryMemo">배송 요청 사항</label> <input type="text"
+						name="deliveryMemo" id="deliveryMemo" />
+				</div>
+				<div>
+					<label for="deliveryReceive">상품 수령 방법</label> <input type="text"
+						name="deliveryReceive" id="deliveryReceive" />
+				</div>
 				<div class="form-group has-feedback">
 					<button class="btn btn-dark" type="submit" id="submit">배송지 입력완료</button>
 					<button class="btn btn-outline-dark" type="button" id="cencle">취소</button>
 				</div>
+				
 			</form>
 		</section>
 		

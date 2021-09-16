@@ -17,12 +17,11 @@
 </c:if>
 <p>남은 재고 : ${payProd.product_stock}</p>
 
-<form action="">
-
+<form action="${path}/payment/delivery" method="post">
+<input type="hidden" name="pno" value="${payVO.pno}"/>
+<input type="submit" value="배송 조회" class="btn btn-sm btn-outline-secondary" />
 </form>
 
-<a href="${path}/payment/delivery" class="btn btn-sm btn-outline-secondary">
-배송 조회</a>
 <%@ include file="/resources/include/footer.jsp"%>
 </body>
 </html>

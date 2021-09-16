@@ -33,12 +33,23 @@
 				<div class="form-group has-feedback">
 					<input class="form-control" type="text" id="address_input_3" name="memberAddr3" value="${payMember.memberAddr3}" readonly="readonly" />
 				</div>
-					
-					
+
+				<div>
+					<label for="deliveryMemo">배송 요청 사항</label> <input type="text"
+						name="deliveryMemo" id="deliveryMemo" />
+				</div>
+				<div>
+					<label for="deliveryReceive">상품 수령 방법</label> <input type="text"
+						name="deliveryReceive" id="deliveryReceive" />
+				</div>
 				<div class="form-group has-feedback">
 					<button class="btn btn-dark" type="submit" id="submit">기본 배송지</button>
 				</div>
-				
+			</form>
+			<form action="${path}/payment/checkCard" method="post">
+			<div class="form-group has-feedback">
+					<input class="form-control" type="hidden" name="memberId" value="${member.memberId}" />
+				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="memberName">받는분</label>
 					<input class="form-control" type="text" id="memberName" name="memberName" value="${payMember.memberName}" />
@@ -57,7 +68,14 @@
 				<div class="form-group has-feedback">
 					<input class="form-control" type="text" id="address_input_3" name="memberAddr3" />
 				</div>
-					
+				<div>
+					<label for="deliveryMemo">배송 요청 사항</label> <input type="text"
+						name="deliveryMemo" id="deliveryMemo" />
+				</div>
+				<div>
+					<label for="deliveryReceive">상품 수령 방법</label> <input type="text"
+						name="deliveryReceive" id="deliveryReceive" />
+				</div>
 					
 				<div class="form-group has-feedback">
 					<button class="btn btn-dark" type="submit" id="submit">배송지 입력 완료</button>
