@@ -75,7 +75,7 @@
 	</div>
 	
 	<div id="carouselExampleInterval2" class="carousel carousel-dark slide hjslide" data-bs-ride="carousel">
-		<h2 class="center">New ITEM 10</h2>
+		<h2 class="center">New ITEM 12</h2>
 		<div class="carousel-inner">
 			<div class="carousel-item active slidepadding" data-bs-interval="2500">
 		    	<c:forEach var="newItem" items="${newItem}" varStatus="status" begin="0" end="3">
@@ -92,7 +92,7 @@
 	   			</c:forEach>
 	   		</div>
 			<div class="carousel-item slidepadding">
-		    	<c:forEach var="newItem" items="${newItem}" varStatus="status" begin="8" end="10">
+		    	<c:forEach var="newItem" items="${newItem}" varStatus="status" begin="8" end="11">
 			    	<a href="${path}/product/readView?product_id=${newItem.product_id}">
 						<img class="hjImg" src="<c:out value="${newItem.product_main_img}" />"/>
 					</a>
