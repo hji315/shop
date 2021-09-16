@@ -39,8 +39,19 @@ public class MyPageController {
     
     /* 배송조회 페이지 접속 */
     @RequestMapping(value = "/delivery", method = RequestMethod.GET)
-    public void deliveryGET() throws Exception{
+    public void deliveryGET(Model model, HttpSession session) throws Exception{
         logger.info("배송 조회 페이지 접속");
+        List <PaymentVO> view;
+		MemberVO mvo = getSessionMember(session, "member");
+		//관리자인지 확인
+		if(mvo.getAdminCk()==1) {
+			//전체 조회
+			view = payService.view();
+		}else {
+			//회원 아이디로 조회
+			view = payService.view(getSessionMember(session, "member").getMemberId());
+		}
+		model.addAttribute("view", view);
     }
     
     /* 후기 작성 페이지 접속 */
@@ -54,22 +65,7 @@ public class MyPageController {
     public void pointGET() throws Exception{
     	logger.info("포인트 조회 페이지 접속");
     }  
-    @RequestMapping("/delivery")
-	public String mypageDelivery(Model model, HttpSession session) throws Exception {
-		logger.info("Mypage Delivery!");
-		List <PaymentVO> view;
-		MemberVO mvo = getSessionMember(session, "member");
-		//관리자인지 확인
-		if(mvo.getAdminCk()==1) {
-			//전체 조회
-			view = payService.view();
-		}else {
-			//회원 아이디로 조회
-			view = payService.view(getSessionMember(session, "member").getMemberId());
-		}
-		model.addAttribute("view", view);
-		return "/mypage/delivery";
-	}
+    
     @RequestMapping(value="/view")
 	public void view(Model model, HttpSession session) throws Exception {
 		logger.info("Mypage payment history");
