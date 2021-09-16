@@ -35,7 +35,7 @@
       <div class="col-4 pt-1">
 	      <a class="btn btn-sm" href="${pageContext.request.contextPath}/notice/list">NOTICE</a>
 	      <a class="btn btn-sm" href="#">Q&A</a>
-      </div>
+	            </div>
       <div class="col-4 text-center">
         <a class="blog-header-logo text-dark" 
         href="${pageContext.request.contextPath}/">
