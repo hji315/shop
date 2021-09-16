@@ -11,7 +11,8 @@ public interface PaymentDAO {
 		
 		// 결제 내역 전체 조회
 		public List<PaymentVO> view(String memberId) throws Exception;
-		
+
+		public List<PaymentVO> view();		
 		// 결제 1개 조회
 		public PaymentVO read(int pno) throws Exception;
 		
@@ -20,5 +21,6 @@ public interface PaymentDAO {
 		
 		// 결제 내역 삭제
 		public void delete(int pno) throws Exception;
+
 		
 }

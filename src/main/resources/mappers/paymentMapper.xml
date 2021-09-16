@@ -23,8 +23,13 @@
   	 <!-- 회원 결제 내역 전체 조회 -->
   	<select id="view" parameterType="String" resultType="com.team.shop.model.PaymentVO">
   	
-  		select * from payment where memberId=#{memberId}
+  		select * from payment
+  		<if test="value != null">
+  		 where memberId=#{memberId}
+  		 </if>
   	</select>
+  	
+  	
   	
   	<!-- 결제 내역 1개 조회 -->
   	<select id="read" parameterType="int" resultType="com.team.shop.model.PaymentVO">

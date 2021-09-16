@@ -155,7 +155,7 @@ public class MemberController {
     //MemberVO는 데이터 전달 받기 위해
     //HttpServletRequest는 로그인 성공 시 session에 회원 정보를 저장
     //RedirectAttributes는 로그인 실패 시 리다이렉트 된 로그인 페이지에 실패를 의미하는 데이터를 전송
-    @RequestMapping(value="login", method=RequestMethod.POST)
+    @RequestMapping(value="/login", method=RequestMethod.POST)
     public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception{
 		/*    비밀번호 암호화 이전 코드
 		 * 
@@ -296,5 +296,52 @@ public class MemberController {
 		return pwdChk;
 	}
 	
+	//비밀번호 찾기 get
+	@RequestMapping(value = "/find_pw", method = RequestMethod.GET)
+	public String get_find_pw() throws Exception {
+		return "member/find_pw";
+	}
+	
+	//비밀번호 찾기 post
+	@RequestMapping(value = "/find_pw", method = RequestMethod.POST)
+	public String post_find_pw(MemberVO member, HttpServletRequest req, RedirectAttributes rttr) throws Exception{
+		
+		HttpSession session = req.getSession();
+		MemberVO find_pw = memberservice.find_pw(member);
+		
+		if(find_pw == null) {
+			session.setAttribute("member", null);
+			rttr.addFlashAttribute("msg", "fail");
+			return "redirect:/member/find_pw";
+		}else {
+			session.setAttribute("member", find_pw);
+			return "redirect:/member/change_pw_form";
+		}
+	}
+	
+	//비밀번호 변경 get
+	@RequestMapping(value = "/change_pw_form", method = RequestMethod.GET)
+	public String get_change_pw_form() throws Exception {
+		return "member/change_pw_form";		
+	}	
+
+	//비밀번호 변경 post
+	@RequestMapping(value="/change_pw", method = RequestMethod.POST)
+	public String post_change_pw(MemberVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		String inputPass = vo.getMemberPw();
+		String pwd = pwEncoder.encode(inputPass);
+		vo.setMemberPw(pwd);
+		int msg_pw = memberservice.change_pw(vo);	
+		
+		if(msg_pw!=1) {	//안될때
+			rttr.addFlashAttribute("msg_pw","0");
+			return "redirect:/member/change_pw_form";
+		}else { //될때
+			rttr.addFlashAttribute("msg_pw","1");
+			session.invalidate();
+			return "redirect:/member/login";
+		}
+	}
 	
 }

@@ -10,9 +10,16 @@
 <body>
 <%@ include file="/resources/include/header.jsp"%>
 <h2>payment - verification</h2>
-<a class="btn btn-sm btn-outline-secondary" href="${path}/payment/checkCard">약관 동의</a>
+<div>
+<form action="${path}/payment/checkAddr">
+<p>본인인증</p>
+<label for="name">이름 : </label>
+<input type="text" name="name" id="name" required/>
+<div></div>
+<input type="submit" class="btn btn-sm btn-outline-secondary" value="약관 동의" />
+</form>
 <button class="btn btn-sm btn-outline-secondary" onClick="history.go(-1)">취소</button>
-
+</div>
 <%@ include file="/resources/include/footer.jsp"%>
 </body>
 </html>

@@ -27,7 +27,10 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentVO> view(String memberId) throws Exception {
 		return dao.view(memberId);
 	}
-
+	@Override
+	public List<PaymentVO> view() {
+		return dao.view();
+	}
 	// 결제 1개 조회
 	@Override
 	public PaymentVO read(int pno) throws Exception {
@@ -45,5 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
 	public void delete(int pno) throws Exception {
 		dao.delete(pno);
 	}
+
+	
 
 }

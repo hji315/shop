@@ -38,6 +38,11 @@
 			$("#find_id_btn").on("click", function(){
 				location.href = "${path}/member/find_id_form.do";
 			});
+			
+			//비밀번호 찾기
+			$("#find_pw_btn").on("click", function(){
+				location.href = "${path}/member/find_pw";
+			});
 	 });
 </script>
 
@@ -69,6 +74,7 @@
 					<button class="btn btn-dark" type="button" id="join">회원가입</button>
 					<button type="button" class="btn btn-outline-dark" id="cancle">홈으로</button>
 					<button class="btn btn-dark" type="button" id="find_id_btn">아이디찾기</button>
+					<button type="button" class="btn btn-outline-dark" id="find_pw_btn">비밀번호 찾기</button>
 				</div>
 			</form>
 		</section>
