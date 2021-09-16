@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,33 +18,31 @@
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp"%>
-<h1>조회 페이지</h1>
+<div data-v-8e4e6430="" fragment="95e7214531" class="term-container">
+<form id="modifyForm" action="/notice/modify" method="post">
 	<div class="input_wrap">
-		<label>게시판 번호</label>
-		<input name="bno" readonly="readonly" value='<c:out value="${pageInfo.bno}"/>' >
+		<input name="title" readonly="readonly" style="border:0 solid black" value='<c:out value="${pageInfo.title}"/>' >
+		<hr>
 	</div>
 	<div class="input_wrap">
-		<label>게시판 제목</label>
-		<input name="title" readonly="readonly" value='<c:out value="${pageInfo.title}"/>' >
+		<input name="writer" readonly="readonly" style="border:0 solid black" value='<c:out value="${pageInfo.writer}"/>' >
+		<input name="regDate" readonly="readonly" style="border:0 solid black" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.regDate }"/>' >
+		<hr>
 	</div>
 	<div class="input_wrap">
-		<label>게시판 내용</label>
-		<textarea rows="3" name="content" readonly="readonly"><c:out value="${pageInfo.content}"/></textarea>
-	</div>
-	<div class="input_wrap">
-		<label>게시판 작성자</label>
-		<input name="writer" readonly="readonly" value='<c:out value="${pageInfo.writer}"/>' >
-	</div>
-	<div class="input_wrap">
-		<label>게시판 등록일</label>
-		<input name="regDate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.regDate }"/>' >
+		<textarea rows="3" name="content" readonly="readonly" style="border:0 solid black"><c:out value="${pageInfo.content}"/></textarea>
+		<hr>
 	</div>
 	<div class="btn_wrap">
 		<a class="btn" id="list_btn">목록</a>
 		<a class="btn" id="modify_btn">수정</a>
 	</div>
+</form>
+</div>
 	<form id="infoForm" action="/notice/modify" method="get">
 		<input type="hidden" id="bno" name="bno" value='<c:out value="${pageInfo.bno }"/>'>
+		<input type="hidden" name="pageNum" value='<c:out value="${ncri.pageNum }"/>'>
+		<input type="hidden" name="amount" value='<c:out value="${ncri.amount }"/>'>
 	</form>
 	
 <script>

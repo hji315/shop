@@ -11,13 +11,18 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
 <link href="${pageContext.request.contextPath}/resources/css/notice.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/blog.css" rel="stylesheet">
 <title>Notice</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+
 <link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
+
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp"%>
+<div data-v-8e4e6430="" fragment="95e7214531" class="term-container">
 <div class="table_wrap">
 <table>
 	<thead>
@@ -33,16 +38,42 @@
 			<td><c:out value="${list.bno }"/></td>
 			<td>
 			<a class="move" href='<c:out value="${list.bno }"/>'>
-			<c:out value="${list.title }"/></td>
+			<c:out value="${list.title }"/></td>			
 			</a>
 			<td><c:out value="${list.writer }"/></td>
             <td><fmt:formatDate pattern="yyyy/MM/dd" value="${list.regDate}"/></td>
 		</tr>
 	</c:forEach>
 </table>
+
+<div class="pageInfo_wrap">
+	<div class="pageInfo_area">
+		<ul id="pageInfo" class="pageInfo">
+		
+			<!-- 이전 페이지 버튼 -->
+			<c:if test="${pageMaker.prev }">
+				<li class="pageInfo_btn previous"><a href="${pageMAker.startPage-1 }">Previous</a></li>
+			</c:if>
+		
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+				<li class="pageInfo_btn ${pageMaker.ncri.pageNum == num ? "active":"" }"><a href="${num }">${num }</a></li>
+			</c:forEach>
+			
+			<!-- 다음 페이지 버튼 -->
+			<c:if test="${pageMaker.next }">
+				<li class="pageInfo_btn next"><a href="${pageMAker.startPage+1 }">Next</a></li>
+			</c:if>
+		</ul>
+	</div>
+</div>
+	<a href="${pageContext.request.contextPath}/notice/enroll" class="top_btn">글쓰기</a>
+</div>
+
 <form id="moveForm" method="get">
+	<input type="hidden" name= "pageNum" value="${pageMaker.ncri.pageNum}">
+	<input type="hidden" name= "amount" value="${pageMaker.ncri.amount}">
 </form>
-<a href="${pageContext.request.contextPath}/notice/enroll" class="top_btn">게시판 등록</a>
 </div>
 
 <script>
@@ -77,7 +108,15 @@
         moveForm.submit();
     });
     
+    $(".pageInfo a").on("click", function(e) {
+    	
+    	e.preventDefault();
+    	moveForm.find("input[name='pageNum']").val($(this).attr("href"));
+    	moveForm.attr("action", "${pageContext.request.contextPath}/notice/list");
+    	moveForm.submit();
+    });
 </script>
+
 <%@ include file="/resources/include/footer.jsp"%>
 </body>
 </html>

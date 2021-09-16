@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.shop.mapper.NoticeMapper;
+import com.team.shop.model.NCriteria;
 import com.team.shop.model.NoticeVO;
 
 @Service
@@ -28,6 +29,13 @@ public class NoticeServiceImpl implements NoticeService {
 		return mapper.getList();
 	}
 
+	// 게시판 목록(페이징 적용)
+	@Override
+	public List<NoticeVO> getListPaging(NCriteria ncri) {
+		
+		return mapper.getListPaging(ncri);
+	}
+
 	// 게시판 조회
 	@Override
 	public NoticeVO getPage(int bno) {
@@ -42,9 +50,18 @@ public class NoticeServiceImpl implements NoticeService {
 		return mapper.modify(nvo);
 	}
 
+	// 게시판 삭제
 	@Override
 	public int delete(int bno) {
 
 		return mapper.delete(bno);
 	}
+
+	// 게시물 총 개수
+	@Override
+	public int getTotal() {
+		
+		return mapper.getTotal();
+	}
+
 }
