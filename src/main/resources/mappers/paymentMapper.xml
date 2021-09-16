@@ -5,8 +5,7 @@
   <mapper namespace="paymentMapper">
   
   	<!-- 결제 내역 추가 -->
-  	<!-- 비회원은 포인트 없는 insert문 따로 동적쿼리로 추가 -->
-	<insert id="add" parameterType="com.team.shop.model.PaymentVO" useGeneratedKeys="true" keyProperty="pno">
+  	<insert id="add" parameterType="com.team.shop.model.PaymentVO" useGeneratedKeys="true" keyProperty="pno">
 	<selectKey keyProperty="pno" resultType="int" order="BEFORE"> <!-- BEFORE =>insert를 실행하기 전에 먼저 실행 -->
 	    	SELECT PAYMENT_SEQ.NEXTVAL FROM DUAL
 	</selectKey>
