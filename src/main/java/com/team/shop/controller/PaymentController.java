@@ -219,7 +219,6 @@ public class PaymentController {
 			//비회원 본인인증시 이름으로 적용
 			payVO.setMemberId(memId);
 
-			
 		}
 		
 		System.out.println("결제된 것 : " + payVO);
@@ -248,21 +247,7 @@ public class PaymentController {
 		// 배송조회로 이동하는 링크 표시
 	}
 	//결제 내역 보기
-	@RequestMapping(value="/view")
-	public void view(Model model, HttpSession session) throws Exception {
-		logger.info("Payment history");
-		List <PaymentVO> view;
-		MemberVO mvo = getSessionMember(session, "member");
-		//관리자인지 확인
-		if(mvo.getAdminCk()==1) {
-			//전체 조회
-			view = payService.view();
-		}else {
-			//회원 아이디로 조회
-			view = payService.view(getSessionMember(session, "member").getMemberId());
-		}
-		model.addAttribute("view", view);
-	}
+	
 	//결제 취소, 환불
 	@RequestMapping(value="/cancel", method=RequestMethod.POST)
 	public String cancel(PaymentVO payVO, HttpSession session) throws Exception{
@@ -302,22 +287,7 @@ public class PaymentController {
 		model.addAttribute("dvVO", dvVO);
 		return "payment/delivery";
 	}
-	@RequestMapping("/mypageDelivery")
-	public String mypageDelivery(Model model, HttpSession session) throws Exception {
-		logger.info("Mypage Delivery!");
-		List <PaymentVO> view;
-		MemberVO mvo = getSessionMember(session, "member");
-		//관리자인지 확인
-		if(mvo.getAdminCk()==1) {
-			//전체 조회
-			view = payService.view();
-		}else {
-			//회원 아이디로 조회
-			view = payService.view(getSessionMember(session, "member").getMemberId());
-		}
-		model.addAttribute("view", view);
-		return "/payment/mypageDelivery";
-	}
+	
 	
 	//세션에 "member"가 있는지 => 로그인 되어 있는지
 	private boolean isSessionMember(HttpSession session) {
