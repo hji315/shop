@@ -10,14 +10,39 @@
 <body>
 <%@ include file="/resources/include/header.jsp"%>
 <div align="center">
+<c:if test="${not empty cardList}">
+<c:forEach var="cardList" items="${cardList}">
+<form action="${path}/payment/buyCheck" method="post">
+<div>
+<label for="cardCompany">카드사</label>
+<input type="text" name="cardCompany" id="cardCompany" value="${cardList.cardCompany}" readonly/>
+</div>
+<div>
+<label for="cardNumber">카드번호</label>
+<input type="text" name="cardNumber" id="cardNumber" value="${cardList.cardNumber}" readonly/>
+</div>
+<div>
+<label for="cardValidityPeriod">유효기간</label>
+<input type="text" name="cardValidityPeriod" id="cardValidityPeriod" value="${cardList.cardValidityPeriod}" />
+</div>
+<div>
+<label for="CVCNumber">CVC번호</label>
+<input type="text" name="CVCNumber" id="CVCNumber" value="${cardList.CVCNumber}" />
+</div>
+<input type="hidden" name="password" id="password" value="1234" />
+<input type="submit" value="등록된 카드 사용" />
+<hr />
+</form>
+</c:forEach>
+</c:if>
 <form action="${path}/payment/buyCheck" method="post">
 <table style="width:720px" class="table">
 <div style="width:120px">
 <select class="form-select form-select-sm" aria-label=".form-select-sm" name="cardCompany">
   <option selected>카드사</option>
-  <option value="1">현대</option>
-  <option value="2">삼성</option>
-  <option value="3">비씨</option>
+  <option value="현대">현대</option>
+  <option value="삼성">삼성</option>
+  <option value="비씨">비씨</option>
 </select>
 </div>
 <tr>
