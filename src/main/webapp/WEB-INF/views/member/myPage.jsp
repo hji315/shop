@@ -81,7 +81,7 @@
                             <a class="list-group-item" href="/mypage/basket">장바구니</a>
                         </li>
                         <li>
-                            <a class="list-group-item"  href="/payment/mypageDelivery">배송조회</a>                            
+                            <a class="list-group-item"  href="/mypage/delivery">배송조회</a>                            
                         </li>
                         <li>
                             <a class="list-group-item"  href="/mypage/postscript">후기작성</a>                            
@@ -90,7 +90,7 @@
                             <a class="list-group-item"  href="${path}/mypage/point">포인트조회</a>                            
                         </li>    
                         <li>
-                            <a class="list-group-item"  href="${path}/payment/view">구매내역 조회</a>                            
+                            <a class="list-group-item"  href="${path}/mypage/view">구매내역 조회</a>                            
                         </li>
                         <li>
                             <a class="list-group-item"  href="${path}/member/memberDeleteView">회원 탈퇴</a>                            
