@@ -37,7 +37,7 @@
 	</tr>
 	<tr>
 		<td>Writer</td>
-		<td><input name="writer" class="writer"></td>
+		<td><input name="writer" readonly="readonly" class="writer" value="#SHOP"></td>
 	</tr>
 	<tr>
 	<td></td>

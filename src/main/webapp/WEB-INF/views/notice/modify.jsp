@@ -34,7 +34,6 @@
 		<input name="title" class="title" value='<c:out value="${pageInfo.title}"/>' >
 	</div>
 	<div class="input_wrap">
-		<input name="writer" readonly="readonly" style="border:0 solid black" value='<c:out value="${pageInfo.writer}"/>' >
 		<input name="regDate" readonly="readonly" style="border:0 solid black" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.regDate}"/>' >
 	</div>
 	<div class="input_wrap">
@@ -43,7 +42,6 @@
 	<div class="btn_wrap">
 		<a class="btn" id="list_btn">목록</a>
 		<a class="btn" id="modify_btn">수정</a>
-		<a class="btn" id="delete_btn">삭제</a>
 		<a class="btn" id="cancel_btn">수정 취소</a>
 	</div>
 </form>
@@ -72,13 +70,6 @@
 	// 취소 버튼
 	$("#cancel_btn").on("click", function(e){
 		form.attr("action", "${pageContext.request.contextPath}/notice/get");
-		form.submit();
-	});
-	
-	// 삭제 버튼
-	$("#delete_btn").on("click", function(e){
-		form.attr("action", "${pageContext.request.contextPath}/notice/delete");
-		form.attr("method", "post");
 		form.submit();
 	});
 	

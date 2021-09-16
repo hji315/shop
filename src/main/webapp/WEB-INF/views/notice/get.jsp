@@ -15,13 +15,19 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 <link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
+
+<style>
+.title {
+  width:800px;
+}
+</style>
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp"%>
 <div data-v-8e4e6430="" fragment="95e7214531" class="term-container">
 <form id="modifyForm" action="/notice/modify" method="post">
 	<div class="input_wrap">
-		<input name="title" readonly="readonly" style="border:0 solid black" value='<c:out value="${pageInfo.title}"/>' >
+		<input name="title" readonly="readonly" style="border:0 solid black; width:800px" value='<c:out value="${pageInfo.title}"/>' >
 		<hr>
 	</div>
 	<div class="input_wrap">
@@ -35,7 +41,10 @@
 	</div>
 	<div class="btn_wrap">
 		<a class="btn" id="list_btn">목록</a>
-		<a class="btn" id="modify_btn">수정</a>
+		  <c:if test="${member.adminCk == 1 }">
+				<a class="btn" id="modify_btn">수정</a>
+				<a class="btn" id="delete_btn">삭제</a>
+		  </c:if>
 	</div>
 </form>
 </div>
@@ -56,6 +65,12 @@
 
 	$("#modify_btn").on("click", function(e){
 		form.attr("action", "${pageContext.request.contextPath}/notice/modify");
+		form.submit();
+	});
+	
+	$("#delete_btn").on("click", function(e){
+		form.attr("action", "${pageContext.request.contextPath}/notice/delete");
+		form.attr("method", "post");
 		form.submit();
 	});
 </script>
