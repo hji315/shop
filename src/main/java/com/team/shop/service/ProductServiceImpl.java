@@ -29,6 +29,11 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
+	public List<ProductVO> list_new() throws Exception {
+		return dao.list_new();
+	}
+	
+	@Override
 	public int listCount(SearchCriteria scri) throws Exception {
 		return dao.listCount(scri);
 	}

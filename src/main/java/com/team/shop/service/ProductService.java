@@ -11,6 +11,8 @@ public interface ProductService {
 	
 	public List<ProductVO> list(SearchCriteria scri) throws Exception;
 	
+	public List<ProductVO> list_new() throws Exception;
+	
 	public int listCount(SearchCriteria scri) throws Exception;
 	
 	public ProductVO read(int product_id) throws Exception;

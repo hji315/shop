@@ -65,7 +65,7 @@
 		<!-- 관리자 -->
 		<div>
 	      <c:if test="${member.adminCk == 1 }">
-	          <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/admin/main">관리자 페이지</a>
+	          <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/admin">관리자 페이지</a>
 	          <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
 	      </c:if>
 	    </div>
@@ -89,7 +89,7 @@
 
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-      <a class="p-2 link-secondary" href="${path}/product/list?product_category=NEW">NEW</a>
+      <a class="p-2 link-secondary" href="${path}/product/list_new">NEW</a>
       <a class="p-2 link-secondary" href="${path}/product/list?product_category=OUTER">OUTER</a>
       <a class="p-2 link-secondary" href="${path}/product/list?product_category=TOP">TOP</a>
       <a class="p-2 link-secondary" href="${path}/product/list?product_category=BOTTOM">BOTTOM</a>

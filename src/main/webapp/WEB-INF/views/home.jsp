@@ -39,56 +39,76 @@
 </head>
 <body>
 <div class="container">
-<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      <img src="${path }/resources/img/mainpage (1).jpg" class="d-block w-100" alt="옷 그림">
-    </div>
-    <div class="carousel-item" data-bs-interval="2000">
-      <img src="${path }/resources/img/mainpage (2).jpg" class="d-block w-100" alt="옷 그림2">
-    </div>
-    <div class="carousel-item">
-      <img src="${path }/resources/img/mainpage (3).jpg" class="d-block w-100" alt="옷 그림3">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-</div>
-<div class="container">
-		<table class="hjTable">
-			<tr>
-				<c:set var="i" value="0" />
-				<c:set var="j" value="4" />
-				<c:forEach var="newItem" items="${newItem}">
-					<c:if test="${i%j == 0 }">
-						<tr>
-					</c:if>
-						<td>
-							<div class="hjPadding">
-								<a href="${path}/product/readView?product_id=${newItem.product_id}">
-									<img class="hjImg" src="<c:out value="${newItem.product_main_img}" />">
-								</a>
-								<br/>
-								<div class="hjText">${newItem.product_name}<br/></div>
-								<a href="#"><img src="${path }/resources/img/cart.png"></a>
-								<div class="right">${newItem.product_price}원<br/><br/></div>
-							</div>
-						</td>
-					<c:if test="${i%j == j-1 }">
-						</tr>
-					</c:if>
-					<c:set var="i" value="${i+1 }" />
-				</c:forEach>
-			</tr>
-		</table>
+	<div id="carouselExampleInterval1" class="carousel carousel-dark slide hjslide" data-bs-ride="carousel">
+		<h2 class="center">Best ITEM 12</h2>
+		<div class="carousel-inner">
+			<div class="carousel-item active slidepadding" data-bs-interval="2500">
+		    	<c:forEach var="bestItem" items="${bestItem}" varStatus="status" begin="0" end="3">
+			    	<a href="${path}/product/readView?product_id=${bestItem.product_id}">
+						<img class="hjImg" src="<c:out value="${bestItem.product_main_img}" />"/>
+					</a>
+	   			</c:forEach>
+	   		</div>
+			<div class="carousel-item slidepadding" data-bs-interval="5000">
+		    	<c:forEach var="bestItem" items="${bestItem}" varStatus="status" begin="4" end="7">
+			    	<a href="${path}/product/readView?product_id=${bestItem.product_id}">
+						<img class="hjImg" src="<c:out value="${bestItem.product_main_img}" />"/>
+					</a>
+	   			</c:forEach>
+	   		</div>
+			<div class="carousel-item slidepadding">
+		    	<c:forEach var="bestItem" items="${bestItem}" varStatus="status" begin="8" end="11">
+			    	<a href="${path}/product/readView?product_id=${bestItem.product_id}">
+						<img class="hjImg" src="<c:out value="${bestItem.product_main_img}" />"/>
+					</a>
+	   			</c:forEach>
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval1" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval1" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
 	</div>
+	
+	<div id="carouselExampleInterval2" class="carousel carousel-dark slide hjslide" data-bs-ride="carousel">
+		<h2 class="center">New ITEM 10</h2>
+		<div class="carousel-inner">
+			<div class="carousel-item active slidepadding" data-bs-interval="2500">
+		    	<c:forEach var="newItem" items="${newItem}" varStatus="status" begin="0" end="3">
+			    	<a href="${path}/product/readView?product_id=${newItem.product_id}">
+						<img class="hjImg" src="<c:out value="${newItem.product_main_img}" />"/>
+					</a>
+	   			</c:forEach>
+	   		</div>
+			<div class="carousel-item slidepadding" data-bs-interval="5000">
+		    	<c:forEach var="newItem" items="${newItem}" varStatus="status" begin="4" end="7">
+			    	<a href="${path}/product/readView?product_id=${newItem.product_id}">
+						<img class="hjImg" src="<c:out value="${newItem.product_main_img}" />"/>
+					</a>
+	   			</c:forEach>
+	   		</div>
+			<div class="carousel-item slidepadding">
+		    	<c:forEach var="newItem" items="${newItem}" varStatus="status" begin="8" end="10">
+			    	<a href="${path}/product/readView?product_id=${newItem.product_id}">
+						<img class="hjImg" src="<c:out value="${newItem.product_main_img}" />"/>
+					</a>
+	   			</c:forEach>
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval2" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval2" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+	</div>
+</div>
 </body>
 <jsp:include page="/resources/include/footer.jsp" />
 </html>

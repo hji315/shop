@@ -12,6 +12,9 @@ public interface ProductDAO {
 	//상품 목록 조회
 	public List<ProductVO> list(SearchCriteria scri) throws Exception;
 	
+	//신상품 목록 조회
+	public List<ProductVO> list_new() throws Exception;
+	
 	//상품 총 갯수
 	public int listCount(SearchCriteria scri) throws Exception;
 	

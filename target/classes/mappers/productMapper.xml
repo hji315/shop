@@ -20,6 +20,10 @@
 		WHERE rNum BETWEEN #{rowStart} AND #{rowEnd} ORDER BY product_id DESC 
 	</select>
 	
+	<select id="listPage_new" resultType="com.team.shop.model.ProductVO" parameterType="com.team.shop.model.SearchCriteria">
+		SELECT product_id, product_name, product_main_img, product_new FROM product WHERE product_new='1' ORDER BY product_id DESC 
+	</select>
+	
 	<select id="listCount" parameterType="com.team.shop.model.SearchCriteria" resultType="int">
 		SELECT COUNT(product_id) FROM product WHERE 1=1 <include refid="category"></include> AND 1=1 <include refid="search"></include> AND product_id > 0
 	</select>
@@ -63,7 +67,7 @@
 	</select>
 	
 	<select id="bestItem" resultType="com.team.shop.model.ProductVO">
-		SELECT * FROM ( SELECT * FROM product ORDER BY hit DESC) WHERE ROWNUM between 1 and 10
+		SELECT * FROM ( SELECT * FROM product ORDER BY hit DESC) WHERE ROWNUM between 1 and 12
 	</select>
 	
 </mapper>
