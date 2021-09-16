@@ -37,3 +37,13 @@ li {
 	float: left; 
 	padding: 6px;
 	}
+	
+.hjslide{
+	width: 100%;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	min-width:1200px;
+}
+.slidepadding{
+	padding-left: 150px;
+}

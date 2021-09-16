@@ -54,6 +54,13 @@ public class ProductController {
 		return "product/list";
 	}
 	
+	//신상품 조회
+	@RequestMapping(value = "/list_new", method = RequestMethod.GET)
+	public String list_new(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
+		model.addAttribute("list_new",service.list_new());		
+		return "product/list_new";
+	}
+	
 	//상품 조회
 	@RequestMapping(value = "/readView", method = RequestMethod.GET)
 	public String read(ProductVO productVO, Model model) throws Exception{

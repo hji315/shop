@@ -27,6 +27,11 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	@Override
+	public List<ProductVO> list_new() throws Exception {
+		return sql.selectList("productMapper.listPage_new");
+	}
+	
+	@Override
 	public int listCount(SearchCriteria scri) throws Exception {
 		return sql.selectOne("productMapper.listCount",scri);
 	}
