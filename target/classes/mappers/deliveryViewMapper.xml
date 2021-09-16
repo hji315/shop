@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="deliveryViewMapper">
+  
+  	<!-- 배송 정보 추가 -->
+	<insert id="add" parameterType="com.team.shop.model.DeliveryViewVO">
+  		insert into delivery_view (
+  			deliveryNumber, pno, memberName, memberAddr1, 
+  			memberAddr2, memberAddr3, deliveryMemo, deliveryReceive
+  		)
+  		values(
+  		#{deliveryNumber}, #{pno}, #{memberName}, #{memberAddr1}, 
+  		#{memberAddr2}, #{memberAddr3}, #{deliveryMemo}, #{deliveryReceive}
+  		)
+  	</insert>
+  	
+  	 <!-- 배송 조회 -->
+  	<select id="view" parameterType="int" resultType="com.team.shop.model.DeliveryViewVO">
+  	
+  		select * from delivery_view where pno=#{pno}
+  	</select>
+  	
+  	<!-- 배송 정보 삭제-->
+	<delete id="delete" parameterType="int">
+		DELETE 
+		  FROM delivery_view
+		 WHERE deliveryNumber=#{deliveryNumber}
+	</delete>
+	
+  </mapper>

@@ -3,7 +3,6 @@ package com.team.shop.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.team.shop.model.CardVO;
+import com.team.shop.model.DeliveryViewVO;
 import com.team.shop.model.MemberVO;
 import com.team.shop.model.PaymentVO;
 import com.team.shop.model.ProductVO;
 import com.team.shop.service.CardService;
+import com.team.shop.service.DeliveryViewService;
 import com.team.shop.service.MemberService;
 import com.team.shop.service.PaymentService;
 import com.team.shop.service.ProductService;
@@ -45,6 +46,9 @@ public class PaymentController {
 
 	@Inject
 	private CardService cardService;
+	
+	@Inject
+	private DeliveryViewService deliveryViewService;
 	
 	//구매
 	@RequestMapping(value="/buy", method=RequestMethod.GET)
@@ -114,8 +118,18 @@ public class PaymentController {
 	}
 	//카드 정보 확인
 	@RequestMapping("/checkCard")
-	public void checkCard(MemberVO mvo, HttpSession session) {
+	public void checkCard(DeliveryViewVO dvVO, HttpSession session, String memberId) throws Exception {
 		logger.info("Payment address!");
+		int deliveryNumber = 0; //임시 송장 번호
+		dvVO.setDeliveryNumber(deliveryNumber);
+		session.setAttribute("dvVO", dvVO);
+		MemberVO mvo = new MemberVO();
+		mvo.setMemberId(memberId);
+		mvo.setMemberName(dvVO.getMemberName());
+		mvo.setMemberAddr1(dvVO.getMemberAddr1());
+		mvo.setMemberAddr2(dvVO.getMemberAddr2());
+		mvo.setMemberAddr3(dvVO.getMemberAddr3());
+		
 		// 배송지 입력 받아서 저장
 		if(isSessionMember(session)) {
 			System.out.println("회원 배송지 : " + mvo);
@@ -168,6 +182,9 @@ public class PaymentController {
 		logger.info("Payment complete!");
 		int point = 90; // 적립 포인트
 		int proAmount = 1; // 구매하려는 상품 수량
+		// 배송조회에 전송할 때 씀
+		String memId; 
+		MemberVO payMemVO;
 		ProductVO pvo = (ProductVO)session.getAttribute("payProd");
 		// 회원, 비회원
 		if(isSessionMember(session)) {
@@ -188,12 +205,21 @@ public class PaymentController {
 			session.setAttribute("member", mvo); // session도 업데이트
 			
 			System.out.println("결제 후 회원 : " + mvo);
+		// 회원은 필요없을 수도 있지만 form에 넘겨줄 데이터가 필요할까봐
+			//배송조회할 때 필요한
+			payMemVO = mvo;
+			memId = mvo.getMemberId();
 		}
 		else {
 			logger.info("NoMember check!");
 			MemberVO mvo = getSessionMember(session, "noMember");
+			//배송조회할 때 필요한
+			payMemVO = mvo;
+			memId = mvo.getMemberId();
 			//비회원 본인인증시 이름으로 적용
-			payVO.setMemberId(mvo.getMemberId());
+			payVO.setMemberId(memId);
+
+			
 		}
 		
 		System.out.println("결제된 것 : " + payVO);
@@ -204,12 +230,21 @@ public class PaymentController {
 		pvo.setProduct_stock(pvo.getProduct_stock()-proAmount);
 		productService.update(pvo);
 		
-		model.addAttribute("payProd", pvo); //재고수량 넘기기
+		model.addAttribute("payProd", pvo); //재고수량 표시용
 		session.removeAttribute("payProd"); //세션에서 상품 정보 삭제
 		
+		//배송조회할 때 필요한 pno 넘겨주기
+		List<PaymentVO> list = payService.view(memId);
+		model.addAttribute("payVO", list.get(0));
+		model.addAttribute("payMem", payMemVO);
+		DeliveryViewVO dvVO = (DeliveryViewVO)session.getAttribute("dvVO");
+		dvVO.setPno(list.get(0).getPno());
+		dvVO.setDeliveryNumber(1976432085+dvVO.getPno());
+		deliveryViewService.add(dvVO);
 		return "payment/complete";
 		// (complete)페이지에서 결제 완료창 구현
 		// 쌓인 포인트, 남은 잔액, 남은 재고수량 표시 
+		// 배송관련 정보 입력폼
 		// 배송조회로 이동하는 링크 표시
 	}
 	//결제 내역 보기
@@ -217,12 +252,14 @@ public class PaymentController {
 	public void view(Model model, HttpSession session) throws Exception {
 		logger.info("Payment history");
 		List <PaymentVO> view;
-		if(isSessionMember(session)) {
-			//회원 아이디로 조회
-			view = payService.view(getSessionMember(session, "member").getMemberId());
-		}else {
+		MemberVO mvo = getSessionMember(session, "member");
+		//관리자인지 확인
+		if(mvo.getAdminCk()==1) {
 			//전체 조회
 			view = payService.view();
+		}else {
+			//회원 아이디로 조회
+			view = payService.view(getSessionMember(session, "member").getMemberId());
 		}
 		model.addAttribute("view", view);
 	}
@@ -241,7 +278,6 @@ public class PaymentController {
 		productService.update(pvo);
 		memberService.memberMoneyUpdate(mvo);
 		payService.delete(payVO.getPno());
-		
 		return "redirect:/payment/view";
 	}
 	
@@ -259,13 +295,28 @@ public class PaymentController {
 	
 	// 배송 조회
 	@RequestMapping("/delivery")
-	public String deliveryView(Model model, HttpSession session) {
+	public String deliveryView(Model model, int pno) throws Exception {
 		logger.info("Delivery!");
-		String mem = (isSessionMember(session))?"member":"noMember";
-		MemberVO mvo = getSessionMember(session, mem);
-		model.addAttribute("deliveryMVO",mvo);
-		
+		System.out.println(pno);
+		DeliveryViewVO dvVO = deliveryViewService.view(pno);
+		model.addAttribute("dvVO", dvVO);
 		return "payment/delivery";
+	}
+	@RequestMapping("/mypageDelivery")
+	public String mypageDelivery(Model model, HttpSession session) throws Exception {
+		logger.info("Mypage Delivery!");
+		List <PaymentVO> view;
+		MemberVO mvo = getSessionMember(session, "member");
+		//관리자인지 확인
+		if(mvo.getAdminCk()==1) {
+			//전체 조회
+			view = payService.view();
+		}else {
+			//회원 아이디로 조회
+			view = payService.view(getSessionMember(session, "member").getMemberId());
+		}
+		model.addAttribute("view", view);
+		return "/payment/mypageDelivery";
 	}
 	
 	//세션에 "member"가 있는지 => 로그인 되어 있는지

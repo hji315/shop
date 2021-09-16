@@ -55,7 +55,7 @@
                             <a class="list-group-item" href="${path}/mypage/basket">장바구니</a>
                         </li>
                         <li>
-                            <a class="list-group-item"  href="${path}/mypage/delivery">배송조회</a>                            
+                            <a class="list-group-item"  href="${path}/payment/mypageDelivery">배송조회</a>                            
                         </li>
                         <li>
                             <a class="list-group-item"  href="${path}/mypage/postscript">후기작성</a>                            
