@@ -32,33 +32,7 @@
 
 </style>
 </head>
-<script type="text/javascript">
-		$(document).ready(function(){
-			// 취소
-			$("#cencle").on("click", function(){
-				location.href = "${path}/";
-			})
-			
-			$("#submit").on("click", function(){
-				if($("#memberId").val()==""){
-					alert("아이디를 입력해주세요.");
-					$("#memberId").focus();
-					return false;
-				}
-				if($("#memberPw").val()==""){
-					alert("비밀번호를 입력해주세요.");
-					$("#memberPw").focus();
-					return false;
-				}
-				if($("#memberPw").val()!=$("#memberPw2").val()){
-					alert("비밀번호를 확인해주세요.");
-					$("#memberPw").focus();
-					return false;
-				}
-			});
-		})
-		
-</script>
+
 <body>
 	
 	<header class="mx-auto" style="width:500px; margin-top:10px;">
