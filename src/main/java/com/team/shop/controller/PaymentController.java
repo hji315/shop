@@ -103,7 +103,9 @@ public class PaymentController {
 		else {
 			System.out.println("비회원 : " + name);
 			//비회원은 아이디 대신 이것을 사용
-			model.addAttribute("noMember", name); // 필요하면 이름+전화번호로
+			MemberVO mvo = new MemberVO();
+			mvo.setMemberId(name);
+			session.setAttribute("noMember", mvo); // 필요하면 이름+전화번호로
 			return "payment/checkAddr";
 		}
 		// (checkAddr)페이지에서 배송지 입력폼 구현
@@ -115,22 +117,14 @@ public class PaymentController {
 		logger.info("Payment address!");
 		int deliveryNumber = 0; //임시 송장 번호
 		dvVO.setDeliveryNumber(deliveryNumber);
-		session.setAttribute("dvVO", dvVO);
-		MemberVO mvo = new MemberVO();
-		mvo.setMemberId(memberId);
-		mvo.setMemberName(dvVO.getMemberName());
-		mvo.setMemberAddr1(dvVO.getMemberAddr1());
-		mvo.setMemberAddr2(dvVO.getMemberAddr2());
-		mvo.setMemberAddr3(dvVO.getMemberAddr3());
-		
 		// 배송지 입력 받아서 저장
 		if(isSessionMember(session)) {
-			System.out.println("회원 배송지 : " + mvo);
-			session.setAttribute("member", mvo);
+			System.out.println("회원 배송지 : " + dvVO);
 		}else {
-			System.out.println("비회원 배송지 : " + mvo);
-			session.setAttribute("noMember", mvo);
+			System.out.println("비회원 배송지 : " + dvVO);
 		}
+		session.setAttribute("dvVO", dvVO);
+		
 		if(isSessionMember(session)) {
 			List<CardVO> list = cardService.view(memberId);
 			model.addAttribute("cardList", list);
