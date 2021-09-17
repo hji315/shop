@@ -240,7 +240,8 @@ public class PaymentController {
 	public String cancel(PaymentVO payVO, HttpSession session) throws Exception{
 		logger.info("Payment cancel");
 		System.out.println("취소된 결제 : " + payVO);
-		MemberVO mvo = getSessionMember(session, "memeber");
+		MemberVO mvo = getSessionMember(session, "member");
+		System.out.println(mvo);
 		mvo.setMoney(mvo.getMoney()+payVO.getPayMoney()); // 금액 환불
 		mvo.setPoint(mvo.getPoint()-payVO.getPayPoint()); // 적립 포인트 회수
 		ProductVO pvo = productService.read(payVO.getProduct_id());
@@ -250,7 +251,7 @@ public class PaymentController {
 		productService.update(pvo);
 		memberService.memberMoneyUpdate(mvo);
 		payService.delete(payVO.getPno());
-		return "redirect:/payment/view";
+		return "redirect:/mypage/view";
 	}
 	
 	//결제 실패
