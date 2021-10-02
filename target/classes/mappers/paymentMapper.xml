@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="paymentMapper">
+  
+  	<!-- 결제 내역 추가 -->
+  	<insert id="add" parameterType="com.team.shop.model.PaymentVO" useGeneratedKeys="true" keyProperty="pno">
+	<selectKey keyProperty="pno" resultType="int" order="BEFORE"> <!-- BEFORE =>insert를 실행하기 전에 먼저 실행 -->
+	    	SELECT PAYMENT_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
+  		insert into payment (
+  			pno, memberId, product_id, payDate, 
+  			shippingFee, payMoney, payPoint
+  		)
+  		values(
+  		#{pno}, #{memberId}, #{product_id}, SYSDATE, 
+  		#{shippingFee}, #{payMoney}, #{payPoint}
+  		)
+  	</insert>
+  	
+  	 <!-- 회원 결제 내역 전체 조회 -->
+  	<select id="view" parameterType="String" resultType="com.team.shop.model.PaymentVO">
+  	
+  		select * from payment
+  		<if test="value != null">
+  		 where memberId=#{memberId}
+  		 </if>
+  		 order by pno desc
+  	</select>
+  	
+  	
+  	
+  	<!-- 결제 내역 1개 조회 -->
+  	<select id="read" parameterType="int" resultType="com.team.shop.model.PaymentVO">
+  	
+  		select * from payment where pno=#{pno} 	
+  	</select>
+  	
+  	<!-- 결제 취소 (payment_deleted table로 옮기게 수정할 예정)-->
+	<delete id="delete" parameterType="int">
+		
+		DELETE 
+		  FROM payment
+		 WHERE pno=#{pno}
+	</delete>
+	
+  </mapper>

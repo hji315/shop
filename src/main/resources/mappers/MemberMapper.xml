@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.team.shop.mapper.MemberMapper">
+  
+     <!-- 회원 가입 -->
+   <insert id="memberJoin">
+        insert into s_member values(
+        #{memberId}, #{memberPw}, #{memberName}, #{memberMail}, 
+        #{memberAddr1}, #{memberAddr2}, #{memberAddr3}, 
+        0, sysdate, 100000, 5000 )
+     </insert>
+     
+      <!-- 아이디 중복검사 -->
+     <select id="idCheck" resultType="int">
+     
+        select count(*) from s_member where memberId = #{memberId}
+     
+     </select>
+     
+     <!-- 로그인 -->
+     <select id="memberLogin" resultType="com.team.shop.model.MemberVO">
+        select memberId, memberPw, memberName, adminck, money, point from s_member where memberId = #{memberId}
+        <!-- select memberId, memberName, adminck, money, point from s_member where memberId = #{memberId} and memberPw = #{memberPw} -->
+     
+     </select>
+     
+     <!-- 회원정보 수정 , #{}는 Controller -> Service -> DAO를 통해 받은 파라미터값들이 들어옴 -->
+     <update id="memberUpdate" >
+     	UPDATE S_MEMBER SET
+    	memberPw=#{memberPw},
+    	memberName = #{memberName},
+    	memberAddr1 = #{memberAddr1},
+    	memberAddr2 = #{memberAddr2},
+    	memberAddr3 = #{memberAddr3}
+    	WHERE memberId = #{memberId}
+     </update>
+     
+     <!-- 회원정보 조회 -->
+     <select id="memberRead" resultType="com.team.shop.model.MemberVO">
+        select * from s_member where memberId = #{memberId}     
+     </select>
+     
+     <!-- 회원 포인트, 돈 갱신 -->
+     <update id="memberMoneyUpdate" >
+     	UPDATE S_MEMBER SET
+    	point = #{point},
+    	money = ${money}
+    	WHERE memberId = #{memberId}
+     </update>
+     
+     <!-- 아이디 찾기 -->
+	<select id="find_id" parameterType="String" resultType="String" >
+		select memberId from s_member where memberMail = #{memberMail}
+	</select>
+     
+     <!-- 비밀번호 체크 -->
+     <select id="passChk" resultType="int">
+     	select count(*) from s_member where memberId = #{memberId} and memberPw = #{memberPw}
+     </select>
+     
+     <!-- 회원 탈퇴 -->
+     <delete id="memberDelete">
+		delete from s_member where memberId = #{memberId}
+	</delete>
+	
+	<!-- 비밀번호 찾기 -->
+    <select id="find_pw" resultType="com.team.shop.model.MemberVO">
+    	SELECT memberId from s_member WHERE memberId = #{memberId} AND memberName = #{memberName} AND memberMail = #{memberMail}
+    </select>
+    
+   	<!-- 비밀번호 변경 -->
+    <update id="change_pw">
+    	UPDATE s_member SET memberPw = #{memberPw} WHERE memberId = #{memberId}
+    </update>
+	
+  </mapper>
