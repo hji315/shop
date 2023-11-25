@@ -1,4 +1,4 @@
-# HH_SHOP 쇼핑몰 프로젝트
+# 쇼핑몰 프로젝트
 ## 환경
 + Spring
 + Windows 10
